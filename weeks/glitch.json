@@ -1,0 +1,35 @@
+{
+	"storyName": "Hypno's Lullaby",
+	"hideFreeplay": false,
+	"weekBackground": "",
+	"weekBefore": "",
+	"startUnlocked": true,
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"songs": [
+		[
+			"missingno",
+			"missingno",
+			[
+				0,
+				0,
+				0
+			]
+		],
+		[
+			"brimstone",
+			"buried",
+			[
+				0,
+				0,
+				0
+			]
+		]
+	],
+	"hideStoryMode": true,
+	"weekName": "Hypno's Lullaby",
+	"difficulties": "hard"
+}

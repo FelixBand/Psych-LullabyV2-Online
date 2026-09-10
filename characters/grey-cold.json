@@ -1,0 +1,133 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				-7,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "GreyCold_Idle"
+		},
+		{
+			"offsets": [
+				-7,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "GreyCold_Down"
+		},
+		{
+			"offsets": [
+				-9,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "GreyCold_Left"
+		},
+		{
+			"offsets": [
+				-7,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "GreyCold_Right"
+		},
+		{
+			"offsets": [
+				-7,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "GreyCold_Up"
+		},
+		{
+			"offsets": [
+				-7,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUPmiss",
+			"loop": false,
+			"name": "GreyCold_Miss_Up"
+		},
+		{
+			"offsets": [
+				-7,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHTmiss",
+			"loop": false,
+			"name": "GreyCold_Miss_Right"
+		},
+		{
+			"offsets": [
+				-9,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFTmiss",
+			"loop": false,
+			"name": "GreyCold_Miss_Left"
+		},
+		{
+			"offsets": [
+				-7,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWNmiss",
+			"loop": false,
+			"name": "GreyCold_Miss_Down"
+		},
+		{
+			"offsets": [
+				-7,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "talk",
+			"loop": false,
+			"name": "GreyCold_Talk"
+		}
+	],
+	"no_antialiasing": true,
+	"image": "characters/shinto/Grey_Assets",
+	"position": [
+		100,
+		280
+	],
+	"healthicon": "grey",
+	"flip_x": true,
+	"healthbar_colors": [
+		207,
+		167,
+		175
+	],
+	"camera_position": [
+		15,
+		-140
+	],
+	"sing_duration": 4,
+	"scale": 2
+}

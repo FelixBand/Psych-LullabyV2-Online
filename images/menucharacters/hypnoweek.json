@@ -1,0 +1,11 @@
+{
+	"idle_anim": "HypnoWeek0",
+	"confirm_anim": "HypnoWeekConfirm",
+	"position": [
+		-300,
+		-140
+	],
+	"scale": 0.75,
+	"flipX": false,
+	"image": "HypnoWeek"
+}

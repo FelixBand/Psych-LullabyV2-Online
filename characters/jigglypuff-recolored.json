@@ -1,0 +1,162 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": true,
+			"name": "Body"
+		},
+		{
+			"offsets": [
+				22,
+				-20
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "Jigglypuff Down front"
+		},
+		{
+			"offsets": [
+				99,
+				5
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "Left pose"
+		},
+		{
+			"offsets": [
+				-20,
+				10
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "Right pose"
+		},
+		{
+			"offsets": [
+				24,
+				10
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "Up pose"
+		},
+		{
+			"offsets": [
+				24,
+				10
+			],
+			"indices": [
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13
+			],
+			"fps": 24,
+			"anim": "singUP-loop",
+			"loop": true,
+			"name": "Up pose"
+		},
+		{
+			"offsets": [
+				-20,
+				10
+			],
+			"indices": [
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16
+			],
+			"fps": 24,
+			"anim": "singRIGHT-loop",
+			"loop": true,
+			"name": "Right pose"
+		},
+		{
+			"offsets": [
+				99,
+				5
+			],
+			"indices": [
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14
+			],
+			"fps": 24,
+			"anim": "singLEFT-loop",
+			"loop": true,
+			"name": "Left pose"
+		},
+		{
+			"offsets": [
+				22,
+				-20
+			],
+			"indices": [
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14
+			],
+			"fps": 24,
+			"anim": "singDOWN-loop",
+			"loop": true,
+			"name": "Jigglypuff Down front"
+		}
+	],
+	"vocals_file": null,
+	"results_character": null,
+	"no_antialiasing": false,
+	"image": "characters/purin/Purin_Recolored",
+	"position": [
+		-35,
+		295
+	],
+	"speaker": null,
+	"healthicon": "jigglypuff",
+	"flip_x": false,
+	"healthbar_colors": [
+		197,
+		203,
+		206
+	],
+	"camera_position": [
+		-32,
+		235
+	],
+	"sing_duration": 4,
+	"dead_character": null,
+	"scale": 0.5
+}

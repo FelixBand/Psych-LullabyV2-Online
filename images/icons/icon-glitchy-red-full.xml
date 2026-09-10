@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="icon-glitchy-red.png">
+	<!-- Created with Adobe Animate version 21.0.9.42677 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="neutral0000" x="0" y="0" width="125" height="125"/>
+	<SubTexture name="dying0000" x="125" y="0" width="125" height="125"/>
+	<SubTexture name="angryneutral0000" x="250" y="0" width="125" height="125"/>
+	<SubTexture name="angrydying0000" x="375" y="0" width="125" height="125"/>
+</TextureAtlas>

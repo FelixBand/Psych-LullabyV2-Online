@@ -1,0 +1,181 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				4,
+				1
+			],
+			"anim": "idle-normal",
+			"fps": 24,
+			"name": "Pico Idle dance",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-13,
+				-3
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "PICO LEFT ",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				104,
+				-41
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "PICO DOWN",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-25,
+				5
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "PICO RIGHT",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-18,
+				37
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "PICO UP",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-14,
+				44
+			],
+			"anim": "singLEFTmiss",
+			"fps": 24,
+			"name": "pico miss left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-16,
+				37
+			],
+			"anim": "singUPmiss",
+			"fps": 24,
+			"name": "pico miss up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-19,
+				7
+			],
+			"anim": "singRIGHTmiss",
+			"fps": 24,
+			"name": "pico right miss",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				109,
+				-27
+			],
+			"anim": "singDOWNmiss",
+			"fps": 24,
+			"name": "pico miss down",
+			"indices": []
+		},
+		{
+			"offsets": [
+				4,
+				17
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "knife",
+			"loop": false,
+			"name": "StabbyStabby"
+		},
+		{
+			"offsets": [
+				-26,
+				12
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": true,
+			"name": "Pico_idle_01"
+		},
+		{
+			"offsets": [
+				-20,
+				30
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "turned",
+			"loop": false,
+			"name": "Turned"
+		},
+		{
+			"offsets": [
+				-10,
+				11
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "fall asleep",
+			"loop": false,
+			"name": "Pico fall asleep"
+		},
+		{
+			"offsets": [
+				55,
+				-5
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle-sleep",
+			"loop": true,
+			"name": "Pico sleep"
+		}
+	],
+	"vocals_file": null,
+	"results_character": null,
+	"no_antialiasing": false,
+	"image": "characters/purin/Full_pico_purin",
+	"position": [
+		50,
+		290
+	],
+	"speaker": null,
+	"healthicon": "pico",
+	"flip_x": true,
+	"healthbar_colors": [
+		255,
+		109,
+		33
+	],
+	"camera_position": [
+		80,
+		-40
+	],
+	"sing_duration": 4,
+	"dead_character": null,
+	"scale": 1
+}

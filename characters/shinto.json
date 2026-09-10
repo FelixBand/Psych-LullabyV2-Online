@@ -1,0 +1,104 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "shitno_idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "shitno_down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "shitno_left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "shitno_up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "shitno_right",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-110,
+				-21
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "lose",
+			"loop": false,
+			"name": "shitno_lose"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "end",
+			"loop": false,
+			"name": "shitno_end"
+		}
+	],
+	"vocals_file": null,
+	"results_character": null,
+	"no_antialiasing": true,
+	"image": "characters/shinto/shitno_assets",
+	"position": [
+		130,
+		490
+	],
+	"speaker": null,
+	"healthicon": "shinto",
+	"flip_x": false,
+	"healthbar_colors": [
+		255,
+		255,
+		112
+	],
+	"camera_position": [
+		-410,
+		-150
+	],
+	"sing_duration": 4,
+	"dead_character": null,
+	"scale": 6
+}

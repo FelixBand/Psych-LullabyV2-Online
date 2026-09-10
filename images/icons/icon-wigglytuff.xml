@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="icon-wigglytuff.png">
+	<SubTexture name="normal0000" x="0" y="0" width="152" height="173"/>
+	<SubTexture name="decay10000" x="151" y="0" width="151" height="173"/>
+	<SubTexture name="decay20000" x="302" y="0" width="151" height="173"/>
+	<SubTexture name="stare0000" x="454" y="0" width="151" height="173"/>
+</TextureAtlas>

@@ -1,0 +1,110 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "Pico ghost idle"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [
+				6,
+				7,
+				8,
+				9,
+				10
+			],
+			"fps": 24,
+			"anim": "idle-loop",
+			"loop": true,
+			"name": "Pico ghost idle"
+		},
+		{
+			"offsets": [
+				239,
+				-70
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "Pico ghost l"
+		},
+		{
+			"offsets": [
+				-76,
+				-50
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "Pico ghost r"
+		},
+		{
+			"offsets": [
+				20,
+				121
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "Pico ghost u"
+		},
+		{
+			"offsets": [
+				-86,
+				-117
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "Pico ghost d"
+		},
+		{
+			"offsets": [
+				3,
+				-54
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "appears",
+			"loop": false,
+			"name": "Wild Pico ghost appears "
+		}
+	],
+	"vocals_file": null,
+	"results_character": null,
+	"no_antialiasing": false,
+	"image": "characters/purin/ghostPico",
+	"position": [
+		50,
+		290
+	],
+	"speaker": null,
+	"healthicon": "pico",
+	"flip_x": false,
+	"healthbar_colors": [
+		255,
+		109,
+		33
+	],
+	"camera_position": [
+		-120,
+		80
+	],
+	"sing_duration": 4,
+	"dead_character": null,
+	"scale": 1
+}

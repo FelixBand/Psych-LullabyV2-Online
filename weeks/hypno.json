@@ -1,0 +1,44 @@
+{
+	"storyName": "Hypno's Lullaby",
+	"hideFreeplay": false,
+	"weekBackground": "black",
+	"weekBefore": "",
+	"startUnlocked": true,
+	"weekCharacters": [
+		"hypnoweek",
+		"campaignboy",
+		""
+	],
+	"songs": [
+		[
+			"safety lullaby",
+			"hypno",
+			[
+				0,
+				0,
+				0
+			]
+		],
+		[
+			"left unchecked",
+			"hypno2-animated",
+			[
+				0,
+				0,
+				0
+			]
+		],
+		[
+			"lost cause",
+			"hypno3-animated",
+			[
+				0,
+				0,
+				0
+			]
+		]
+	],
+	"hideStoryMode": false,
+	"weekName": "Hypno's Lullaby",
+	"difficulties": "hard"
+}

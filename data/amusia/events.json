@@ -1,0 +1,386 @@
+{
+	"song": {
+		"events": [
+			[
+				2666.66666666667,
+				[
+					[
+						"Song Start",
+						"",
+						""
+					]
+				]
+			],
+			[
+				8000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay1"
+					]
+				]
+			],
+			[
+				10666.6666666667,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay2"
+					]
+				]
+			],
+			[
+				13333.3333333333,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff"
+					]
+				]
+			],
+			[
+				20000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay1"
+					]
+				]
+			],
+			[
+				21833.3333333333,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay2"
+					]
+				]
+			],
+			[
+				23166.6666666667,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-stare"
+					]
+				]
+			],
+			[
+				24000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff"
+					]
+				]
+			],
+			[
+				25333.3333333333,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff"
+					]
+				]
+			],
+			[
+				26166.6666666667,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay1"
+					]
+				]
+			],
+			[
+				27166.6666666667,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay1"
+					]
+				]
+			],
+			[
+				28000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay2"
+					]
+				]
+			],
+			[
+				29333.3333333333,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff"
+					]
+				]
+			],
+			[
+				34666.6666666667,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-stare"
+					]
+				]
+			],
+			[
+				35333.3333333333,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay2"
+					]
+				]
+			],
+			[
+				36000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay1"
+					]
+				]
+			],
+			[
+				37833.3333333333,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay2"
+					]
+				]
+			],
+			[
+				38583.3333333333,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay1"
+					]
+				]
+			],
+			[
+				38666.6666666667,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff"
+					]
+				]
+			],
+			[
+				39500,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff"
+					]
+				]
+			],
+			[
+				40000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff"
+					]
+				]
+			],
+			[
+				45250,
+				[
+					[
+						"Amusia Background Change",
+						"",
+						""
+					]
+				]
+			],
+			[
+				45333.3333333333,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay2"
+					]
+				]
+			],
+			[
+				46666.6666666667,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-stare"
+					]
+				]
+			],
+			[
+				48000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay2"
+					]
+				]
+			],
+			[
+				50666.6666666667,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay1"
+					]
+				]
+			],
+			[
+				51333.3333333334,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay2"
+					]
+				]
+			],
+			[
+				51750,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay1"
+					]
+				]
+			],
+			[
+				56000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff"
+					]
+				]
+			],
+			[
+				56666.6666666667,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay1"
+					]
+				]
+			],
+			[
+				57333.3333333334,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff"
+					]
+				]
+			],
+			[
+				57666.6666666667,
+				[
+					[
+						"HUD Fade",
+						"",
+						""
+					]
+				]
+			],
+			[
+				58000,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay1"
+					]
+				]
+			],
+			[
+				58166.6666666667,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-decay2"
+					]
+				]
+			],
+			[
+				58333.3333333334,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-stare"
+					]
+				]
+			],
+			[
+				58666.6666666667,
+				[
+					[
+						"HUD Fade Mid Song",
+						"",
+						""
+					]
+				]
+			],
+			[
+				60500,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-stare"
+					]
+				]
+			],
+			[
+				61166.6666666667,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-stare"
+					]
+				]
+			]
+		]
+	}
+}

@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				-47,
+				-73
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "DECAY 1 idle"
+		},
+		{
+			"offsets": [
+				-45,
+				-61
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "DECAY 1 up"
+		},
+		{
+			"offsets": [
+				-47,
+				-69
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "DECAY 1 right"
+		},
+		{
+			"offsets": [
+				-38,
+				-77
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "DECAY 1 left"
+		},
+		{
+			"offsets": [
+				-45,
+				-79
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "DECAY 1 down"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/disabled/wiggles_glitchy",
+	"position": [
+		100,
+		310
+	],
+	"healthicon": "wigglytuff-decay1",
+	"flip_x": false,
+	"healthbar_colors": [
+		163,
+		103,
+		117
+	],
+	"camera_position": [
+		-40,
+		20
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

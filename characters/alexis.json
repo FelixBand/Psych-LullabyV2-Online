@@ -1,0 +1,122 @@
+{
+	"animations": [
+		{
+			"loop": true,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "GGirl Idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				45,
+				5
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "GGirl Left0",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				30,
+				-5
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "GGirl Down0",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-48,
+				49
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "GGirl Up0",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-10,
+				28
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "GGirl Right0",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				103,
+				133
+			],
+			"anim": "singUPmiss",
+			"fps": 24,
+			"name": "GGirl Up Miss",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				27,
+				41
+			],
+			"anim": "singDOWNmiss",
+			"fps": 24,
+			"name": "GGirl Down Miss",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				58,
+				38
+			],
+			"anim": "singLEFTmiss",
+			"fps": 24,
+			"name": "GGirl left Miss",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-64,
+				51
+			],
+			"anim": "singRIGHTmiss",
+			"fps": 24,
+			"name": "GGirl Right Miss",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/hypno/GGirl Alexis Full Spritesheet",
+	"position": [
+		410,
+		-60
+	],
+	"healthicon": "alexis",
+	"flip_x": true,
+	"healthbar_colors": [
+		45,
+		75,
+		85
+	],
+	"camera_position": [
+		360,
+		252
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

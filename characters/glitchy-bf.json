@@ -1,0 +1,122 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				-5,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "Bf Idle Dance"
+		},
+		{
+			"offsets": [
+				-20,
+				-41
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "boyfriend down"
+		},
+		{
+			"offsets": [
+				145,
+				-6
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "boyfriend left"
+		},
+		{
+			"offsets": [
+				-58,
+				43
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "boyfriend right"
+		},
+		{
+			"offsets": [
+				34,
+				97
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "boyfriend up"
+		},
+		{
+			"offsets": [
+				181,
+				275
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUPmiss",
+			"loop": false,
+			"name": "boyfriend u miss"
+		},
+		{
+			"offsets": [
+				5,
+				183
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHTmiss",
+			"loop": false,
+			"name": "boyfriend righ miss"
+		},
+		{
+			"offsets": [
+				367,
+				169
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFTmiss",
+			"loop": false,
+			"name": "boyfriend lef miss"
+		},
+		{
+			"offsets": [
+				30,
+				111
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWNmiss",
+			"loop": false,
+			"name": "boyfriend dow miss"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/bf/Boyfriend_Isotope",
+	"position": [
+		0,
+		350
+	],
+	"healthicon": "bf",
+	"flip_x": true,
+	"healthbar_colors": [
+		49,
+		176,
+		209
+	],
+	"camera_position": [
+		-480,
+		-230
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

@@ -1,0 +1,11 @@
+{
+	"idle_anim": "allcombined0",
+	"confirm_anim": "confirm",
+	"position": [
+		200,
+		-287
+	],
+	"scale": 0.75,
+	"flipX": false,
+	"image": "CampaignBoy"
+}

@@ -1,0 +1,199 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "Jigglypuff idle main",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				12,
+				-14
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "jigglydown",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				114,
+				40
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "jigglyleft",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				9,
+				27
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "jigglyright",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				56,
+				50
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "jigglyup",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				24,
+				2
+			],
+			"anim": "turn",
+			"fps": 24,
+			"name": "jigglyturn",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				3,
+				4
+			],
+			"anim": "sleep",
+			"fps": 24,
+			"name": "jigglysing",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				12,
+				-14
+			],
+			"anim": "singDOWN-loop",
+			"fps": 24,
+			"name": "jigglydown",
+			"indices": [
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13
+			]
+		},
+		{
+			"loop": true,
+			"offsets": [
+				9,
+				27
+			],
+			"anim": "singRIGHT-loop",
+			"fps": 24,
+			"name": "jigglyright",
+			"indices": [
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13
+			]
+		},
+		{
+			"loop": true,
+			"offsets": [
+				56,
+				50
+			],
+			"anim": "singUP-loop",
+			"fps": 24,
+			"name": "jigglyup",
+			"indices": [
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14
+			]
+		},
+		{
+			"offsets": [
+				24,
+				2
+			],
+			"indices": [
+				21,
+				20,
+				19,
+				18,
+				17,
+				16,
+				15,
+				14,
+				13,
+				12,
+				11,
+				10,
+				9,
+				8,
+				7,
+				6,
+				5,
+				4,
+				3,
+				2,
+				1,
+				0
+			],
+			"fps": 24,
+			"anim": "turn back",
+			"loop": false,
+			"name": "jigglyturn"
+		}
+	],
+	"vocals_file": null,
+	"results_character": null,
+	"no_antialiasing": false,
+	"image": "characters/purin/jigglyassets",
+	"position": [
+		-10,
+		280
+	],
+	"speaker": null,
+	"healthicon": "jigglypuff",
+	"flip_x": false,
+	"healthbar_colors": [
+		197,
+		203,
+		206
+	],
+	"camera_position": [
+		50,
+		80
+	],
+	"sing_duration": 4,
+	"dead_character": null,
+	"scale": 0.5
+}

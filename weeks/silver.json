@@ -1,0 +1,44 @@
+{
+	"storyName": "Lost Silver",
+	"hideFreeplay": false,
+	"weekBackground": "black",
+	"weekBefore": "",
+	"startUnlocked": true,
+	"weekCharacters": [
+		"lostsilverweek",
+		"campaignboy",
+		""
+	],
+	"songs": [
+		[
+			"frostbite",
+			"red",
+			[
+				0,
+				0,
+				0
+			]
+		],
+		[
+			"insomnia",
+			"silver",
+			[
+				0,
+				0,
+				0
+			]
+		],
+		[
+			"monochrome",
+			"gold",
+			[
+				0,
+				0,
+				0
+			]
+		]
+	],
+	"hideStoryMode": false,
+	"weekName": "Lost Silver",
+	"difficulties": "hard"
+}

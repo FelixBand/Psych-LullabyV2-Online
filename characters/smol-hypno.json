@@ -1,0 +1,205 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": true,
+			"name": "Smol H Idle"
+		},
+		{
+			"offsets": [
+				-10,
+				-15
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "Smol H Down0"
+		},
+		{
+			"offsets": [
+				-20,
+				-12
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "Smol H Right0"
+		},
+		{
+			"offsets": [
+				9,
+				-1
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "Smol H Up0"
+		},
+		{
+			"offsets": [
+				25,
+				-15
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "Smol H Left0"
+		},
+		{
+			"offsets": [
+				25,
+				-15
+			],
+			"indices": [
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14
+			],
+			"fps": 24,
+			"anim": "singLEFT-loop",
+			"loop": true,
+			"name": "Smol H Left0"
+		},
+		{
+			"offsets": [
+				-20,
+				-12
+			],
+			"indices": [
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14
+			],
+			"fps": 24,
+			"anim": "singRIGHT-loop",
+			"loop": true,
+			"name": "Smol H Right0"
+		},
+		{
+			"offsets": [
+				-10,
+				-15
+			],
+			"indices": [
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14
+			],
+			"fps": 24,
+			"anim": "singDOWN-loop",
+			"loop": true,
+			"name": "Smol H Down0"
+		},
+		{
+			"offsets": [
+				9,
+				-1
+			],
+			"indices": [
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14
+			],
+			"fps": 24,
+			"anim": "singUP-loop",
+			"loop": true,
+			"name": "Smol H Up0"
+		},
+		{
+			"offsets": [
+				55,
+				143
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUPmiss",
+			"loop": false,
+			"name": "Smol H Up Miss"
+		},
+		{
+			"offsets": [
+				66,
+				80
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHTmiss",
+			"loop": false,
+			"name": "Smol H Right Miss"
+		},
+		{
+			"offsets": [
+				168,
+				58
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFTmiss",
+			"loop": false,
+			"name": "Smol H Left Miss"
+		},
+		{
+			"offsets": [
+				97,
+				61
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWNmiss",
+			"loop": false,
+			"name": "Smol H Down Miss"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/hypno/Smol_Hypno_Sprites",
+	"position": [
+		150,
+		240
+	],
+	"healthicon": "smallhypno-animated",
+	"flip_x": true,
+	"healthbar_colors": [
+		45,
+		75,
+		85
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

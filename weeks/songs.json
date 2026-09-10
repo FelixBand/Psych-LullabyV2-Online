@@ -1,0 +1,26 @@
+{
+	"storyName": "Hypno's Lullaby",
+	"hideFreeplay": false,
+	"weekBackground": "",
+	"weekBefore": "",
+	"startUnlocked": true,
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"songs": [
+		["amusia", "ponyta", [0, 0, 0]],
+		["dissension", "steven", [0, 0, 0]],
+		["purin", "jigglypuff", [0, 0, 0]],
+		["death toll", "beelze", [0, 0, 0]],
+		["isotope", "glitchy-red", [0, 0, 0]],
+		["bygone purpose", "smallhypno", [0, 0, 0]],
+		["pasta night", "lord-x", [0, 0, 0]],
+		["shinto", "shinto", [0, 0, 0]],
+		["shitno", "shitno", [0, 0, 0]]
+	],
+	"hideStoryMode": true,
+	"weekName": "Hypno's Lullaby",
+	"difficulties": "hard"
+}
