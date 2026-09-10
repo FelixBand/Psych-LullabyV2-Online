@@ -1,7 +1,7 @@
 #pragma header
 // https://www.shadertoy.com/view/XtyXzW
 
-#extension GL_EXT_gpu_shader4 : enable
+
 
 uniform float time = 0.0;
 uniform float prob = 0.0;
@@ -19,7 +19,7 @@ vec2 _round(vec2 n) {
 
 vec3 tex2D(sampler2D _tex,vec2 _p)
 {
-    vec3 col=texture(_tex,_p).xyz;
+    vec3 col=texture2D(_tex,_p).xyz;
     if(.5<abs(_p.x-.5)){
         col=vec3(.1);
     }
@@ -66,7 +66,7 @@ GlitchSeed glitchSeed(vec2 p, float speed) {
 }
 
 float shouldApply(GlitchSeed seed) {
-    return round(
+    return _round(
         mix(
             mix(rand(seed.seed), 1., seed.prob - .5),
             0.,
@@ -143,7 +143,7 @@ void staticNoise(inout vec2 p, vec2 groupSize, float grainSize, float contrast) 
     if (shouldApply(seedA) == 1.) {
         GlitchSeed seedB = glitchSeed(glitchCoord(p, vec2(grainSize)), 5.);
         vec2 offset = vec2(rand(seedB.seed), rand(seedB.seed + .1));
-        offset = round(offset * 2. - 1.);
+        offset = _round(offset * 2. - 1.);
         offset *= contrast;
         p += offset;
     }
