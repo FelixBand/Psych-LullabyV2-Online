@@ -27,8 +27,10 @@ function onCreate()
 end
 
 function onCreatePost()
-	for i = 0,getProperty('playerStrums.length') - 1 do
-		setPropertyFromGroup('playerStrums', i, 'x', _G['defaultOpponentStrumX'..i]);
+	if not middlescroll then
+		for i = 0,getProperty('playerStrums.length') - 1 do
+			setPropertyFromGroup('playerStrums', i, 'x', _G['defaultOpponentStrumX'..i]);
+		end
 	end
 	for i = 0,getProperty('opponentStrums.length') - 1 do
 		setPropertyFromGroup('opponentStrums', i, 'x', 5000);

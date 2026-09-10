@@ -22,17 +22,21 @@ end
 
 function onCreatePost()
     -- swap strum positions
-	for i = 0,getProperty('playerStrums.length') - 1 do
-		setPropertyFromGroup('playerStrums', i, 'x', _G['defaultOpponentStrumX'..i]);
-	end
-	for i = 0,getProperty('opponentStrums.length') - 1 do
-		setPropertyFromGroup('opponentStrums', i, 'x', _G['defaultPlayerStrumX'..i]);
-	end
+    if not middlescroll then
+        for i = 0,getProperty('playerStrums.length') - 1 do
+            setPropertyFromGroup('playerStrums', i, 'x', _G['defaultOpponentStrumX'..i]);
+        end
+        for i = 0,getProperty('opponentStrums.length') - 1 do
+            setPropertyFromGroup('opponentStrums', i, 'x', _G['defaultPlayerStrumX'..i]);
+        end
+    end
 
     -- Hide opponent strums off screen somewhere
-	for i = 0,getProperty('opponentStrums.length') - 1 do
-		setPropertyFromGroup('opponentStrums', i, 'x', -5000);
-	end
+    if playsAsBF() then
+        for i = 0,getProperty('opponentStrums.length') - 1 do
+            setPropertyFromGroup('opponentStrums', i, 'x', -5000);
+        end
+    end
     
     setProperty('camZooming', true);
 end
