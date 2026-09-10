@@ -1,1 +1,1 @@
-http://files.felixband.nl/fnf/Psych-LullabyV2.zip
+https://github.com/FelixBand/Psych-LullabyV2/archive/refs/heads/main.zip
