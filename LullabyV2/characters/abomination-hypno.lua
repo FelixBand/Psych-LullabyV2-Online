@@ -25,11 +25,11 @@ local winningFPS = 24
 --   health > opponentLosingHealth = losing
 --   health < opponentWinningHealth = winning
 
-local playerLosingHealth = 0.5
-local playerWinningHealth = 1.5
+local playerLosingHealth = 0.4
+local playerWinningHealth = 1.6
 
-local opponentLosingHealth = 1.5
-local opponentWinningHealth = 0.5
+local opponentLosingHealth = 1.6
+local opponentWinningHealth = 0.4
 
 
 --==================================================
