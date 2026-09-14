@@ -18,7 +18,7 @@ function onCreatePost()
         end
     end
     setProperty('iconP2.alpha', 0.0001);
-    setProperty('dad.alpha', 0.0001);
+    setProperty('dadGroup.alpha', 0.0001);
 end
 
 function onEvent(name, value1, value2)
@@ -29,7 +29,7 @@ function onEvent(name, value1, value2)
             runTimer('bfSlide', 0.86)
         end,
         ['Shitno Laugh'] = function()
-            setProperty('dad.alpha', getProperty('dad.alpha') + 0.15)
+            setProperty('dadGroup.alpha', getProperty('dadGroup.alpha') + 0.15)
             setProperty('ground.alpha', getProperty('ground.alpha') + 0.15)
             setProperty('iconP2.alpha', 1)
         end,

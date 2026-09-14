@@ -42,7 +42,7 @@ function onCreate()
 end
 
 function onCreatePost()
-    setProperty('boyfriend.visible', false);
+    setProperty('boyfriendGroup.visible', false);
     setProperty('gfGroup.visible', false);
     setProperty('camHUD.alpha', 0.0001);
 
