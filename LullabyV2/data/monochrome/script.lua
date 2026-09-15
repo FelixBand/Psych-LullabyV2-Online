@@ -12,7 +12,7 @@ end
 function onTimerCompleted(tag)
     if tag == 'startsong' then
         startCountdown()
-        setProperty('dad.visible', true);
+        setProperty('dadGroup.visible', true);
         characterPlayAnim('dad', 'fadeIn', true);
         if playsAsBF() then
             for i = 0,getProperty('opponentStrums.length') - 1 do
@@ -24,17 +24,17 @@ end
 
 function onCreate()
     setProperty('skipCountdown', true);
-    setProperty('dad.visible', false);
+    setProperty('dadGroup.visible', false);
 
     addCharacterToList('gold-headless', 'dad');
 
-    makeAnimatedLuaSprite('no more', 'characters/gold/GOLD_NO_MORE', getProperty('dad.x') - 64, getProperty('dad.y') - 111);
+    makeAnimatedLuaSprite('no more', 'characters/gold/GOLD_NO_MORE', getProperty('dadGroup.x') - 64, getProperty('dadGroup.y') - 111);
     addAnimationByPrefix('no more', 'idle', 'No More instance 1', 24, false);
     setProperty('no more.alpha', 0);
     scaleObject('no more', 1.3, 1.3);
     addLuaSprite('no more');
 
-    makeAnimatedLuaSprite('headrip', 'characters/gold/GOLD_HEAD_RIPPING_OFF', getProperty('dad.x') - 151, getProperty('dad.y') - 251);
+    makeAnimatedLuaSprite('headrip', 'characters/gold/GOLD_HEAD_RIPPING_OFF', getProperty('dadGroup.x') - 151, getProperty('dadGroup.y') - 251);
     addAnimationByPrefix('headrip', 'idle', 'Head rips_OneLayer instance 1', 24, false);
     setProperty('headrip.alpha', 0);
     scaleObject('headrip', 1.3, 1.3);
@@ -52,17 +52,17 @@ end
 
 function onStepHit()
     if curStep == 1605 then
-        setProperty('dad.visible', false);
+        setProperty('dadGroup.visible', false);
         setProperty('no more.alpha', 1);
-        objectPlayAnimation('no more', 'idle', true);
+        playAnim('no more', 'idle', true);
     elseif curStep == 1632 then
         removeLuaSprite('no more', true);
         setProperty('headrip.alpha', 1);
-        objectPlayAnimation('headrip', 'idle', true);
+        playAnim('headrip', 'idle', true);
     elseif curStep == 1664 then
         removeLuaSprite('headrip', true);
         triggerEvent('Change Character', 'dad', 'gold-headless');
-        setProperty('dad.visible', true);
+        setProperty('dadGroup.visible', true);
         setProperty('defaultCamZoom', 0.7);
     end
 end

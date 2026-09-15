@@ -92,7 +92,8 @@ function onEvent(name, value1, value2)
 
 		setProperty('boyfriend.color', 0xFFFFFFF);
 		setProperty('dad.color', 0xFFFFFFF);
-	elseif name == 'Amusia Background Change' then
+	end
+	if name == 'Amusia Background Change' then
 		removeLuaSprite('background', true);
 		setProperty('background2.alpha', 1);
 	end
