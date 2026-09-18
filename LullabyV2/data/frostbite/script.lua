@@ -87,10 +87,12 @@ function onCreate()
 
     -- healthbar flipping
 	setProperty('healthBar.flipX', true)
+
+    --addLuaSprite('freakachuJumpscare');
 end
 
 function onBeatHit()
-    if curBeat % 2 == 0 and getProperty('typhlosion.animation.curAnim.finished') == true then
+    if curBeat % 2 == 0 and getProperty('typhlosion.animation.curAnim.finished') then
         playAnim('typhlosion', 'idle', true);
     end
     if curBeat % 2 == 0 then
@@ -137,19 +139,29 @@ function onCreatePost()
                 new ShaderFilter(pincushionShader),
                 new ShaderFilter(chromaticShader)
             ]);
-            game.camOther.setFilters([new ShaderFilter(chromaticShader)]);
+            game.camOther.setFilters([
+                new ShaderFilter(pincushionShader),
+                new ShaderFilter(chromaticShader)
+            ]);
         ]]);
     end
 end
 
-local xx2 = 700;
+local xx2 = 700; -- defaults for defaultCamZoom = 0.8
 local yy2 = 820;
 local ofs = 20;
 local followchars = true;
 
 local timeValue = nil;
 function onUpdate(elapsed)
-    if followchars == true then -- camfollow script
+    --debugPrint(coldness)
+    xx2 = 700 + (580 - 700) * (getProperty('defaultCamZoom') - 0.8) / 0.2
+    yy2 = 820 + (920 - 820) * (getProperty('defaultCamZoom') - 0.8) / 0.2
+
+    -- coldness goes up to 80
+    setProperty('defaultCamZoom', 0.8 + ((coldness * 1.25) / 500))
+
+    if followchars then -- camfollow script
         if getProperty('boyfriend.animation.curAnim.name') == 'singLEFT' then
             triggerEvent('Camera Follow Pos',xx2-ofs,yy2);
         elseif getProperty('boyfriend.animation.curAnim.name') == 'singRIGHT' then
@@ -166,8 +178,13 @@ function onUpdate(elapsed)
     if shadersEnabled then
         timeValue = getSongPosition() / (stepCrochet * 8);
         chromaticAmount = getProperty('chromaticController.x');
-        setShaderFloat('pincushionController', 'distort', chromaticAmount / 3);
-        setShaderFloat('chromaticController', 'amount', chromaticAmount * 10);
+        if curBeat > 343 then -- hack fix to make the effects on the last jumpscare look good
+            setShaderFloat('pincushionController', 'distort', chromaticAmount / 15);
+            setShaderFloat('chromaticController', 'amount', chromaticAmount * 1);
+        else
+            setShaderFloat('pincushionController', 'distort', chromaticAmount / 3);
+            setShaderFloat('chromaticController', 'amount', chromaticAmount * 10);
+        end
         setShaderFloat('snowfallController', 'time', timeValue);
         setShaderFloat('snowfallController', 'intensity', getProperty('snowfallController.y'));
         setShaderInt('snowfallController', 'amount', getProperty('snowfallController.x'));
@@ -321,8 +338,8 @@ function onTimerCompleted(tag, loops, loopsLeft)
     if tag == 'jumpscare' then
         addLuaSprite('freakachuJumpscare');
         if shadersEnabled then
-            triggerEvent('Chromatic Riser', '50', '0');
-            triggerEvent('Chromatic Riser', '0', tostring(500 / stepCrochet));
+            triggerEvent('Chromatic Riser', '1', '0');
+            triggerEvent('Chromatic Riser', '0', tostring(400 / stepCrochet));
         end
         cameraShake('other', 0.008, 3.08);
     end
