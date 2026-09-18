@@ -300,7 +300,6 @@ function onEvent(name, value1, value2)
         setProperty('freakachu.alpha', 1);
         playAnim('freakachu', 'idle', true);
         removeLuaSprite('summonFreak', true);
-        playAnim('iconOpponent', 'dying', true);
     end
     if name == 'Frostbite End' then
         inCutscene = true;
