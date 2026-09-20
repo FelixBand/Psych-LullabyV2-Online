@@ -118,11 +118,11 @@ function onCreatePost()
 
     if shadersEnabled then
         runHaxeCode([[
-            game.initLuaShader('custom/pincushion');
+            game.initLuaShader('pincushion');
             game.initLuaShader('custom/chromaticAberration');
             game.initLuaShader('snowfall');
 
-            var pincushionShader = game.createRuntimeShader('custom/pincushion');
+            var pincushionShader = game.createRuntimeShader('pincushion');
             var chromaticShader = game.createRuntimeShader('custom/chromaticAberration');
             var snowfallShader = game.createRuntimeShader('snowfall');
 

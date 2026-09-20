@@ -6,6 +6,8 @@
 uniform float time = 0.0;
 uniform float prob = 0.0;
 uniform float distort = 0.0;
+uniform float amount = 4;
+#define texture flixel_texture2D
 
 float _round(float n) {
     return floor(n + .5);
@@ -211,6 +213,10 @@ vec2 pincushionDistortion(in vec2 uv, float strength) {
     return 0.5 + vec2(sin(uvA), cos(uvA)) * sqrt(uvD) * (1.0 - strength * uvD);
 }
 
+vec2 uv = openfl_TextureCoordv.xy;
+vec2 pixel = uv*openfl_TextureSize.xy;
+vec2 size = openfl_TextureSize;
+
 void main() {
     // time = mod(time, 1.);
     float alpha = openfl_Alphav;
@@ -220,6 +226,6 @@ void main() {
     glitchStatic(p);
 
     vec3 color = texture2D(bitmap, p).rgb;
-    gl_FragColor = vec4(color.r * alpha, color.g * alpha, color.b * alpha, 1.0);
+    gl_FragColor = vec4(color, texture2D(bitmap, p).a);
 }
 

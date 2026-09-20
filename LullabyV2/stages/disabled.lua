@@ -60,7 +60,7 @@ function onCreate()
             game.initLuaShader('custom/pincushion');
             game.initLuaShader('custom/chromaticAberration');
 
-            var pincushionShader = game.createRuntimeShader('custom/pincushion');
+            var pincushionShader = game.createRuntimeShader('pincushion');
             var chromaticShader = game.createRuntimeShader('custom/chromaticAberration');
 
             game.getLuaObject('pincushionController').shader = pincushionShader;
