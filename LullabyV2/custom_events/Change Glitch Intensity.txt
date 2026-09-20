@@ -1,0 +1,2 @@
+Value 1 = Probability
+Value 2 = Intensity
