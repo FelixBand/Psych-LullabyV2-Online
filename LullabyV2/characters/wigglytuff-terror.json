@@ -140,7 +140,7 @@
 	"no_antialiasing": false,
 	"image": "characters/disabled/WigglesTerrorUneashed",
 	"position": [
-		-329,
+		-335,
 		277
 	],
 	"speaker": null,
@@ -153,7 +153,7 @@
 	],
 	"camera_position": [
 		20,
-		200
+		220
 	],
 	"sing_duration": 4,
 	"dead_character": null,
