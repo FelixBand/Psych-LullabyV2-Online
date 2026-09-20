@@ -207,6 +207,19 @@ function onStepHit()
 		doTweenX('bfIn', 'boyfriendGroup', getProperty('boyfriend.x') + screenWidth, (stepCrochet / 1000) * 12, 'circInOut')
 	end
 
+	if curStep == 272 then
+		doTweenAlpha('staticIn', 'static', 0.25, 0.5, 'linear')
+		doTweenAlpha('camOut', 'camGame', 0.5, 0.5, 'linear')
+	end
+	if curStep == 280 then
+		setProperty('camGame.alpha', 1)
+		setProperty('static.alpha', 0)
+		doTweenAlpha('staticIn', 'static', 0.25, 0.5, 'linear')
+	end
+	if curStep == 288 then
+		doTweenAlpha('staticOut', 'static', 0, 0.5, 'linear')
+	end
+
 	if curStep == 538 then
 		doTweenAlpha('staticIn', 'static', 0.25, 0.5, 'linear')
 		doTweenAlpha('camOut', 'camGame', 0.5, 0.5, 'linear')
@@ -255,7 +268,7 @@ function onStepHit()
 	if curStep == 809 then
 		triggerEvent('Camera Follow Pos', '', '')
 		doTweenX('chromUp', 'chromaticController', 10, 0.677, 'cubeIn')
-		doTweenX('pincUp', 'pincushionController', 0.5, 0.677, 'cubeIn')
+		doTweenX('pincUp', 'pincushionController', 0.6, 0.677, 'cubeIn')
     end
 end
 
