@@ -44,10 +44,10 @@ end
 function onStepHit()
 	if curStep == 588 then
 		doTweenAlpha('picture', 'bygoneFuck', 1, 6, 'linear');
-	elseif curStep == 633 then
+	elseif curStep == 632 then
 		setProperty('boyfriend.alpha', 0);
+	elseif curStep == 633 then
 		setProperty('health', 1);
-		removeLuaSprite('iconPlayer', true);
 		setProperty('iconP1.visible', true);
 		doTweenAlpha('picture', 'bygoneFuck', 0, 10, 'linear');
 		doTweenAlpha('bgTrans1', 'bigHypno', 1, 10, 'linear');
