@@ -137,6 +137,7 @@ end
 
 function singDirection(direction)
 	callOnLuas('follow', {direction, false, nil})
+	setProperty('vocals.volume', 1)
 	if direction == 0 then
 		triggerEvent('Play Animation', 'singLEFT', 'dad')
 	elseif direction == 1 then
@@ -176,17 +177,25 @@ function onEvent(name, value1, value2)
 end
 
 function onMoveCamera(focus)
-	if focus == 'boyfriend' then
-		setProperty('defaultCamZoom', 1.3)
-	elseif focus == 'dad' then
-		if dadName == 'wigglytuff' then
-			setProperty('defaultCamZoom', 1.1)
-		elseif dadName == 'wigglytuff-decay1' then
-			setProperty('defaultCamZoom', 1.125)
-		elseif dadName == 'wigglytuff-decay2' then
+	if curStep < 791 then
+		if focus == 'boyfriend' then
+			setProperty('defaultCamZoom', 1.3)
+		elseif focus == 'dad' then
+			if dadName == 'wigglytuff' then
+				setProperty('defaultCamZoom', 1.1)
+			elseif dadName == 'wigglytuff-decay1' then
+				setProperty('defaultCamZoom', 1.125)
+			elseif dadName == 'wigglytuff-decay2' then
+				setProperty('defaultCamZoom', 1.15)
+			elseif dadName == 'wigglytuff-stare' then
+				setProperty('defaultCamZoom', 1.175)
+			end
+		end
+	else
+		if focus == 'boyfriend' then
 			setProperty('defaultCamZoom', 1.15)
-		elseif dadName == 'wigglytuff-stare' then
-			setProperty('defaultCamZoom', 1.175)
+		elseif focus == 'dad' then
+			setProperty('defaultCamZoom', 1.25)
 		end
 	end
 end
@@ -200,8 +209,63 @@ function onStepHit()
 
 	if curStep == 538 then
 		doTweenAlpha('staticIn', 'static', 0.25, 0.5, 'linear')
+		doTweenAlpha('camOut', 'camGame', 0.5, 0.5, 'linear')
 	end
 	if curStep == 544 then
 		doTweenAlpha('staticOut', 'static', 0.05, 0.1, 'linear')
+		doTweenAlpha('camIn', 'camGame', 1, 0.1, 'linear')
+	end
+
+	if curStep == 728 then
+        doTweenX('chromUp', 'chromaticController', 15, 0.677, 'cubeIn')
+		doTweenX('pincUp', 'pincushionController', 0.5, 0.677, 'cubeIn')
+        doTweenAlpha('staticIn', 'static', 0.25, 0.5, 'linear')
+    end
+    if curStep == 736 then
+        cancelTween('chromUp')
+        setProperty('chromaticController.x', 0)
+		setProperty('pincushionController.x', 0)
+		doTweenAlpha('staticOut', 'static', 0.05, 0.1, 'linear')
+    end
+
+	if curStep == 791 then
+        doTweenX('dadSlideRight', 'dadGroup', getProperty('dadGroup.x') + 1000, 0.75, 'circIn')
+		doTweenX('bfSlideLeft', 'boyfriendGroup', getProperty('boyfriend.x') - 1000, 0.75, 'circIn')
+
+		doTweenX('plateLright', 'plateL', getProperty('plateL.x') + 1000, 0.75, 'circIn')
+		doTweenX('plateRleft', 'plateR', getProperty('plateR.x') - 1000, 0.75, 'circIn')
+
+		triggerEvent('Camera Follow Pos', '1150', '1100')
+    end
+	if curStep == 804 then
+		setProperty('dadGroup.x', 160)
+		setProperty('dadGroup.y', 482)
+
+		setProperty('boyfriendGroup.x', 1540)
+		setProperty('boyfriendGroup.y', 680)
+
+        doTweenX('dadSlideBack', 'dadGroup', getProperty('dadGroup.x') + 1000, 0.75, 'quartOut')
+		doTweenX('bfSlideBack', 'boyfriendGroup', getProperty('boyfriendGroup.x') - 1000, 0.75, 'quartOut')
+
+		doTweenX('plateLback', 'plateL', getProperty('plateL.x') - 1000, 0.75, 'quartOut')
+		doTweenX('plateRback', 'plateR', getProperty('plateR.x') + 1000, 0.75, 'quartOut')
+
+		setProperty('healthBar.flipX', true)
+    end
+	if curStep == 809 then
+		triggerEvent('Camera Follow Pos', '', '')
+		doTweenX('chromUp', 'chromaticController', 10, 0.677, 'cubeIn')
+		doTweenX('pincUp', 'pincushionController', 0.5, 0.677, 'cubeIn')
+    end
+end
+
+function onUpdatePost()
+	if curStep >= 804 then
+		setProperty('iconP1.x',getProperty('healthBar.x') + ((getProperty('healthBar.width') *        getProperty('healthBar.percent') * 0.01) + (150 * getProperty('iconP1.scale.x') - 150) / 2 - 26) - 110)
+		setProperty('iconP1.origin.x',240)
+		setProperty('iconP1.flipX',true)
+		setProperty('iconP2.x',getProperty('healthBar.x') + ((getProperty('healthBar.width') * getProperty('healthBar.percent') * 0.01) - (150 * getProperty('iconP2.scale.x')) / 2 - 26 * 2) + 110)
+		setProperty('iconP2.origin.x',-100)
+		setProperty('iconP2.flipX',true)
 	end
 end

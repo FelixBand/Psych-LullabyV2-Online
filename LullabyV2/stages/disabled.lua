@@ -43,8 +43,8 @@ function onCreate()
     addLuaSprite('black')
 
     if shadersEnabled then
-        makeLuaSprite('pincushionController')
-        makeLuaSprite('chromaticController', '', 1);
+        makeLuaSprite('pincushionController', '', 0, 0)
+        makeLuaSprite('chromaticController', '', 0, 0);
 
         initLuaShader('vignetteGlitch')
         initLuaShader('pincushion')
@@ -53,21 +53,24 @@ function onCreate()
         setSpriteShader('background', 'pincushion')
 
         setShaderFloat('background', 'prob', 0.01)
+        setShaderFloat('background', 'distort', 1)
         setShaderFloat('background', 'vignetteIntensity', 0.01)
 
         runHaxeCode([[
+            game.initLuaShader('custom/pincushion');
             game.initLuaShader('custom/chromaticAberration');
 
+            var pincushionShader = game.createRuntimeShader('custom/pincushion');
             var chromaticShader = game.createRuntimeShader('custom/chromaticAberration');
 
+            game.getLuaObject('pincushionController').shader = pincushionShader;
             game.getLuaObject('chromaticController').shader = chromaticShader;
 
             game.camGame.setFilters([
-                new ShaderFilter(chromaticShader)
+                new ShaderFilter(pincushionShader),
+                new ShaderFilter(chromaticShader),
             ]);
         ]]);
-
-        setShaderFloat('chromaticController', 'amount', 0);
     end
 end
 
@@ -75,6 +78,8 @@ function onUpdate(elapsed)
     if shadersEnabled then
         setShaderFloat('background', 'time', os.clock())
     end
+    setShaderFloat('chromaticController', 'amount', getProperty('chromaticController.x'))
+    setShaderFloat('pincushionController', 'distort', getProperty('pincushionController.x'))
 end
 
 function onEvent(name, value1, value2)

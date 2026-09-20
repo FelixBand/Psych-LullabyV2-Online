@@ -1,0 +1,82 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": true,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "idle"
+		},
+		{
+			"offsets": [
+				62,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "left"
+		},
+		{
+			"offsets": [
+				-6,
+				5
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "up"
+		},
+		{
+			"offsets": [
+				-16,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "right"
+		},
+		{
+			"offsets": [
+				1,
+				-32
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "down"
+		}
+	],
+	"vocals_file": null,
+	"results_character": null,
+	"no_antialiasing": false,
+	"image": "characters/disabled/The_death_stare",
+	"position": [
+		40,
+		390
+	],
+	"speaker": null,
+	"healthicon": "wigglytuff-stare",
+	"flip_x": false,
+	"healthbar_colors": [
+		163,
+		103,
+		117
+	],
+	"camera_position": [
+		-320,
+		175
+	],
+	"sing_duration": 4,
+	"dead_character": null,
+	"scale": 0.6
+}

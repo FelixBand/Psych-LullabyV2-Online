@@ -380,6 +380,36 @@
 						"wigglytuff-stare"
 					]
 				]
+			],
+			[
+				66666.6666666667,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-perspective"
+					]
+				]
+			],
+			[
+				66666.6666666667,
+				[
+					[
+						"Change Character",
+						"bf",
+						"ponyta-perspective"
+					]
+				]
+			],
+			[
+				109333,
+				[
+					[
+						"Change Character",
+						"dad",
+						"wigglytuff-terror"
+					]
+				]
 			]
 		]
 	}

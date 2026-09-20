@@ -1,0 +1,161 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "WigglesTerror",
+			"indices": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14
+			]
+		},
+		{
+			"loop": false,
+			"offsets": [
+				45,
+				-1
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "WigglesTerror",
+			"indices": [
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29
+			]
+		},
+		{
+			"loop": false,
+			"offsets": [
+				7,
+				16
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "WigglesTerror",
+			"indices": [
+				30,
+				31,
+				32,
+				33,
+				34,
+				35,
+				36,
+				37,
+				38,
+				39,
+				40,
+				41,
+				42,
+				43,
+				44
+			]
+		},
+		{
+			"loop": false,
+			"offsets": [
+				29,
+				-4
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "WigglesTerror",
+			"indices": [
+				45,
+				46,
+				47,
+				48,
+				49,
+				50,
+				51,
+				52,
+				53,
+				54,
+				55,
+				56,
+				57,
+				58,
+				59
+			]
+		},
+		{
+			"loop": false,
+			"offsets": [
+				2,
+				-49
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "WigglesTerror",
+			"indices": [
+				60,
+				61,
+				62,
+				63,
+				64,
+				65,
+				66,
+				67,
+				68,
+				69,
+				70,
+				71,
+				72,
+				73
+			]
+		}
+	],
+	"vocals_file": null,
+	"results_character": null,
+	"no_antialiasing": false,
+	"image": "characters/disabled/WigglesTerrorUneashed",
+	"position": [
+		-329,
+		277
+	],
+	"speaker": null,
+	"healthicon": "wigglytuff-stare",
+	"flip_x": false,
+	"healthbar_colors": [
+		163,
+		103,
+		117
+	],
+	"camera_position": [
+		20,
+		200
+	],
+	"sing_duration": 4,
+	"dead_character": null,
+	"scale": 0.6
+}
