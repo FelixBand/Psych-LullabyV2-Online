@@ -24,25 +24,22 @@ function onCreate()
 	setProperty('cameraSpeed', 100)
 	setProperty('camHUD.alpha', 0.0001)
 
-	for i = 0, getProperty('unspawnNotes.length')-1 do
+	for i = 0, getProperty('unspawnNotes.length') - 1 do
 		table.insert(strumTimes, getPropertyFromGroup('unspawnNotes', i, 'strumTime'))
 		table.insert(mustPresses, getPropertyFromGroup('unspawnNotes', i, 'mustPress'))
 		table.insert(noteDatas, getPropertyFromGroup('unspawnNotes', i, 'noteData'))
-		if getPropertyFromGroup('unspawnNotes', i, 'mustPress') == false then			
+
+		-- Only ignore opponent notes when playing as BF.
+		if playsAsBF() and getPropertyFromGroup('unspawnNotes', i, 'mustPress') == false then
 			setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', true)
 		end
 	end
-
-	makeAnimatedLuaSprite('amusiaStatic', 'stages/disabled/images/static', -2, -2)
-	setObjectCamera('amusiaStatic', 'other')
-	scaleObject('amusiaStatic', 1.35, 1.35)
-	addAnimationByPrefix('amusiaStatic', 'idle', 'static', 24, true)
-	setProperty('amusiaStatic.alpha', 0.001)
-	addLuaSprite('amusiaStatic', true)
 end
 
 function onCreatePost()
-	for i = 0, 3 do
+	local strumCount = getProperty('opponentStrums.length')
+
+	for i = 0, strumCount - 1 do
 		strumBaseX[i] = getPropertyFromGroup('opponentStrums', i, 'x')
 		strumBaseY[i] = getPropertyFromGroup('opponentStrums', i, 'y')
 	end
@@ -55,19 +52,20 @@ function onSongStart()
 	setProperty('dad.color', 0xFFFF0000)
 end
 
-whichNote = 1
-
 function onUpdate(elapsed)
-	if whichNote <= #strumTimes and getSongPosition() > strumTimes[whichNote] then
-		if mustPresses[whichNote] == false then	
-			singDirection(noteDatas[whichNote])
+	-- Only manually process opponent notes when playing as BF.
+	if playsAsBF() then
+		if whichNote <= #strumTimes and getSongPosition() > strumTimes[whichNote] then
+			if mustPresses[whichNote] == false then
+				singDirection(noteDatas[whichNote])
 
-			-- Start synchronized shake
-			strumShakeTime = strumShakeDuration
-			strumShakeActive = true
+				-- Start synchronized shake
+				strumShakeTime = strumShakeDuration
+				strumShakeActive = true
+			end
+
+			whichNote = whichNote + 1
 		end
-
-		whichNote = whichNote + 1
 	end
 
 	-- Synchronized opponent strum shake
@@ -78,17 +76,31 @@ function onUpdate(elapsed)
 			strumShakeTime = 0
 			strumShakeActive = false
 
-			-- Restore exact original positions
-			for i = 0, 3 do
-				setPropertyFromGroup('opponentStrums', i, 'x', strumBaseX[i])
-				setPropertyFromGroup('opponentStrums', i, 'y', strumBaseY[i])
+			local strumCount = getProperty('opponentStrums.length')
+
+			for i = 0, strumCount - 1 do
+				setPropertyFromGroup(
+					'opponentStrums',
+					i,
+					'x',
+					strumBaseX[i]
+				)
+
+				setPropertyFromGroup(
+					'opponentStrums',
+					i,
+					'y',
+					strumBaseY[i]
+				)
 			end
 		else
 			-- One random offset shared by ALL strums
 			local shakeX = math.random(-3, 3)
 			local shakeY = math.random(-3, 3)
 
-			for i = 0, 3 do
+			local strumCount = getProperty('opponentStrums.length')
+
+			for i = 0, strumCount - 1 do
 				setPropertyFromGroup(
 					'opponentStrums',
 					i,
@@ -106,7 +118,6 @@ function onUpdate(elapsed)
 		end
 	end
 
-	-- Your existing note swapping
 	if notesSwapped then
 		for i = 0, getProperty('notes.length') - 1 do
 			local noteData = getPropertyFromGroup('notes', i, 'noteData')
@@ -135,17 +146,96 @@ function onUpdate(elapsed)
 	end
 end
 
-function singDirection(direction)
-	callOnLuas('follow', {direction, false, nil})
+function getSingAnimation(noteData)
+	local keyCount = getProperty('opponentStrums.length')
+
+	-- 4K
+	if keyCount == 4 then
+		local directions = {
+			'singLEFT',
+			'singDOWN',
+			'singUP',
+			'singRIGHT'
+		}
+
+		return directions[noteData + 1]
+	end
+
+	-- 5K
+	-- LEFT, DOWN, UP, UP, RIGHT
+	-- with the center lane being UP.
+	if keyCount == 5 then
+		local directions = {
+			'singLEFT',
+			'singDOWN',
+			'singUP',
+			'singUP',
+			'singRIGHT'
+		}
+
+		return directions[noteData + 1]
+	end
+
+	-- 6K
+	-- LEFT, DOWN, RIGHT, LEFT, UP, RIGHT
+	if keyCount == 6 then
+		local directions = {
+			'singLEFT',
+			'singDOWN',
+			'singRIGHT',
+			'singLEFT',
+			'singUP',
+			'singRIGHT'
+		}
+
+		return directions[noteData + 1]
+	end
+
+	-- Generic fallback for other key counts.
+	-- Odd key counts get UP in the center.
+	if keyCount % 2 == 1 then
+		local center = math.floor(keyCount / 2)
+
+		if noteData == center then
+			return 'singUP'
+		end
+
+		if noteData < center then
+			if noteData % 2 == 0 then
+				return 'singLEFT'
+			else
+				return 'singDOWN'
+			end
+		else
+			local distance = noteData - center
+
+			if distance % 2 == 1 then
+				return 'singRIGHT'
+			else
+				return 'singUP'
+			end
+		end
+	end
+
+	-- Generic fallback for even key counts.
+	local directions = {
+		'singLEFT',
+		'singDOWN',
+		'singRIGHT',
+		'singUP'
+	}
+
+	return directions[(noteData % #directions) + 1]
+end
+
+function singDirection(noteData)
+	callOnLuas('follow', {noteData, false, nil})
 	setProperty('vocals.volume', 1)
-	if direction == 0 then
-		triggerEvent('Play Animation', 'singLEFT', 'dad')
-	elseif direction == 1 then
-		triggerEvent('Play Animation', 'singDOWN', 'dad')
-	elseif direction == 2 then
-		triggerEvent('Play Animation', 'singUP', 'dad')
-	elseif direction == 3 then
-		triggerEvent('Play Animation', 'singRIGHT', 'dad')
+
+	local animation = getSingAnimation(noteData)
+
+	if animation ~= nil then
+		triggerEvent('Play Animation', animation, 'dad')
 	end
 end
 
@@ -161,13 +251,17 @@ function onEvent(name, value1, value2)
 			setProperty('defaultCamZoom', 1.175)
 		end
 	end
+
 	if name == 'Song Start' then
 		doTweenAlpha('hudIn', 'camHUD', 1, 0.5, 'linear')
 		removeLuaSprite('black', true)
+
 		setObjectCamera('white', 'other')
 		setProperty('white.x', 0)
 		setProperty('white.y', 0)
+
 		doTweenAlpha('whiteOut', 'white', 0, 1, 'linear')
+
 		setProperty('cameraSpeed', 1)
 		triggerEvent('Camera Follow Pos', nil, nil)
 
@@ -180,6 +274,7 @@ function onMoveCamera(focus)
 	if curStep < 791 then
 		if focus == 'boyfriend' then
 			setProperty('defaultCamZoom', 1.3)
+
 		elseif focus == 'dad' then
 			if dadName == 'wigglytuff' then
 				setProperty('defaultCamZoom', 1)
@@ -194,6 +289,7 @@ function onMoveCamera(focus)
 	else
 		if focus == 'boyfriend' then
 			setProperty('defaultCamZoom', 1.15)
+
 		elseif focus == 'dad' then
 			setProperty('defaultCamZoom', 1.25)
 		end
@@ -294,8 +390,8 @@ function onStepHit()
     end
 	if curStep == 2064 then
 		setProperty('background.visible', false)
-		doTweenAlpha('questionareIn', 'questionare', 1, 5, 'linear')
-		doTweenAlpha('wigglesIn', 'wigglesEnd', 1, 5, 'linear')
+		doTweenAlpha('questionareIn', 'questionare', 1, 3, 'linear')
+		doTweenAlpha('wigglesIn', 'wigglesEnd', 1, 3, 'linear')
     end
 	if curStep == 2103 then
 		doTweenAlpha('staticOut', 'static', 0, 1, 'linear')
