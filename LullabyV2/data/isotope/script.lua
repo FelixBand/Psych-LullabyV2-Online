@@ -83,7 +83,7 @@ function onStepHit()
 		setProperty('iconP2.visible', false);
 
 		for i = 0,getProperty('playerStrums.length') - 1 do
-            noteTweenAlpha('notetween' .. i, i + 4, 0, 3, 'quadInOut');
+            noteTweenAlpha('notetween' .. i, i + getProperty('playerStrums.length'), 0, 3, 'quadInOut');
         end
 	elseif curStep == 1997 then
 		removeLuaSprite('legacyCutscene', true);
