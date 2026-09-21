@@ -3,6 +3,13 @@ local dir = 'stages/disabled/images/'
 function onCreate()
     setProperty('skipCountdown', true)
 
+    makeAnimatedLuaSprite('redStatic', dir .. 'static-overlay', -3, -3)
+    addAnimationByPrefix('redStatic', 'idle', 'static-overlay', 8, true)
+    scaleObject('redStatic', 1.35, 1.35)
+    setObjectCamera('redStatic', 'other')
+    setProperty('redStatic.alpha', 0.0001)
+    addLuaSprite('redStatic')
+    
     makeAnimatedLuaSprite('static', dir .. 'static', -3, -3)
     addAnimationByPrefix('static', 'idle', 'static', 8, true)
     scaleObject('static', 1.35, 1.35)
@@ -10,12 +17,6 @@ function onCreate()
     setProperty('static.alpha', 0.0001)
     addLuaSprite('static')
 
-    makeAnimatedLuaSprite('redStatic', dir .. 'static-overlay', -3, -3)
-    addAnimationByPrefix('redStatic', 'idle', 'static-overlay', 8, true)
-    scaleObject('redStatic', 1.35, 1.35)
-    setObjectCamera('redStatic', 'other')
-    setProperty('redStatic.alpha', 0.0001)
-    addLuaSprite('redStatic')
 
     makeLuaSprite('background', dir .. 'background', 0, 200)
     scaleObject('background', 1.5, 1.5)

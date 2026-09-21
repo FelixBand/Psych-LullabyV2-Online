@@ -182,7 +182,7 @@ function onMoveCamera(focus)
 			setProperty('defaultCamZoom', 1.3)
 		elseif focus == 'dad' then
 			if dadName == 'wigglytuff' then
-				setProperty('defaultCamZoom', 1.1)
+				setProperty('defaultCamZoom', 1)
 			elseif dadName == 'wigglytuff-decay1' then
 				setProperty('defaultCamZoom', 1.125)
 			elseif dadName == 'wigglytuff-decay2' then
@@ -209,10 +209,10 @@ function onStepHit()
 
 	if curStep == 272 then
 		doTweenAlpha('staticIn', 'static', 0.25, 0.5, 'linear')
-		doTweenAlpha('camOut', 'camGame', 0.5, 0.5, 'linear')
+		doTweenAlpha('redIn', 'redStatic', 0.25, 0.5, 'linear')
 	end
 	if curStep == 280 then
-		setProperty('camGame.alpha', 1)
+		doTweenAlpha('redOut', 'redStatic', 0, 0.1, 'linear')
 		setProperty('static.alpha', 0)
 		doTweenAlpha('staticIn', 'static', 0.25, 0.5, 'linear')
 	end
@@ -222,17 +222,18 @@ function onStepHit()
 
 	if curStep == 538 then
 		doTweenAlpha('staticIn', 'static', 0.25, 0.5, 'linear')
-		doTweenAlpha('camOut', 'camGame', 0.5, 0.5, 'linear')
+		doTweenAlpha('redIn', 'redStatic', 0.5, 0.5, 'linear')
 	end
 	if curStep == 544 then
 		doTweenAlpha('staticOut', 'static', 0.05, 0.1, 'linear')
-		doTweenAlpha('camIn', 'camGame', 1, 0.1, 'linear')
+		doTweenAlpha('redOut', 'redStatic', 0, 0.1, 'linear')
 	end
 
 	if curStep == 728 then
         doTweenX('chromUp', 'chromaticController', 15, 0.677, 'cubeIn')
 		doTweenX('pincUp', 'pincushionController', 0.5, 0.677, 'cubeIn')
         doTweenAlpha('staticIn', 'static', 0.25, 0.5, 'linear')
+		doTweenAlpha('redIn', 'redStatic', 0.25, 0.5, 'linear')
     end
     if curStep == 736 then
         cancelTween('chromUp')
@@ -248,7 +249,10 @@ function onStepHit()
 		doTweenX('plateLright', 'plateL', getProperty('plateL.x') + 1000, 0.75, 'circIn')
 		doTweenX('plateRleft', 'plateR', getProperty('plateR.x') - 1000, 0.75, 'circIn')
 
-		triggerEvent('Camera Follow Pos', '1150', '1100')
+		setShaderFloat('background', 'prob', 1)
+        setShaderFloat('background', 'vignetteIntensity', 1)
+
+		triggerEvent('Camera Follow Pos', '1050', '1150')
     end
 	if curStep == 804 then
 		setProperty('dadGroup.x', 160)
@@ -267,8 +271,32 @@ function onStepHit()
     end
 	if curStep == 809 then
 		triggerEvent('Camera Follow Pos', '', '')
-		doTweenX('chromUp', 'chromaticController', 10, 0.677, 'cubeIn')
-		doTweenX('pincUp', 'pincushionController', 0.6, 0.677, 'cubeIn')
+		doTweenX('chromUp', 'chromaticController', 15, 0.677, 'cubeIn')
+		doTweenX('pincUp', 'pincushionController', 0.3, 0.677, 'cubeIn')
+    end
+	if curStep == 1296 then
+		doTweenX('chromOff', 'chromaticController', 0, 0.677, 'cubeIn')
+		doTweenX('pincOff', 'pincushionController', 0, 0.677, 'cubeIn')
+		doTweenAlpha('redIn', 'redStatic', 0.75, 0.667, 'cubeIn')
+		doTweenAlpha('staticIn', 'static', 0.1, 0.667, 'linear')
+    end
+	if curStep == 1312 then
+		doTweenAlpha('redOut', 'redStatic', 0.25, 0.667, 'cubeIn')
+    end
+	if curStep == 2000 then
+		doTweenAlpha('redIn', 'redStatic', 0.75, 2, 'cubeIn')
+		doTweenAlpha('staticIn', 'static', 0.25, 1, 'cubeIn')
+    end
+	if curStep == 2052 then
+		doTweenAlpha('camOut', 'camGame', 0, 0.75, 'cubeIn')
+		doTweenAlpha('hudOut', 'camHUD', 0, 0.75, 'cubeIn')
+		doTweenAlpha('redOut', 'redStatic', 0, 2, 'cubeIn')
+    end
+	if curStep == 2064 then
+		doTweenAlpha('camIn', 'camGame', 1, 5, 'cubeIn')
+    end
+	if curStep == 2105 then
+		doTweenAlpha('staticOut', 'static', 0, 1, 'cubeIn')
     end
 end
 
