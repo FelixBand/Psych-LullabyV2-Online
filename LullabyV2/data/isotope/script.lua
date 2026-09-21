@@ -7,9 +7,30 @@ function onCreate()
 	scaleObject('legacyCutscene', 1.25, 1.25);
 	setProperty('legacyCutscene.alpha', 0.0001);
 	addLuaSprite('legacyCutscene');
+
+	makeLuaSprite('vignetteGlitchController', '', 0, 0)
+	runHaxeCode([[
+		game.initLuaShader('vignetteGlitch');
+
+		var vignetteGlitchShader = game.createRuntimeShader('vignetteGlitch');
+
+		game.getLuaObject('vignetteGlitchController').shader = vignetteGlitchShader;
+
+		game.camGame.setFilters([
+			new ShaderFilter(vignetteGlitchShader)
+		]);
+	]]);
+
+	setShaderFloat('vignetteGlitchController', 'prob', 0)
+    setShaderFloat('vignetteGlitchController', 'vignetteIntensity', 0)
 end
 
 function onUpdatePost()
+	setShaderFloat('vignetteGlitchController', 'time', os.clock())
+	if curSection >= 68 then
+		setShaderFloat('dad', 'amount', getProperty('chromaticController.x'))
+	end
+
     setProperty('iconP1.x',getProperty('healthBar.x') + ((getProperty('healthBar.width') *        getProperty('healthBar.percent') * 0.01) + (150 * getProperty('iconP1.scale.x') - 150) / 2 - 26) - 110)
     setProperty('iconP1.origin.x',240)
     setProperty('iconP1.flipX',true)
@@ -25,14 +46,19 @@ end
 
 function onEvent(name, value1, value2)
 	if name == 'Change Character' and value2 == 'glitchy-red-mad' then
-		triggerEvent('Red Aberration', '5', '1');
-		triggerEvent('MissingnoGlitchHell', 'true/true', '0.2');
+		makeLuaSprite('chromaticController', '', 0, 0);
+		initLuaShader('redAberration')
+		setSpriteShader('dad', 'redAberration')
+
+		setShaderFloat('vignetteGlitchController', 'prob', 0.75)
+    	setShaderFloat('vignetteGlitchController', 'vignetteIntensity', 0.75)
 	end
 end
 
 function onSectionHit()
-	if dadName == 'glitchy-red-mad' then
-		triggerEvent('Red Aberration', '3', '0');
+	if curSection >= 68 then
+		setProperty('chromaticController.x', 15)
+		doTweenX('chromDown', 'chromaticController', 0, 0.5, 'linear')
 	end
 end
 
@@ -41,7 +67,7 @@ function onStepHit()
 		setProperty('camGame.alpha', 0);
 		runTimer('doCamThing', 1);
 		runTimer('doSpeech', 1);
-		objectPlayAnimation('legacyCutscene', 'speech', true);
+		playAnim('legacyCutscene', 'speech', true);
 		setProperty('dadGroup.visible', false);
 		setProperty('boyfriendGroup.visible', false);
 		setProperty('girlTits.visible', false);
