@@ -275,8 +275,8 @@ function onStepHit()
 		doTweenX('pincUp', 'pincushionController', 0.3, 0.677, 'cubeIn')
     end
 	if curStep == 1296 then
-		doTweenX('chromOff', 'chromaticController', 0, 0.677, 'cubeIn')
-		doTweenX('pincOff', 'pincushionController', 0, 0.677, 'cubeIn')
+		doTweenX('chromOff', 'chromaticController', 0, 1, 'cubeIn')
+		doTweenX('pincOff', 'pincushionController', 0, 1, 'cubeIn')
 		doTweenAlpha('redIn', 'redStatic', 0.75, 0.667, 'cubeIn')
 		doTweenAlpha('staticIn', 'static', 0.1, 0.667, 'linear')
     end
@@ -293,10 +293,12 @@ function onStepHit()
 		doTweenAlpha('redOut', 'redStatic', 0, 2, 'cubeIn')
     end
 	if curStep == 2064 then
-		doTweenAlpha('camIn', 'camGame', 1, 5, 'cubeIn')
+		setProperty('background.visible', false)
+		doTweenAlpha('questionareIn', 'questionare', 1, 5, 'linear')
+		doTweenAlpha('wigglesIn', 'wigglesEnd', 1, 5, 'linear')
     end
-	if curStep == 2105 then
-		doTweenAlpha('staticOut', 'static', 0, 1, 'cubeIn')
+	if curStep == 2103 then
+		doTweenAlpha('staticOut', 'static', 0, 1, 'linear')
     end
 end
 

@@ -3,6 +3,22 @@ local dir = 'stages/disabled/images/'
 function onCreate()
     setProperty('skipCountdown', true)
 
+    makeLuaSprite('questionare', dir .. 'questionare', 0, 0)
+    setObjectCamera('questionare', 'other')
+    scaleObject('questionare', 0.25, 0.25)
+    screenCenter('questionare', 'xy')
+    setProperty('questionare.alpha', 0.0001)
+    addLuaSprite('questionare')
+
+    makeAnimatedLuaSprite('wigglesEnd', dir .. 'wiggles_questionare', 509, 230)
+    addAnimationByPrefix('wigglesEnd', 'idle', 'angry', 24, true)
+    addAnimationByPrefix('wigglesEnd', 'idle', 'Give me your sing', 24, true)
+    addAnimationByPrefix('wigglesEnd', 'idle', 'questionnaire idle', 24, true)
+    scaleObject('wigglesEnd', 1, 1)
+    setObjectCamera('wigglesEnd', 'other')
+    setProperty('wigglesEnd.alpha', 0.0001)
+    addLuaSprite('wigglesEnd')
+
     makeAnimatedLuaSprite('redStatic', dir .. 'static-overlay', -3, -3)
     addAnimationByPrefix('redStatic', 'idle', 'static-overlay', 8, true)
     scaleObject('redStatic', 1.35, 1.35)
@@ -16,7 +32,6 @@ function onCreate()
     setObjectCamera('static', 'other')
     setProperty('static.alpha', 0.0001)
     addLuaSprite('static')
-
 
     makeLuaSprite('background', dir .. 'background', 0, 200)
     scaleObject('background', 1.5, 1.5)
