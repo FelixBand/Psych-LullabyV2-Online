@@ -27,8 +27,8 @@ end
 function onSongStart()
 	setProperty('camZooming', true)
 	triggerEvent('Camera Follow Pos', 1150, 1100)
-	setProperty('boyfriend.color', 0xFFFF0000)
-	setProperty('dad.color', 0xFFFF0000)
+	setProperty('boyfriendGroup.color', 0xFFFF0000)
+	setProperty('dadGroup.color', 0xFFFF0000)
 end
 
 function onUpdate(elapsed)
@@ -219,8 +219,8 @@ function onEvent(name, value1, value2)
 		setProperty('cameraSpeed', 1)
 		triggerEvent('Camera Follow Pos', nil, nil)
 
-		setProperty('boyfriend.color', 0xFFFFFFF)
-		setProperty('dad.color', 0xFFFFFFF)
+		setProperty('boyfriendGroup.color', 0xFFFFFFF)
+		setProperty('dadGroup.color', 0xFFFFFFF)
 	end
 end
 
