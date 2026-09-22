@@ -41,6 +41,24 @@ function onCreate()
 	makeAnimatedLuaSprite('psyshockParticle', 'UI/base/hypno/Psyshock', 1250, 400);
 	addAnimationByPrefix('psyshockParticle', 'spark', 'Full Psyshock Particle', 24, false);
 	addLuaSprite('psyshockParticle');
+
+	-- tutorial & UI
+	makeAnimatedLuaSprite('tutorial', 'UI/base/hypno/Extras', 0, 0)
+	addAnimationByPrefix('tutorial', 'tap', 'Spacebar', 24, false)
+	setObjectCamera('tutorial', 'other')
+	screenCenter('tutorial', 'xy')
+	setProperty('tutorial.y', getProperty('tutorial.y') + 60)
+	setProperty('tutorial.alpha', 0.0001)
+	addLuaSprite('tutorial')
+
+	makeAnimatedLuaSprite('pendFeedback', 'UI/base/hypno/Extras', 0, 0)
+	addAnimationByPrefix('pendFeedback', 'nice', 'Checkmark', 24, false)
+	addAnimationByPrefix('pendFeedback', 'bad', 'X finished', 24, false)
+	setObjectCamera('pendFeedback', 'other')
+	screenCenter('pendFeedback', 'xy')
+	setProperty('pendFeedback.y', getProperty('pendFeedback.y') + 60)
+	setProperty('pendFeedback.alpha', 1)
+	addLuaSprite('pendFeedback')
 end
 
 function reset()
@@ -58,6 +76,9 @@ function onBeatHit()
 	if curBeat % swingTime == 0 then 
 		reset();
 	end
+	if curBeat % (swingTime / 2) == 0 then 
+		playAnim('tutorial', 'tap', true)
+	end
 end
 
 function onTweenCompleted(tag)
@@ -68,6 +89,7 @@ function onTweenCompleted(tag)
 		if canHit then
 			--when the player did not hit the pendulum
 			lose();
+			playAnim('pendFeedback', 'bad', true)
 		end
 		canHit = true;
 	elseif tag == 'pend2' then 
@@ -77,6 +99,7 @@ function onTweenCompleted(tag)
 		if canHit then
 			--when the player did not hit the pendulum
 			lose();
+			playAnim('pendFeedback', 'bad', true)
 		end
 		canHit = true;
 	end
@@ -104,6 +127,8 @@ function tranceSound()
 end
 
 function onSongStart()
+	doTweenAlpha('tutorialIn', 'tutorial', 1, 0.5, 'linear')
+	runTimer('tutorialFadeOut', (stepCrochet * 64) / 1000)
 	doTweenAngle('pend1', 'pendulum', getProperty('pendulum.angle') + 30, (stepCrochet / 1000) * 4, 'quadOut');
 	runTimer('psyshock', getRandomInt(5, 15));
 	playSound('TranceStatic', 0, 'trance');
@@ -119,6 +144,9 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		objectPlayAnimation('psyshockParticle', 'spark', true);
 		lose();
 	end
+	if tag == 'tutorialFadeOut' then
+		doTweenAlpha('tutorialOut', 'tutorial', 0, 0.5, 'linear')	
+	end
 end
 
 function onUpdate(elapsed)
@@ -133,8 +161,11 @@ function onUpdate(elapsed)
 			end
 			tranceSound();
 			canHit = false;
+
+			playAnim('pendFeedback', 'nice', true)
 		else
 			lose();
+			playAnim('pendFeedback', 'bad', true)
 			--debugPrint('bad timing, scrub');
 		end
 	end

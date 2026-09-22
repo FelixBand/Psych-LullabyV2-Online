@@ -41,6 +41,24 @@ function onCreate()
 	addAnimationByPrefix('psyshockParticle', 'spark', 'Full Psyshock Particle', 24, false)
 	addLuaSprite('psyshockParticle')
 
+	-- tutorial & UI
+	makeAnimatedLuaSprite('tutorial', 'UI/base/hypno/Extras', 0, 0)
+	addAnimationByPrefix('tutorial', 'tap', 'Spacebar', 24, false)
+	setObjectCamera('tutorial', 'other')
+	screenCenter('tutorial', 'xy')
+	setProperty('tutorial.y', getProperty('tutorial.y') + 60)
+	setProperty('tutorial.alpha', 0.0001)
+	addLuaSprite('tutorial')
+
+	makeAnimatedLuaSprite('pendFeedback', 'UI/base/hypno/Extras', 0, 0)
+	addAnimationByPrefix('pendFeedback', 'nice', 'Checkmark', 24, false)
+	addAnimationByPrefix('pendFeedback', 'bad', 'X finished', 24, false)
+	setObjectCamera('pendFeedback', 'other')
+	screenCenter('pendFeedback', 'xy')
+	setProperty('pendFeedback.y', getProperty('pendFeedback.y') + 60)
+	setProperty('pendFeedback.alpha', 1)
+	addLuaSprite('pendFeedback')
+
 	debugPrint(getProperty('dad.x') .. ' ' .. getProperty('dad.y'))
 end
 
@@ -59,6 +77,9 @@ function onBeatHit()
 	if curBeat % swingTime == 0 then 
 		reset()
 	end
+	if curBeat % (swingTime / 2) == 0 then 
+		playAnim('tutorial', 'tap', true)
+	end
 end
 
 function onTweenCompleted(tag)
@@ -68,6 +89,7 @@ function onTweenCompleted(tag)
 		doTweenAngle('pend2', 'pendulum', getProperty('pendulum.angle') - (40 + angleOff), (stepCrochet / 1000) * swingTime, 'quadIn')
 		if canHit then
 			--when the player did not hit the pendulum
+			playAnim('pendFeedback', 'bad', true)
 			lose()
 		end
 		canHit = true
@@ -77,6 +99,7 @@ function onTweenCompleted(tag)
 		doTweenAngle('pend0', 'pendulum', getProperty('pendulum.angle') + (40 + angleOff), (stepCrochet / 1000) * swingTime, 'quadIn')
 		if canHit then
 			--when the player did not hit the pendulum
+			playAnim('pendFeedback', 'bad', true)
 			lose()
 		end
 		canHit = true
@@ -105,6 +128,8 @@ function tranceSound()
 end
 
 function onSongStart()
+	doTweenAlpha('tutorialIn', 'tutorial', 1, 0.5, 'linear')
+	runTimer('tutorialFadeOut', (stepCrochet * 64) / 1000)
 	doTweenAngle('pend1', 'pendulum', getProperty('pendulum.angle') + (40 + angleOff), (stepCrochet / 1000) * 4, 'quadOut')
 	runTimer('psyshock', getRandomInt(5, 15))
 	playSound('TranceStatic', 0, 'trance')
@@ -122,6 +147,9 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		playAnim('psyshockParticle', 'spark', true)
 		triggerEvent('Play Animation', 'psyshock', 'dad')
 		lose()
+	end
+	if tag == 'tutorialFadeOut' then
+		doTweenAlpha('tutorialOut', 'tutorial', 0, 0.5, 'linear')	
 	end
 
 	if tag == 'next' then
@@ -306,8 +334,11 @@ function onUpdate(elapsed) -- Janky as fuck but works for me
 			end
 			tranceSound()
 			canHit = false
+
+			playAnim('pendFeedback', 'nice', true)
 		else
 			lose()
+			playAnim('pendFeedback', 'bad', true)
 			--debugPrint('bad timing, scrub')
 		end
 	end

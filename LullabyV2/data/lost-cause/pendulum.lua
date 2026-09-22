@@ -43,6 +43,16 @@ function onCreate()
 	makeAnimatedLuaSprite('psyshockParticle', 'UI/base/hypno/Psyshock', 1300, 0);
 	addAnimationByPrefix('psyshockParticle', 'spark', 'Full Psyshock Particle', 24, false);
 	addLuaSprite('psyshockParticle');
+
+	-- UI
+	makeAnimatedLuaSprite('pendFeedback', 'UI/base/hypno/Extras', 0, 0)
+	addAnimationByPrefix('pendFeedback', 'nice', 'Checkmark', 24, false)
+	addAnimationByPrefix('pendFeedback', 'bad', 'X finished', 24, false)
+	setObjectCamera('pendFeedback', 'other')
+	screenCenter('pendFeedback', 'xy')
+	setProperty('pendFeedback.y', getProperty('pendFeedback.y') + 60)
+	setProperty('pendFeedback.alpha', 1)
+	addLuaSprite('pendFeedback')
 end
 
 function reset()
@@ -74,6 +84,7 @@ function onTweenCompleted(tag)
 		if canHit then
 			--when the player did not hit the pendulum
 			lose();
+			playAnim('pendFeedback', 'bad', true)
 		end
 		canHit = true;
 	elseif tag == 'pend2' then 
@@ -83,6 +94,7 @@ function onTweenCompleted(tag)
 		if canHit then
 			--when the player did not hit the pendulum
 			lose();
+			playAnim('pendFeedback', 'bad', true)
 		end
 		canHit = true;
 	end
@@ -131,8 +143,10 @@ function onUpdate(elapsed)
 			end
 			tranceSound();
 			canHit = false;
+			playAnim('pendFeedback', 'nice', true)
 		else
 			lose();
+			playAnim('pendFeedback', 'bad', true)
 			--debugPrint('bad timing, scrub');
 		end
 	end
