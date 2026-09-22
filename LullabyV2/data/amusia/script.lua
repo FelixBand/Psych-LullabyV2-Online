@@ -63,8 +63,8 @@ function onUpdate(elapsed)
 			end
 		else
 			-- One shared random offset for ALL opponent strums.
-			local shakeX = getRandomInt(21, 25)
-			local shakeY = getRandomInt(21, 25)
+			local shakeX = getRandomInt(20, 26)
+			local shakeY = getRandomInt(20, 26)
 
 			for i = 0, strumCount - 1 do
 				setPropertyFromGroup('opponentStrums', i, 'offset.x', shakeX)
