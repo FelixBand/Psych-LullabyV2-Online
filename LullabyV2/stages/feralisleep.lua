@@ -52,11 +52,8 @@ function onBeatHit()
 end
 
 function onUpdate(elapsed)
-	if getProperty('inCutscene') then
-		fogTimer = fogTimer + elapsed * 1000;
-	elseif getSongPosition() >= 0 then
-		fogTimer = getSongPosition();
-	end
+	fogTimer = os.clock() * 1000;
+
 
 	for i = 1, #insomniaFog do
 		local zeroIndex = i - 1;
