@@ -4,6 +4,8 @@ local hitWindow = 12
 local angleOff = -9
 
 function onCreate()
+	debugPrint(songName)
+
 	makeAnimatedLuaSprite('pendulumTrail', 'UI/base/hypno/Pendelum', 0, 0)
 	addAnimationByPrefix('pendulumTrail', 'idle', 'Pendelum instance 1', 24, true)
 	objectPlayAnimation('pendulumTrail', 'idle')
@@ -356,7 +358,7 @@ end
 
 local playedNoise = false
 function onEndSong()
-	if not playedNoise and isStoryMode then
+	if songName == 'Safety Lullaby' and not playedNoise and isStoryMode then
 		playedNoise = true
 		stopSound('trance')
 		setProperty('camGame.visible', false)
