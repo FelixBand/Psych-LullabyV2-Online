@@ -1,92 +1,102 @@
-local playedNoise = false;
+local playedNoise = false
 function onStartCountdown()
     if not playedNoise then
-        playSound('ImDead' .. getRandomInt(1,7), 1);
-        runTimer('startsong', 3.5);
-        playedNoise = true;
-        return Function_Stop;
+        playSound('ImDead' .. getRandomInt(1,7), 1)
+        runTimer('startsong', 3.5)
+        playedNoise = true
+        return Function_Stop
     end
-    return Function_Continue;
+    return Function_Continue
 end
 
 function onTimerCompleted(tag)
     if tag == 'startsong' then
         startCountdown()
-        setProperty('dadGroup.visible', true);
-        characterPlayAnim('dad', 'fadeIn', true);
+        setProperty('dadGroup.visible', true)
+        characterPlayAnim('dad', 'fadeIn', true)
         if playsAsBF() then
             for i = 0,getProperty('opponentStrums.length') - 1 do
-                setPropertyFromGroup('opponentStrums', i, 'x', -5000);
+                setPropertyFromGroup('opponentStrums', i, 'x', -5000)
             end
         end
     end
 end
 
 function onCreate()
-    setProperty('skipCountdown', true);
-    setProperty('dadGroup.visible', false);
+    setProperty('skipCountdown', true)
+    setProperty('dadGroup.visible', false)
 
-    addCharacterToList('gold-headless', 'dad');
+    addCharacterToList('gold-headless', 'dad')
 
-    makeAnimatedLuaSprite('no more', 'characters/gold/GOLD_NO_MORE', getProperty('dadGroup.x') - 73, getProperty('dadGroup.y') - 112);
-    addAnimationByPrefix('no more', 'idle', 'No More instance 1', 24, false);
-    setProperty('no more.alpha', 0);
-    scaleObject('no more', 1.3, 1.3);
-    addLuaSprite('no more');
+    makeAnimatedLuaSprite('celebi', 'characters/gold/Celebi_Assets', 400, 200)
+    addAnimationByPrefix('celebi', 'idle', 'Celebi Spawn Full', 24, true)
+    --addLuaSprite('celebi')
 
-    makeAnimatedLuaSprite('headrip', 'characters/gold/GOLD_HEAD_RIPPING_OFF', getProperty('dadGroup.x') - 160, getProperty('dadGroup.y') - 252);
-    addAnimationByPrefix('headrip', 'idle', 'Head rips_OneLayer instance 1', 24, false);
-    setProperty('headrip.alpha', 0);
-    scaleObject('headrip', 1.3, 1.3);
-    addLuaSprite('headrip');
+    makeAnimatedLuaSprite('celebiNote', 'characters/gold/Note_asset', 600, 200)
+    addAnimationByIndices('celebiNote', 'idle', 'Note Full', '18', 1)
+    --addLuaSprite('celebiNote', true)
+
+    makeAnimatedLuaSprite('no more', 'characters/gold/GOLD_NO_MORE', getProperty('dadGroup.x') - 73, getProperty('dadGroup.y') - 112)
+    addAnimationByPrefix('no more', 'idle', 'No More instance 1', 24, false)
+    setProperty('no more.alpha', 0)
+    scaleObject('no more', 1.3, 1.3)
+    addLuaSprite('no more')
+
+    makeAnimatedLuaSprite('headrip', 'characters/gold/GOLD_HEAD_RIPPING_OFF', getProperty('dadGroup.x') - 160, getProperty('dadGroup.y') - 252)
+    addAnimationByPrefix('headrip', 'idle', 'Head rips_OneLayer instance 1', 24, false)
+    setProperty('headrip.alpha', 0)
+    scaleObject('headrip', 1.3, 1.3)
+    addLuaSprite('headrip')
 end
 
 function onCreatePost()
-    setProperty('boyfriendGroup.visible', false);
-    setProperty('gfGroup.visible', false);
-    setProperty('camHUD.alpha', 0.0001);
+    setProperty('boyfriendGroup.visible', false)
+    setProperty('gfGroup.visible', false)
+    setProperty('camHUD.alpha', 0.0001)
 
-    triggerEvent('Camera Follow Pos', '300', '370');
-    removeLuaScript('scripts/camFollow');
+    triggerEvent('Camera Follow Pos', '300', '370')
+    removeLuaScript('scripts/camFollow')
 end
 
 function onStepHit()
     if curStep == 1605 then
-        setProperty('dadGroup.visible', false);
-        setProperty('no more.alpha', 1);
-        playAnim('no more', 'idle', true);
+        setProperty('dadGroup.visible', false)
+        setProperty('no more.alpha', 1)
+        playAnim('no more', 'idle', true)
     elseif curStep == 1632 then
-        removeLuaSprite('no more', true);
-        setProperty('headrip.alpha', 1);
-        playAnim('headrip', 'idle', true);
+        removeLuaSprite('no more', true)
+        setProperty('headrip.alpha', 1)
+        playAnim('headrip', 'idle', true)
     elseif curStep == 1664 then
-        removeLuaSprite('headrip', true);
-        triggerEvent('Change Character', 'dad', 'gold-headless');
-        setProperty('dadGroup.visible', true);
-        setProperty('defaultCamZoom', 0.7);
+        removeLuaSprite('headrip', true)
+        triggerEvent('Change Character', 'dad', 'gold-headless')
+        setProperty('dadGroup.visible', true)
+        setProperty('defaultCamZoom', 0.7)
+    elseif curStep == 16 then
+        playAnim('celebi', 'spawn', true)
     end
 end
 
 --camfollow stuff
-local off = {20, 20}; -- x and y movement force
-local opponentNotes = false;
-local bfNotes = true; -- change this to false if you want to trigger when player notes
-local xy = {{-off[1], 0}, {0, off[2]}, {0, -off[2]}, {off[1], 0}}; -- table which has the applied movement force
+local off = {20, 20} -- x and y movement force
+local opponentNotes = false
+local bfNotes = true -- change this to false if you want to trigger when player notes
+local xy = {{-off[1], 0}, {0, off[2]}, {0, -off[2]}, {off[1], 0}} -- table which has the applied movement force
 
 function goodNoteHit(i, d, n, s)
     if bfNotes and mustHitSection then
-		resetCam(d);
+		resetCam(d)
 	end
 end
 
 function opponentNoteHit(i, d, n, s)
     if opponentNotes and not mustHitSection then
-		resetCam(d);
+		resetCam(d)
 	end
 end
 
 function resetCam(d)
-    runHaxeCode('game.moveCameraSection();');
-    setProperty('camFollow.x', 300 + xy[d+1][1]);
-    setProperty('camFollow.y', 370 + xy[d+1][2]);
+    runHaxeCode('game.moveCameraSection()')
+    setProperty('camFollow.x', 300 + xy[d+1][1])
+    setProperty('camFollow.y', 370 + xy[d+1][2])
 end
