@@ -47,7 +47,7 @@ function onCreatePost()
 		local strumTime = getPropertyFromGroup('unspawnNotes', i, 'strumTime')
 		local mustPress = getPropertyFromGroup('unspawnNotes', i, 'mustPress')
 
-		if mustPress and strumTime >= 85452 and strumTime <= 86728 then
+		if mustPress and strumTime >= 85029 and strumTime <= 87728 then
 			setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true)
 		end
 	end
