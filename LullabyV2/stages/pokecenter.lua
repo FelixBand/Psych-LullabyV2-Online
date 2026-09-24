@@ -60,7 +60,7 @@ function onCreate()
 	setProperty('charmanderShadow.color', 0xFFFF0000);
 	addLuaSprite('charmanderShadow')
 
-	makeLuaSprite('duskullShadow', dir .. '/characters/duskullEye', charPositions[1] + 625, charPositions[2] - 225)
+	makeLuaSprite('duskullShadow', dir .. '/characters/duskullEye', charPositions[1] + 625, charPositions[2] - 250)
 	setScrollFactor('duskullShadow', 0.98, 0.98)
 	setProperty('duskullShadow.alpha', 0.001)
 	setProperty('duskullShadow.color', 0xFFFF0000);
@@ -71,7 +71,6 @@ function onCreate()
 	setScrollFactor('chanseyShadow', 0.98, 0.98)
 	setProperty('chanseyShadow.alpha', 0.001)
 	setProperty('chanseyShadow.color', 0xFFFF0000);
-	addLuaSprite('chanseyShadow')
 
 	-- characters
 
@@ -81,7 +80,6 @@ function onCreate()
 	addAnimationByPrefix('misdreavous', 'idle', 'MISDREAVEOUS REA SHAKE', 24, true)
 	setScrollFactor('misdreavous', 0.98, 0.98)
 	setProperty('misdreavous.alpha', 0.001)
-	--setProperty('misdreavous.color', 0xFFFF0000);
 	addLuaSprite('misdreavous')
 
 	makeAnimatedLuaSprite('audinos', dir .. '/characters/Audinos ALT', charPositions[1], charPositions[2])
@@ -89,7 +87,6 @@ function onCreate()
 	scaleObject('audinos', 0.7, 0.7)
 	setScrollFactor('audinos', 0.98, 0.98)
 	setProperty('audinos.alpha', 0.001)
-	--setProperty('audinos.color', 0xFFFF0000);
 	addLuaSprite('audinos')
 
 	makeAnimatedLuaSprite('cubone', dir .. '/characters/CUBONE ALT', charPositions[1] + 225, charPositions[2] + 95)
@@ -97,7 +94,6 @@ function onCreate()
 	scaleObject('cubone', 0.6, 0.6)
 	setScrollFactor('cubone', 0.98, 0.98)
 	setProperty('cubone.alpha', 0.001)
-	--setProperty('cubone.color', 0xFFFF0000);
 	addLuaSprite('cubone')
 
 	makeAnimatedLuaSprite('charmander', dir .. '/characters/Charmander', charPositions[1] + 475, charPositions[2] + 50)
@@ -105,14 +101,12 @@ function onCreate()
 	scaleObject('charmander', 0.7, 0.7)
 	setScrollFactor('charmander', 0.98, 0.98)
 	setProperty('charmander.alpha', 0.001)
-	--setProperty('charmander.color', 0xFFFF0000);
 	addLuaSprite('charmander')
 
-	makeAnimatedLuaSprite('duskull', dir .. '/characters/DustskullBackground', charPositions[1] + 625, charPositions[2] - 225)
+	makeAnimatedLuaSprite('duskull', dir .. '/characters/DustskullBackground', charPositions[1] + 625, charPositions[2] - 250)
 	addAnimationByPrefix('duskull', 'idle', 'DUSTSKULLHELL', 24, true)
 	setScrollFactor('duskull', 0.98, 0.98)
 	setProperty('duskull.alpha', 0.001)
-	--setProperty('duskull.color', 0xFFFF0000);
 	addLuaSprite('duskull')
 
 	makeAnimatedLuaSprite('chansey', dir .. '/characters/Chansey', charPositions[1] + 575, charPositions[2] - 120)
@@ -120,7 +114,7 @@ function onCreate()
 	scaleObject('chansey', 0.9, 0.9)
 	setScrollFactor('chansey', 0.98, 0.98)
 	setProperty('chansey.alpha', 0.001)
-	--setProperty('chansey.color', 0xFFFF0000);
+	addLuaSprite('chanseyShadow')
 	addLuaSprite('chansey')
 
 	-- animated characters
