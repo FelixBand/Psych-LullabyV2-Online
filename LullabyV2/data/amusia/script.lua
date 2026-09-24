@@ -296,7 +296,7 @@ function onStepHit()
 	end
 
 	if curStep == 728 then
-		doTweenX('chromUp', 'chromaticController', 15, 0.677, 'cubeIn')
+		doTweenX('chromUp', 'chromaticController', 20, 0.677, 'cubeIn')
 		doTweenX('pincUp', 'pincushionController', 0.5, 0.677, 'cubeIn')
 		doTweenAlpha('staticIn', 'static', 0.25, 0.5, 'linear')
 		doTweenAlpha('redIn', 'redStatic', 0.25, 0.5, 'linear')
