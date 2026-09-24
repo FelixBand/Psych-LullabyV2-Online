@@ -304,6 +304,7 @@ function onStepHit()
 
 	if curStep == 736 then
 		cancelTween('chromUp')
+		cancelTween('pincUp')
 		setProperty('chromaticController.x', 0)
 		setProperty('pincushionController.x', 0)
 		doTweenAlpha('staticOut', 'static', 0.05, 0.1, 'linear')
