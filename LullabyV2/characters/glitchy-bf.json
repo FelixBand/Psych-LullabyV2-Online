@@ -1,111 +1,125 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				-5,
 				0
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "idle",
-			"loop": false,
-			"name": "Bf Idle Dance"
+			"fps": 24,
+			"name": "Bf Idle Dance",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-20,
 				-41
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singDOWN",
-			"loop": false,
-			"name": "boyfriend down"
+			"fps": 24,
+			"name": "boyfriend down",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				145,
 				-6
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singLEFT",
-			"loop": false,
-			"name": "boyfriend left"
+			"fps": 24,
+			"name": "boyfriend left",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-58,
 				43
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singRIGHT",
-			"loop": false,
-			"name": "boyfriend right"
+			"fps": 24,
+			"name": "boyfriend right",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				34,
 				97
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singUP",
-			"loop": false,
-			"name": "boyfriend up"
+			"fps": 24,
+			"name": "boyfriend up",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				181,
 				275
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singUPmiss",
-			"loop": false,
-			"name": "boyfriend u miss"
+			"fps": 24,
+			"name": "boyfriend u miss",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				5,
 				183
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singRIGHTmiss",
-			"loop": false,
-			"name": "boyfriend righ miss"
+			"fps": 24,
+			"name": "boyfriend righ miss",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				367,
 				169
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singLEFTmiss",
-			"loop": false,
-			"name": "boyfriend lef miss"
+			"fps": 24,
+			"name": "boyfriend lef miss",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				30,
 				111
 			],
+			"anim": "singDOWNmiss",
+			"fps": 24,
+			"name": "boyfriend dow miss",
+			"indices": []
+		},
+		{
+			"offsets": [
+				164,
+				76
+			],
 			"indices": [],
 			"fps": 24,
-			"anim": "singDOWNmiss",
+			"anim": "throw",
 			"loop": false,
-			"name": "boyfriend dow miss"
+			"name": "IsotopeBF throw"
 		}
 	],
+	"vocals_file": null,
+	"results_character": null,
 	"no_antialiasing": false,
 	"image": "characters/bf/Boyfriend_Isotope",
 	"position": [
 		0,
 		350
 	],
+	"speaker": null,
 	"healthicon": "bf",
 	"flip_x": true,
 	"healthbar_colors": [
@@ -118,5 +132,6 @@
 		-230
 	],
 	"sing_duration": 4,
+	"dead_character": null,
 	"scale": 1
 }

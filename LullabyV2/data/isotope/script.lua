@@ -42,6 +42,15 @@ end
 function onCreatePost()
 	setProperty('camZoomingMult', 0);
 	setProperty('healthBar.flipX', true)
+
+	for i = 0, getProperty('unspawnNotes.length') - 1 do -- allow bf's throw animation to play uninterrupted
+		local strumTime = getPropertyFromGroup('unspawnNotes', i, 'strumTime')
+		local mustPress = getPropertyFromGroup('unspawnNotes', i, 'mustPress')
+
+		if mustPress and strumTime >= 85452 and strumTime <= 86728 then
+			setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true)
+		end
+	end
 end
 
 function onEvent(name, value1, value2)

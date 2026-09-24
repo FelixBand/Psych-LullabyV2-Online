@@ -2,6 +2,16 @@
 	"song": {
 		"events": [
 			[
+				18670,
+				[
+					[
+						"Play Animation",
+						"joke",
+						"dad"
+					]
+				]
+			],
+			[
 				20345.7446808511,
 				[
 					[
@@ -72,6 +82,36 @@
 				]
 			],
 			[
+				85531,
+				[
+					[
+						"Play Animation",
+						"throw",
+						"bf"
+					]
+				]
+			],
+			[
+				86489,
+				[
+					[
+						"Play Animation",
+						"no",
+						"dad"
+					]
+				]
+			],
+			[
+				86489,
+				[
+					[
+						"Alt Idle Animation",
+						"dad",
+						"-disabled"
+					]
+				]
+			],
+			[
 				88005.3191489361,
 				[
 					[
@@ -128,6 +168,16 @@
 						"Change Character",
 						"dad",
 						"glitchy-red-mad"
+					]
+				]
+			],
+			[
+				86489,
+				[
+					[
+						"Alt Idle Animation",
+						"dad",
+						""
 					]
 				]
 			]

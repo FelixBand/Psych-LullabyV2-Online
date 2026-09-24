@@ -1,67 +1,92 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "idle",
-			"indices": [],
-			"name": "RedIdle"
+			"fps": 24,
+			"name": "RedIdle",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				87,
 				6
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "singLEFT",
-			"indices": [],
-			"name": "RedLeft"
+			"fps": 24,
+			"name": "RedLeft",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-45,
 				17
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "singRIGHT",
-			"indices": [],
-			"name": "RedRight"
+			"fps": 24,
+			"name": "RedRight",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				66,
 				23
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "singUP",
-			"indices": [],
-			"name": "RedUp"
+			"fps": 24,
+			"name": "RedUp",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				2,
 				-10
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "singDOWN",
+			"fps": 24,
+			"name": "RedDown",
+			"indices": []
+		},
+		{
+			"offsets": [
+				8,
+				1
+			],
 			"indices": [],
-			"name": "RedDown"
+			"fps": 24,
+			"anim": "no",
+			"loop": false,
+			"name": "No"
+		},
+		{
+			"offsets": [
+				3,
+				16
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "joke",
+			"loop": false,
+			"name": "ImJoke"
 		}
 	],
+	"vocals_file": null,
+	"results_character": null,
 	"no_antialiasing": false,
 	"image": "characters/red/Glitchy_Red_Assets_elpepe",
 	"position": [
 		40,
 		30
 	],
+	"speaker": null,
 	"healthicon": "glitchy-red",
 	"flip_x": false,
 	"healthbar_colors": [
@@ -74,5 +99,6 @@
 		100
 	],
 	"sing_duration": 4,
+	"dead_character": null,
 	"scale": 0.8
 }
