@@ -23,6 +23,9 @@ function onCreate()
 
 	setShaderFloat('vignetteGlitchController', 'prob', 0)
     setShaderFloat('vignetteGlitchController', 'vignetteIntensity', 0)
+
+	makeLuaSprite('chromaticController', '', 0, 0);
+	initLuaShader('redAberration')
 end
 
 function onUpdatePost()
@@ -55,8 +58,6 @@ end
 
 function onEvent(name, value1, value2)
 	if name == 'Change Character' and value2 == 'glitchy-red-mad' then
-		makeLuaSprite('chromaticController', '', 0, 0);
-		initLuaShader('redAberration')
 		setSpriteShader('dad', 'redAberration')
 
 		setShaderFloat('vignetteGlitchController', 'prob', 0.75)
