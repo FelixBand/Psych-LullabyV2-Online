@@ -28,13 +28,13 @@ function onCreate()
 
     addCharacterToList('gold-headless', 'dad');
 
-    makeAnimatedLuaSprite('no more', 'characters/gold/GOLD_NO_MORE', getProperty('dadGroup.x') - 64, getProperty('dadGroup.y') - 111);
+    makeAnimatedLuaSprite('no more', 'characters/gold/GOLD_NO_MORE', getProperty('dadGroup.x') - 73, getProperty('dadGroup.y') - 112);
     addAnimationByPrefix('no more', 'idle', 'No More instance 1', 24, false);
     setProperty('no more.alpha', 0);
     scaleObject('no more', 1.3, 1.3);
     addLuaSprite('no more');
 
-    makeAnimatedLuaSprite('headrip', 'characters/gold/GOLD_HEAD_RIPPING_OFF', getProperty('dadGroup.x') - 151, getProperty('dadGroup.y') - 251);
+    makeAnimatedLuaSprite('headrip', 'characters/gold/GOLD_HEAD_RIPPING_OFF', getProperty('dadGroup.x') - 160, getProperty('dadGroup.y') - 252);
     addAnimationByPrefix('headrip', 'idle', 'Head rips_OneLayer instance 1', 24, false);
     setProperty('headrip.alpha', 0);
     scaleObject('headrip', 1.3, 1.3);
