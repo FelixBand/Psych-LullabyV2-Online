@@ -14,10 +14,6 @@ function remapOpponentStrums()
 	local spacing = (rightX - leftX) / 4
 	local centerX = (leftX + rightX) / 2
 
-	-- Hide the unused center lane.
-	setPropertyFromGroup('opponentStrums', 2, 'visible', false)
-	setPropertyFromGroup('opponentStrums', 2, 'alpha', 0)
-
 	-- Redistribute the four usable lanes as normal 4K.
 	for lane = 0, 3 do
 		local strum = opponentLaneMap[lane + 1]
