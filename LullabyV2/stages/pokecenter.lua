@@ -258,6 +258,8 @@ function onUpdate(elapsed)
 	--nursejoy.angle = nurseangle + Math.sin((180 / Math.PI) * ((Conductor.songPosition / 1000) / 36)) * 3
 	setProperty('nursejoy.angle', math.sin((180 / math.pi) * ((getSongPosition() / 1000 ) / 36)) * 3)
 
+	setProperty('gfGroup.y', defaultGirlfriendY + math.sin((getSongPosition() / 3000) * math.pi) * 50)
+
 	if curBeat >= 460 then
 		-- staticbg should pulse in and out between 0.25 and 0.6 using a sine wave based on the song position
 		setProperty('staticbg.alpha', 0.625 + math.sin((180 / math.pi) * ((getSongPosition() / 1000 ) / 36)) * 0.175)
