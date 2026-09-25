@@ -39,12 +39,6 @@ function onCreatePost()
 
 		setPropertyFromGroup('playerStrums', 2, 'useRGBShader', false)
 
-        if playsAsBF() then -- Hide opponent notes when playing as P1
-            for i = 0,getProperty('opponentStrums.length') - 1 do
-                setPropertyFromGroup('opponentStrums', i, 'x', -5000);
-            end
-        end
-
 		-- Swap strum positions
 		if not middlescroll then
 			for i = 0, getProperty('opponentStrums.length') - 1 do
@@ -113,10 +107,17 @@ function onCreatePost()
 
         end
 
-        -- Turn the opponent side into normal 4K.
-		remapOpponentStrums()
-        -- Opponent center lane isn't used.
-        setPropertyFromGroup('opponentStrums', 2, 'x', -5000);
+		if playsAsBF() then -- Hide opponent notes when playing as P1
+            for i = 0,getProperty('opponentStrums.length') - 1 do
+                setPropertyFromGroup('opponentStrums', i, 'x', -5000);
+            end
+		else
+			-- Turn the opponent side into normal 4K.
+			remapOpponentStrums()
+			-- Opponent center lane isn't used.
+			setPropertyFromGroup('opponentStrums', 2, 'x', -5000);
+        end
+
 
         setPropertyFromGroup('playerStrums', 2, 'y', getPropertyFromGroup('playerStrums', 2, 'y') + centerDown) -- shift the center key down a tad, because the texture is too high up
 
