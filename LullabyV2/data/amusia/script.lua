@@ -311,13 +311,13 @@ function onStepHit()
 	end
 
 	if curStep == 791 then
-		doTweenX('dadSlideRight', 'dadGroup', getProperty('dadGroup.x') + 1000, 0.75, 'circIn')
+		doTweenX('dadSlideRight', 'dadGroup', getProperty('dadGroup.x') + 1100, 0.75, 'circIn')
 
-		doTweenX('bfSlideLeft', 'boyfriendGroup', getProperty('boyfriend.x') - 1000, 0.75, 'circIn')
+		doTweenX('bfSlideLeft', 'boyfriendGroup', getProperty('boyfriend.x') - 1100, 0.75, 'circIn')
 
-		doTweenX('plateLright', 'plateL', getProperty('plateL.x') + 1000, 0.75, 'circIn')
+		doTweenX('plateLright', 'plateL', getProperty('plateL.x') + 1100, 0.75, 'circIn')
 
-		doTweenX('plateRleft', 'plateR', getProperty('plateR.x') - 1000, 0.75, 'circIn')
+		doTweenX('plateRleft', 'plateR', getProperty('plateR.x') - 1100, 0.75, 'circIn')
 
 		setShaderFloat('background', 'prob', 1)
 		setShaderFloat('background', 'vignetteIntensity', 1)
@@ -342,16 +342,16 @@ function onStepHit()
 	end
 
 	if curStep == 804 then
-		setProperty('dadGroup.x', 160)
+		setProperty('dadGroup.x', 60)
 		setProperty('dadGroup.y', 482)
 
-		setProperty('boyfriendGroup.x', 1540)
+		setProperty('boyfriendGroup.x', 1640)
 		setProperty('boyfriendGroup.y', 680)
 
 		doTweenX(
 			'dadSlideBack',
 			'dadGroup',
-			getProperty('dadGroup.x') + 1000,
+			getProperty('dadGroup.x') + 1100,
 			0.75,
 			'quartOut'
 		)
@@ -359,7 +359,7 @@ function onStepHit()
 		doTweenX(
 			'bfSlideBack',
 			'boyfriendGroup',
-			getProperty('boyfriendGroup.x') - 1000,
+			getProperty('boyfriendGroup.x') - 1100,
 			0.75,
 			'quartOut'
 		)
@@ -367,7 +367,7 @@ function onStepHit()
 		doTweenX(
 			'plateLback',
 			'plateL',
-			getProperty('plateL.x') - 1000,
+			getProperty('plateL.x') - 1100,
 			0.75,
 			'quartOut'
 		)
@@ -375,7 +375,7 @@ function onStepHit()
 		doTweenX(
 			'plateRback',
 			'plateR',
-			getProperty('plateR.x') + 1000,
+			getProperty('plateR.x') + 1100,
 			0.75,
 			'quartOut'
 		)
