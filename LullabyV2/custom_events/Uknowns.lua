@@ -34,6 +34,7 @@ local WordLength=0
 local LetterCreates=0
 local UknownsOpen=false
 local ActualWordObjects={}
+local SubstateAdditions={}
 local ActualLetter=1
 local Offset=20
 local Time=15
@@ -55,6 +56,7 @@ local Difficulte='Normal'
 local WasReset=false
 function onCustomSubstateCreate(name)
     if name=='Uknowns' then
+        SubstateAdditions={}
         setProperty('persistentUpdate',true)
         UknownsOpen=true
         WasReset=getProperty("canReset")
@@ -102,6 +104,7 @@ function onCustomSubstateCreate(name)
         for i, letter in ipairs(ActualWord) do
             MakeLetter(letter)
         end
+        FlushLuaSpriteSubstateAdditions()
         for i=1,#ActualWordObjects do
             if luaSpriteExists(ActualWordObjects[i].Letter) then
                 WordLength=WordLength+getProperty(ActualWordObjects[i].Letter..'.width')
@@ -208,11 +211,16 @@ function onPause()
     end
 end
 function addLuaSpriteSubstate(tag)
-    runHaxeCode([[
-        var Item= game.getLuaObject("]]..tag..[[");
-        if(Item!=null)
-        CustomSubstate.instance.add(Item);
-    ]])
+    table.insert(SubstateAdditions,tag)
+end
+function FlushLuaSpriteSubstateAdditions()
+    local code=''
+    for i,tag in ipairs(SubstateAdditions) do
+        local item='Item'..i
+        code=code..'var '..item..'= game.getLuaObject("'..tag..'"); if('..item..'!=null) CustomSubstate.instance.add('..item..');'
+    end
+    if code~='' then runHaxeCode(code) end
+    SubstateAdditions={}
 end
 function addLuaTextSubstate(tag)
     runHaxeCode([[
