@@ -8,13 +8,11 @@ function onCreate()
 	
 	makeAnimatedLuaSprite('alexisPass', 'stages/bygone/images/GGirl Alexis Passing Spritesheet', 1630, 290);
 	addAnimationByPrefix('alexisPass', 'pass', 'GGirl Passing', 24, false);
-	objectPlayAnimation('alexisPass', 'pass', true);
 	setProperty('alexisPass.alpha', 0.0001);
 	addLuaSprite('alexisPass');
 
 	makeAnimatedLuaSprite('gates', 'stages/bygone/images/Heavens Gate', 1565, 250);
 	addAnimationByPrefix('gates', 'open', 'Heavens Gate', 24, false);
-	objectPlayAnimation('gates', 'open', true);
 	setProperty('gates.alpha', 0.0001);
 	addLuaSprite('gates');
 
@@ -74,7 +72,7 @@ function onStepHit()
 		setProperty('boyfriend.visible', false);
 		setProperty('alexisPass.alpha', 1);
 		setProperty('gates.alpha', 1);
-		objectPlayAnimation('gates', 'open', true);
-		objectPlayAnimation('alexisPass', 'pass', true);
+		playAnim('gates', 'open', true);
+		playAnim('alexisPass', 'pass', true);
 	end
 end
