@@ -23,6 +23,10 @@ function onCreate()
         if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
             setPropertyFromGroup('unspawnNotes', i, 'multSpeed', getPropertyFromGroup('unspawnNotes', i, 'prevNote.multSpeed'))
         end
+
+		if not getPropertyFromGroup('unspawnNotes', i, 'mustPress') then
+            setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', true)
+        end
     end
 end
 
@@ -32,8 +36,14 @@ function onCreatePost()
 			setPropertyFromGroup('playerStrums', i, 'x', _G['defaultOpponentStrumX'..i]);
 		end
 	end
-	for i = 0,getProperty('opponentStrums.length') - 1 do
-		setPropertyFromGroup('opponentStrums', i, 'x', 5000);
+	if playsAsBF() then
+		for i = 0,getProperty('opponentStrums.length') - 1 do
+			setPropertyFromGroup('opponentStrums', i, 'x', 5000);
+		end
+	else
+		for i = 0,getProperty('playerStrums.length') - 1 do
+			setPropertyFromGroup('playerStrums', i, 'x', 5000);
+		end
 	end
 
 	setProperty('iconP2.visible', false);
