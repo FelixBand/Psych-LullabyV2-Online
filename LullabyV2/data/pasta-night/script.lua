@@ -20,12 +20,7 @@ function onCreate()
 	setVar('pastaPlayer', pastaPlayer)
 end
 
-function setupPastaPlayer()
-	-- Update the shared variable after selection.
-	setVar('pastaPlayer', pastaPlayer)
-
-	removeLuaScript('scripts/camFollow')
-
+function setupStrums()
 	if pastaPlayer == 1 then
 		if not middleScroll then
 			for i = 0, getProperty('playerStrums.length') - 1 do
@@ -69,6 +64,33 @@ function setupPastaPlayer()
 		end
 	end
 
+	if not playsAsBF() then
+		for i = 0, getProperty('playerStrums.length') - 1 do
+			setPropertyFromGroup(
+				'playerStrums',
+				i,
+				'x',
+				-5000
+			)
+		end
+	else
+		for i = 0, getProperty('opponentStrums.length') - 1 do
+			setPropertyFromGroup(
+				'opponentStrums',
+				i,
+				'x',
+				5000
+			)
+		end
+	end
+end
+
+function setupPastaPlayer()
+	-- Update the shared variable after selection.
+	setVar('pastaPlayer', pastaPlayer)
+
+	removeLuaScript('scripts/camFollow')
+
 	if not playsAsBF() and not pastaPlayer == 0 or playsAsBF() and pastaPlayer == 0 then
 		triggerEvent('Change Character', 'dad', 'pasta-hypno-flip')
 		triggerEvent('Change Character', 'bf', 'MX-flip')
@@ -109,16 +131,6 @@ function setupPastaPlayer()
 			setProperty('boyfriend.y', defaultOpponentY)
 			setProperty('dad.x', defaultGirlfriendX)
 			setProperty('dad.y', defaultGirlfriendY)
-		end
-	end
-
-	if not playsAsBF() then
-		for i = 0, getProperty('playerStrums.length') - 1 do
-			setPropertyFromGroup('playerStrums', i, 'x', -5000)
-		end
-	else
-		for i = 0, getProperty('opponentStrums.length') - 1 do
-			setPropertyFromGroup('opponentStrums', i, 'x', 5000)
 		end
 	end
 
@@ -385,6 +397,9 @@ function updateSelection(pos)
 end
 
 function onTimerCompleted(tag, loops, loopsLeft)
+	if tag == 'ApplyPastaStrums' then
+		setupStrums()
+	end
 	if tag == 'StartingSong' then
 		soundFadeOut('', 0.0001, 0)
 
@@ -410,6 +425,8 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		setupPastaPlayer()
 
 		Selectin = false
+
+		runTimer('ApplyPastaStrums', 1)
 
 		-- Remove selector objects.
 		removeLuaSprite('bg', true)
