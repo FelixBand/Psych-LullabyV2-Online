@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				-60,
+				-66
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "Hypno Down0",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "Hypno Idle0",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-126,
+				22
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "Hypno Left0",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-172,
+				137
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "Hypno Up0",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-151,
+				70
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "Hypno Right0",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/hypno/PASTA_HYPNO",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "hypno-cards",
+	"flip_x": true,
+	"healthbar_colors": [
+		249,
+		223,
+		68
+	],
+	"camera_position": [
+		200,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1.5
+}

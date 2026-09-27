@@ -167,33 +167,7 @@ addLuaSprite('JeffArm',false)
 	    saled.clipRect = swagRect;
 	]])
 end
-local PendelumAdd=true
-local SongStarter=false
-local currentChar='Hypno'
-function onSongStart()
-	for i=0,getProperty('unspawnNotes.length')-1 do
-		if getPropertyFromGroup('unspawnNotes',i,'mustPress') then
-			currentChar=getPropertyFromGroup('unspawnNotes',i,'noteType')
-			if getPropertyFromGroup('unspawnNotes',i,'noteType')=='Hypno' then
-				PendelumAdd=false
-			end
-			break
-		end
-	end
-	
-	if PendelumAdd then
-		CreatePendelum(false)
-	end
-	runTimer('PendelumDelay',0.5)
-	SongStarter=true
-end
-function onTimerCompleted(tag, loops, loopsLeft)
-    if tag=='PendelumDelay' then
-		if PendelumAdd then
-			StartPendelum()
-		end
-	end
-end
+
 function onBeatHit()
 	if curBeat % 2 == 0 then
 		for i=0,#pastaBoppers do
@@ -233,95 +207,6 @@ function onCreatePost()
 	setGlobalFromScript('scripts/Stuff/CameraMove','CamMove',false)
 end
 
-function onEvent(eventName, value1, value2)
-    if eventName=='Pasta_Camera' then
-		if tonumber(value1)==-1 then
-			setGlobalFromScript('scripts/Stuff/CameraMove','ManualPos',{(getCharacterX('gf')+264.5-50)-200,getCharacterY('gf')+245-200})
-		elseif tonumber(value1)==1 then
-			setGlobalFromScript('scripts/Stuff/CameraMove','ManualPos',{(getCharacterX('gf')+264.5-50)+200,getCharacterY('gf')+245-200})
-		else
-			setGlobalFromScript('scripts/Stuff/CameraMove','ManualPos',{getCharacterX('gf')+264.5-50,getCharacterY('gf')+245-200})
-		end
-	end 
-end
-local calluno=false
-function onGameOver()
-    setProperty('paused',true)
-	runHaxeCode([[
-		FlxG.sound.music.pause();
-		game.vocals.pause();
-		game.KillNotes();
-	]])
-    if not calluno then
-        calluno=true
-        openCustomSubstate('PastaGameover',true)
-    end
-    return Function_Stop
-end
-function onCustomSubstateCreate(name)
-    if name=='PastaGameover' then
-		playSound('PS_Death')
-		setProperty('camGame.visible',false)
-        setProperty('camHUD.visible',false)
-        setProperty('SelectorCam.visible',true)
-        runHaxeCode([[
-            CustomSubstate.instance.camera=getVar('SelectorCam');
-        ]])
-        makeLuaSprite('blackBG')
-        makeGraphic('blackBG',screenWidth,screenHeight,'000000')
-        addLuaSpriteSubstate('blackBG')
-        
-        makeAnimatedLuaSprite('GameoverBG','pasta/PN_GameOver')
-        addAnimationByPrefix('GameoverBG','idle', 'pastanight_curtains0', 0, false)
-        addAnimationByPrefix('GameoverBG','moving', 'pastanight_curtains0', 24, false)
-        addAnimationByPrefix('GameoverBG','retry', 'pastanight_curtains_retry0', 24, true)
-        playAnim('GameoverBG','idle')
-        scaleObject('GameoverBG',3,3,false)
-        setProperty('GameoverBG.x',getProperty('SelectorCam.width')/2-getProperty('GameoverBG.width')/2)
-        setProperty('GameoverBG.y',getProperty('SelectorCam.height')/2-getProperty('GameoverBG.height')/2)
-        
-        makeAnimatedLuaSprite('miniChar','pasta/PN_LoseSprites')
-        addAnimationByPrefix('miniChar','idle', 'pastanight_Lose'..currentChar..'0',24)
-        scaleObject('miniChar',3,3,false)
-        setProperty('miniChar.x',getProperty('SelectorCam.width')/2-getProperty('miniChar.width')/2)
-        setProperty('miniChar.y',getProperty('SelectorCam.height')/2-getProperty('miniChar.height')/2)
-        if currentChar=='LordX' then
-            setProperty('miniChar.x',getProperty('miniChar.x')+24)
-        end
-        addLuaSpriteSubstate('miniChar')
-        addLuaSpriteSubstate('GameoverBG')
-    end
-end
-local velocity = -5
-local totalElapsed=0
-function onCustomSubstateUpdate(name, elapsed)
-    if name=='PastaGameover' then
-		totalElapsed=totalElapsed+elapsed
-		if shadersEnabled and luaSpriteExists('SelectorShader') then
-            setShaderFloat('SelectorShader','time',totalElapsed)
-        end
-        if getProperty('miniChar.y')>getProperty('GameoverBG.y')+getProperty('GameoverBG.height') then
-            if getProperty('GameoverBG.animation.curAnim.name')~='moving' and getProperty('GameoverBG.animation.curAnim.name')~='retry' then
-                playAnim('GameoverBG','moving')
-			end
-		end
-		if getProperty('GameoverBG.animation.curAnim.name')=='moving' and getProperty('GameoverBG.animation.curAnim.finished') then
-			playAnim('GameoverBG','retry')
-		end
-        setProperty('miniChar.y',getProperty('miniChar.y') + velocity * (elapsed / (1 / 60)) * 3)
-        if velocity < 32 then velocity=velocity+0.21875 * (elapsed / (1 / 60)) end
-
-        if keyJustPressed('accept') then
-			playSound('gameOverEnd')
-			setProperty('SelectorCam.visible',false)
-            restartSong()
-        end
-        if keyJustPressed('back') then
-			setProperty('SelectorCam.visible',false)
-            callScript('scripts/Stuff/PlayStuff.lua','toMenu')
-        end
-    end
-end
 function addLuaSpriteSubstate(tag)
     runHaxeCode([[
         CustomSubstate.instance.add(game.getLuaObject("]]..tag..[["));
