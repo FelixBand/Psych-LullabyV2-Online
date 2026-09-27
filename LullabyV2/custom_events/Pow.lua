@@ -45,7 +45,7 @@ function onCreatePost()
     end
 end
 
-mxChar = ''
+mxChar = 'dad'
 
 function onSongStart()
     if string.sub(dadName, 1, 2) == 'MX' then
