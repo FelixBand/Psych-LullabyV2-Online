@@ -13,11 +13,22 @@ local totalElapsed = 0
 local canSelecter = true
 
 function onCreate()
-	if pastaPlayer ~= 2 then
-		addLuaScript('pendulum')
-	end
-
 	setVar('pastaPlayer', pastaPlayer)
+
+	if shadersEnabled then
+		makeLuaSprite('crtController', '', 0, 0)
+        runHaxeCode([[
+            game.initLuaShader('crt');
+
+            var crtShader = game.createRuntimeShader('crt');
+
+            game.getLuaObject('crtController').shader = crtShader;
+
+            game.camOther.setFilters([
+                new ShaderFilter(crtShader)
+            ]);
+        ]]);
+    end
 end
 
 function setupStrums()
@@ -90,6 +101,10 @@ function setupPastaPlayer()
 	setVar('pastaPlayer', pastaPlayer)
 
 	removeLuaScript('scripts/camFollow')
+
+	if pastaPlayer ~= 2 then
+		addLuaScript('pendulum')
+	end
 
 	if not playsAsBF() and not pastaPlayer == 0 or playsAsBF() and pastaPlayer == 0 then
 		triggerEvent('Change Character', 'dad', 'pasta-hypno-flip')
@@ -319,10 +334,13 @@ function startCharacterSelector()
 	setObjectCamera('Arrow', 'other')
 	addLuaSprite('Arrow', true)
 
-	updateSelection(curSelect)
+	updateSelection(2)
 end
 
 function onUpdate(elapsed)
+	if luaSpriteExists('crtController') then
+		setShaderFloat('crtController', 'time', os.clock())
+	end
 	if Selectin then
 		totalElapsed = totalElapsed + elapsed
 
@@ -399,6 +417,10 @@ end
 function onTimerCompleted(tag, loops, loopsLeft)
 	if tag == 'ApplyPastaStrums' then
 		setupStrums()
+		setupPastaPlayer()
+		setProperty('camGame.visible', true)
+		setProperty('camHUD.visible', true)
+		setProperty('camOther.visible', true)
 	end
 	if tag == 'StartingSong' then
 		soundFadeOut('', 0.0001, 0)
@@ -419,10 +441,12 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		pastaPlayer = curSelect - 1
 
 		if pastaPlayer ~= 2 then
+			debugPrint('pastaplayer obviously isnt ' .. pastaPlayer)
 			addLuaScript('pendulum')
 		end
 
-		setupPastaPlayer()
+		runHaxeCode([[ game.camOther.setFilters([]); ]])
+		removeLuaSprite('crtController')
 
 		Selectin = false
 
@@ -448,10 +472,6 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	end
 
 	if tag == 'StartPastaSong' then
-		setProperty('camGame.visible', true)
-		setProperty('camHUD.visible', true)
-		setProperty('camOther.visible', true)
-
 		startCountdown()
 	end
 end
