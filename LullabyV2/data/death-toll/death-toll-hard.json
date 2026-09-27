@@ -1,6 +1,6 @@
 {
   "song": {
-    "player1": "dawn-bf",
+    "player1": "dawn",
     "player2": "beelze",
     "notes": [
       {
@@ -8343,7 +8343,7 @@
         "mustHitSection": true
       }
     ],
-    "gfVersion": "gf",
+    "gfVersion": "bfDT",
     "events": [],
     "player3": null,
     "song": "Death-Toll",

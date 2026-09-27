@@ -28,6 +28,7 @@ function remapOpponentStrums()
 end
 
 function onCreatePost()
+	setProperty('healthBar.flipX', true)
 	if getProperty('playerStrums.length') == 5 then -- if 5 key
 		local centerShift = 80
         local rightShift = 50
@@ -143,4 +144,13 @@ function onSpawnNote(id)
 		setPropertyFromGroup('notes', id, 'noteSplashData.disabled', true)
 		setPropertyFromGroup('notes', id, 'noteSplashData.useRGBShader', false)
 	end
+end
+
+function onUpdatePost()
+    setProperty('iconP1.x',getProperty('healthBar.x') + ((getProperty('healthBar.width') *        getProperty('healthBar.percent') * 0.01) + (150 * getProperty('iconP1.scale.x') - 150) / 2 - 26) - 110)
+    setProperty('iconP1.origin.x',240)
+    setProperty('iconP1.flipX',true)
+    setProperty('iconP2.x',getProperty('healthBar.x') + ((getProperty('healthBar.width') * getProperty('healthBar.percent') * 0.01) - (150 * getProperty('iconP2.scale.x')) / 2 - 26 * 2) + 110)
+    setProperty('iconP2.origin.x',-100)
+    setProperty('iconP2.flipX',true)
 end

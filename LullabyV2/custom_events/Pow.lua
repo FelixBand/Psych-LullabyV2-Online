@@ -16,18 +16,20 @@ local Patterns={
 }
 
 function onEvent(eventName, value1, value2)
-    if eventName=='Pow' then
-        startReverse=0
-        doReverse=false
-        if getDataFromSave('HypnosPref','Hell mode',false) then
-            moveNotes=Patterns[getRandomInt(1, #Patterns)]
-        end
-        if luaSpriteExists('MXArms') then
-            playSound('HandUp',1)
-            playAnim(mxChar,'Hit1',true)
-            setProperty(mxChar .. '.specialAnim',true)
-        else
-            dropStart()
+    if if getVar('pastaPlayer') ~= 0 then
+        if eventName=='Pow' then
+            startReverse=0
+            doReverse=false
+            if getDataFromSave('HypnosPref','Hell mode',false) then
+                moveNotes=Patterns[getRandomInt(1, #Patterns)]
+            end
+            if luaSpriteExists('MXArms') then
+                playSound('HandUp',1)
+                playAnim(mxChar,'Hit1',true)
+                setProperty(mxChar .. '.specialAnim',true)
+            else
+                dropStart()
+            end
         end
     end
 end

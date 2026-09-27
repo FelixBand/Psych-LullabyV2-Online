@@ -1,0 +1,261 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "dtbf idle"
+		},
+		{
+			"offsets": [
+				-8,
+				-1
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT-cover",
+			"indices": [
+				0,
+				0,
+				1,
+				1,
+				2,
+				2
+			],
+			"name": "dtbf cover right"
+		},
+		{
+			"offsets": [
+				-8,
+				28
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP-cover",
+			"indices": [
+				0,
+				0,
+				1,
+				1,
+				2,
+				2
+			],
+			"name": "dtbf cover up"
+		},
+		{
+			"offsets": [
+				2,
+				-12
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN-cover",
+			"indices": [
+				0,
+				0,
+				1,
+				1,
+				2,
+				2
+			],
+			"name": "dtbf cover down"
+		},
+		{
+			"offsets": [
+				9,
+				2
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "transcover",
+			"indices": [],
+			"name": "dtbf cover cover"
+		},
+		{
+			"offsets": [
+				118,
+				100
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFTmiss",
+			"indices": [
+				0,
+				0,
+				1,
+				1,
+				2,
+				2
+			],
+			"name": "dtbf miss left"
+		},
+		{
+			"offsets": [
+				122,
+				99
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHTmiss",
+			"indices": [
+				0,
+				0,
+				1,
+				1,
+				2,
+				2
+			],
+			"name": "dtbf miss right"
+		},
+		{
+			"offsets": [
+				129,
+				98
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUPmiss",
+			"indices": [
+				0,
+				0,
+				1,
+				1,
+				2,
+				2
+			],
+			"name": "dtbf miss up"
+		},
+		{
+			"offsets": [
+				123,
+				96
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWNmiss",
+			"indices": [
+				0,
+				0,
+				1,
+				1,
+				2,
+				2
+			],
+			"name": "dtbf miss down"
+		},
+		{
+			"offsets": [
+				6,
+				1
+			],
+			"indices": [
+				0,
+				0,
+				1,
+				1,
+				2,
+				2
+			],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "dtbf left"
+		},
+		{
+			"offsets": [
+				-7,
+				-1
+			],
+			"indices": [
+				0,
+				0,
+				1,
+				1,
+				2,
+				2
+			],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "dtbf right"
+		},
+		{
+			"offsets": [
+				-8,
+				28
+			],
+			"indices": [
+				0,
+				0,
+				1,
+				1,
+				2,
+				2
+			],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "dtbf up"
+		},
+		{
+			"offsets": [
+				1,
+				-11
+			],
+			"indices": [
+				0,
+				0,
+				1,
+				1,
+				2,
+				2
+			],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "dtbf down"
+		},
+		{
+			"offsets": [
+				7,
+				1
+			],
+			"indices": [
+				0,
+				0,
+				1,
+				1,
+				2,
+				2
+			],
+			"fps": 24,
+			"anim": "singLEFT-cover",
+			"loop": false,
+			"name": "dtbf cover left"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/bf/BFDeath-toll",
+	"position": [
+		-280,
+		160
+	],
+	"healthicon": "bf",
+	"flip_x": false,
+	"healthbar_colors": [
+		49,
+		176,
+		209
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1.2
+}

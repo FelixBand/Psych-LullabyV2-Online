@@ -1,0 +1,155 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "OldMan_Idle"
+		},
+		{
+			"offsets": [
+				101,
+				-5
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "OldMan_Left"
+		},
+		{
+			"offsets": [
+				47,
+				-13
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "OldMan_Down"
+		},
+		{
+			"offsets": [
+				51,
+				9
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "OldMan_Up"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				94,
+				23
+			],
+			"anim": "Walk",
+			"fps": 24,
+			"name": "OldMan_Walk",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				244,
+				36
+			],
+			"anim": "Laugh",
+			"fps": 24,
+			"name": "OldMan_Laugh",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				98,
+				21
+			],
+			"anim": "idle-alt",
+			"fps": 24,
+			"name": "OldMan_Creepy_Idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				223,
+				14
+			],
+			"anim": "singLEFT-alt",
+			"fps": 24,
+			"name": "OldMan_Creepy_Left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				156,
+				5
+			],
+			"anim": "singDOWN-alt",
+			"fps": 24,
+			"name": "OldMan_Creepy_Down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				72,
+				17
+			],
+			"anim": "singRIGHT-alt",
+			"fps": 24,
+			"name": "OldMan_Creepy_Right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-22,
+				-6
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "OldMan_Right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				164,
+				30
+			],
+			"anim": "singUP-alt",
+			"fps": 24,
+			"name": "OldMan_Creepy_Up",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/beelze/beelze_normal",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "beelze",
+	"flip_x": false,
+	"healthbar_colors": [
+		126,
+		93,
+		145
+	],
+	"camera_position": [
+		-405,
+		80
+	],
+	"sing_duration": 6.1,
+	"scale": 0.9
+}
