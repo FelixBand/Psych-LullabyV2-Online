@@ -1,7 +1,7 @@
 -- 0 = MX
 -- 1 = Lord X
 -- 2 = Hypno
-local pastaPlayer = 2
+local pastaPlayer = 1
 
 function onCreatePost()
 	for i = 0, getProperty('unspawnNotes.length') - 1 do
@@ -12,19 +12,19 @@ function onCreatePost()
 		local isHypno = noteType == 'Hypno Sing'
 
 		if pastaPlayer == 0 then
-            -- MX = PLAYER
-            if isMX then
-                setPropertyFromGroup('unspawnNotes', i, 'mustPress', true)
+			-- MX = PLAYER
+			if isMX then
+				setPropertyFromGroup('unspawnNotes', i, 'mustPress', true)
 
-            -- Lord X = OPPONENT + GF Sing
-            elseif isLordX then
-                setPropertyFromGroup('unspawnNotes', i, 'mustPress', false)
-                setPropertyFromGroup('unspawnNotes', i, 'noteType', 'GF Sing')
+			-- Lord X = OPPONENT + GF Sing
+			elseif isLordX then
+				setPropertyFromGroup('unspawnNotes', i, 'mustPress', false)
+				setPropertyFromGroup('unspawnNotes', i, 'noteType', 'GF Sing')
 
-            -- Hypno = OPPONENT
-            elseif isHypno then
-                setPropertyFromGroup('unspawnNotes', i, 'mustPress', false)
-            end
+			-- Hypno = OPPONENT
+			elseif isHypno then
+				setPropertyFromGroup('unspawnNotes', i, 'mustPress', false)
+			end
 
 		elseif pastaPlayer == 1 then
 			-- MX = OPPONENT
@@ -56,6 +56,13 @@ function onCreatePost()
 			elseif isHypno then
 				setPropertyFromGroup('unspawnNotes', i, 'mustPress', true)
 			end
+		end
+
+		-- Multiplayer / opponent-player mode.
+		-- If we're playing as the opponent, swap which side belongs to us.
+		if not playsAsBF() and (isMX or isLordX or isHypno) then
+			local mustPress = getPropertyFromGroup('unspawnNotes', i, 'mustPress')
+			setPropertyFromGroup('unspawnNotes', i, 'mustPress', not mustPress)
 		end
 	end
 end
