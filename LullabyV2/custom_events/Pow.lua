@@ -16,7 +16,7 @@ local Patterns={
 }
 
 function onEvent(eventName, value1, value2)
-    if if getVar('pastaPlayer') ~= 0 then
+    if getVar('pastaPlayer') ~= 0 then
         if eventName=='Pow' then
             startReverse=0
             doReverse=false
