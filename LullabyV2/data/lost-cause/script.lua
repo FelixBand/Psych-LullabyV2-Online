@@ -1,49 +1,60 @@
 function onCreate()
-    setProperty('dad.alpha', 0.0001);
+    setProperty('dad.alpha', 0.0001)
 
-    makeLuaSprite('bfded', 'characters/bf/dead_ass_bitch_LMAOOOO', -55, 1273);
-    scaleObject('bfded', 0.76, 0.76);
-    setProperty('bfded.alpha', 0.0001);
-    addLuaSprite('bfded');
+    makeLuaSprite('bfded', 'characters/bf/dead_ass_bitch_LMAOOOO', -55, 1273)
+    scaleObject('bfded', 0.76, 0.76)
+    setProperty('bfded.alpha', 0.0001)
+    addLuaSprite('bfded')
 
-    makeAnimatedLuaSprite('hypnoEntrance', 'characters/hypno/ABOMINATION_HYPNO_ENTRANCE', getProperty('dad.x') - 260, getProperty('dad.y') + 43);
-    addAnimationByPrefix('hypnoEntrance', 'entrance', 'Entrance instance', 24, false);
-    setProperty('hypnoEntrance.alpha', 0.0001);
-    addLuaSprite('hypnoEntrance');
+    makeAnimatedLuaSprite('hypnoEntrance', 'characters/hypno/ABOMINATION_HYPNO_ENTRANCE', getProperty('dad.x') - 260, getProperty('dad.y') + 43)
+    addAnimationByPrefix('hypnoEntrance', 'entrance', 'Entrance instance', 24, false)
+    setProperty('hypnoEntrance.alpha', 0.0001)
+    addLuaSprite('hypnoEntrance')
 
-    makeAnimatedLuaSprite('ending', 'characters/hypno/hypno_ending_sequence', getProperty('dad.x') - 510, getProperty('dad.y') - 10);
-    addAnimationByPrefix('ending', 'end', 'Ending instance 1', 24, false);
-    scaleObject('ending', 0.7, 0.7);
-    setProperty('ending.alpha', 0.0001);
-    addLuaSprite('ending');
+    makeAnimatedLuaSprite('ending', 'characters/hypno/hypno_ending_sequence', getProperty('dad.x') - 510, getProperty('dad.y') - 10)
+    addAnimationByPrefix('ending', 'end', 'Ending instance 1', 24, false)
+    scaleObject('ending', 0.7, 0.7)
+    setProperty('ending.alpha', 0.0001)
+    addLuaSprite('ending')
 
-    setProperty('skipCountdown', true);
+    precacheImage('UI/base/hypno/Extras')
+    precacheImage('UI/base/hypno/StaticHypno')
+    precacheImage('UI/base/hypno/Pendelum_Phase2')
+    precacheImage('UI/base/hypno/Psyshock')
+
+    setProperty('skipCountdown', true)
 end
 
 function onCreatePost()
     -- swap strum positions
     if not middlescroll then
         for i = 0,getProperty('playerStrums.length') - 1 do
-            setPropertyFromGroup('playerStrums', i, 'x', _G['defaultOpponentStrumX'..i]);
+            setPropertyFromGroup('playerStrums', i, 'x', _G['defaultOpponentStrumX'..i])
         end
         for i = 0,getProperty('opponentStrums.length') - 1 do
-            setPropertyFromGroup('opponentStrums', i, 'x', _G['defaultPlayerStrumX'..i]);
+            setPropertyFromGroup('opponentStrums', i, 'x', _G['defaultPlayerStrumX'..i])
         end
     end
 
     -- Hide opponent strums off screen somewhere
     if playsAsBF() then
         for i = 0,getProperty('opponentStrums.length') - 1 do
-            setPropertyFromGroup('opponentStrums', i, 'x', -5000);
+            setPropertyFromGroup('opponentStrums', i, 'x', -5000)
         end
     end
     
-    setProperty('camZooming', true);
+    setProperty('camZooming', true)
 end
 
 function onEvent(name, value1, value2)
     if name == 'Change Character' and value1 == 'bf' then
-        setProperty('bfded.alpha', 1);
+        setProperty('bfded.alpha', 1)
+    end
+end
+
+function onBeatHit()
+    if curBeat == 79 then
+        addLuaScript('pendulum')
     end
 end
 
@@ -60,22 +71,22 @@ end
 
 function onStepHit()
     if curStep == 304 then
-        setProperty('defaultCamZoom', 0.5);
-        setProperty('hypnoEntrance.alpha', 1);
-        playAnim('hypnoEntrance', 'entrance', true);
-        doTweenAlpha('hudOut', 'camHUD', 0, 0.1, 'linear');
+        setProperty('defaultCamZoom', 0.5)
+        setProperty('hypnoEntrance.alpha', 1)
+        playAnim('hypnoEntrance', 'entrance', true)
+        doTweenAlpha('hudOut', 'camHUD', 0, 0.1, 'linear')
     elseif curStep == 320 then
         for i = 0,getProperty('opponentStrums.length') - 1 do
-            setPropertyFromGroup('opponentStrums', i, 'x', _G['defaultPlayerStrumX'..i]);
+            setPropertyFromGroup('opponentStrums', i, 'x', _G['defaultPlayerStrumX'..i])
         end
-        triggerEvent('Change Character', 'dad', 'abomination-hypno');
-        removeLuaSprite('hypnoEntrance', true);
-        setProperty('dad.alpha', 1);
+        triggerEvent('Change Character', 'dad', 'abomination-hypno')
+        removeLuaSprite('hypnoEntrance', true)
+        setProperty('dad.alpha', 1)
         setProperty('healthBar.flipX', true)
-        doTweenAlpha('hudIn', 'camHUD', 1, 0.25, 'linear');
+        doTweenAlpha('hudIn', 'camHUD', 1, 0.25, 'linear')
     elseif curStep == 2128 then
-        setProperty('ending.alpha', 1);
-        playAnim('ending', 'end', true);
-        setProperty('dad.alpha', 0);
+        setProperty('ending.alpha', 1)
+        playAnim('ending', 'end', true)
+        setProperty('dad.alpha', 0)
     end
 end

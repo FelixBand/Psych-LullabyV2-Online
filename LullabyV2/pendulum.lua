@@ -38,6 +38,7 @@ function onCreate()
 
 	makeAnimatedLuaSprite('psyshockParticle', 'UI/base/hypno/Psyshock', 1250, 400)
 	addAnimationByPrefix('psyshockParticle', 'spark', 'Full Psyshock Particle', 24, false)
+	setProperty('psyshockParticle.alpha', 0.0001)
 	addLuaSprite('psyshockParticle')
 
 	-- tutorial & UI
@@ -55,7 +56,7 @@ function onCreate()
 	setObjectCamera('pendFeedback', 'other')
 	screenCenter('pendFeedback', 'xy')
 	setProperty('pendFeedback.y', getProperty('pendFeedback.y') + 60)
-	setProperty('pendFeedback.alpha', 1)
+	setProperty('pendFeedback.alpha', 0.0001)
 	addLuaSprite('pendFeedback')
 end
 
@@ -79,6 +80,15 @@ function onBeatHit()
 	end
 end
 
+function pendFeedback(feedback)
+	setProperty('pendFeedback.alpha', 1)
+	if feedback == 0 then -- good!
+		playAnim('pendFeedback', 'nice', true)
+	elseif feedback == 1 then -- bad! >:(
+		playAnim('pendFeedback', 'bad', true)
+	end
+end
+
 function onTweenCompleted(tag)
 	if tag == 'pend0' then 
 		doTweenAngle('pend1', 'pendulum', getProperty('pendulum.angle') + 30, (stepCrochet / 1000) * swingTime, 'quadOut')
@@ -87,7 +97,7 @@ function onTweenCompleted(tag)
 		if canHit then
 			--when the player did not hit the pendulum
 			lose()
-			playAnim('pendFeedback', 'bad', true)
+			pendFeedback(1)
 		end
 		canHit = true
 	elseif tag == 'pend2' then 
@@ -97,7 +107,7 @@ function onTweenCompleted(tag)
 		if canHit then
 			--when the player did not hit the pendulum
 			lose()
-			playAnim('pendFeedback', 'bad', true)
+			pendFeedback(1)
 		end
 		canHit = true
 	end
@@ -138,7 +148,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		playSound('Psyshock', 1)
 		setProperty('daFlash.alpha', 1)
 		doTweenAlpha('flashOut', 'daFlash', 0, 1, 'linear')
-		--setProperty('psyshock.visible', true)
+		setProperty('psyshockParticle.alpha', 1)
 		playAnim('psyshockParticle', 'spark', true)
 		lose()
 	end
@@ -160,10 +170,10 @@ function onUpdate(elapsed)
 			tranceSound()
 			canHit = false
 
-			playAnim('pendFeedback', 'nice', true)
+			pendFeedback(0)
 		else
 			lose()
-			playAnim('pendFeedback', 'bad', true)
+			pendFeedback(1)
 			--debugPrint('bad timing, scrub')
 		end
 	end
