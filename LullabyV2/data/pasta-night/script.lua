@@ -246,8 +246,8 @@ function startCharacterSelector()
 
 	playMusic('PastaNightSelect', 1, true)
 
-	setProperty('camGame.visible', false)
-	setProperty('camHUD.visible', false)
+	setProperty('camGame.alpha', 0.0001)
+	setProperty('camHUD.alpha', 0.0001)
 
 	-- Selector uses camOther.
 	setProperty('camOther.visible', true)
@@ -418,8 +418,8 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	if tag == 'ApplyPastaStrums' then
 		setupStrums()
 		setupPastaPlayer()
-		setProperty('camGame.visible', true)
-		setProperty('camHUD.visible', true)
+		setProperty('camGame.alpha', 1)
+		setProperty('camHUD.alpha', 1)
 		setProperty('camOther.visible', true)
 	end
 	if tag == 'StartingSong' then
