@@ -28,6 +28,12 @@ function remapOpponentStrums()
 end
 
 function onCreatePost()
+	makeLuaSprite('whiteFlash', '', 0, 0)
+	makeGraphic('whiteFlash', screenWidth, screenHeight, 'FFFFFF')
+	setObjectCamera('whiteFlash', 'hud')
+	setProperty('whiteFlash.alpha', 0)
+	addLuaSprite('whiteFlash')
+
 	setProperty('gfGroup.alpha', 0.0001)
 	setObjectOrder('gfGroup', getObjectOrder('boyfriendGroup') + 1)
 	setProperty('healthBar.flipX', true)
@@ -242,6 +248,19 @@ function onEvent(name, value1, value2)
 	if name == 'Set Health Icon' then
 		if value1 == '2' then
 			setHealthBarColors('7E5D91', '31B0D1')
+		end
+	end
+end
+
+function onBeatHit()
+	if flashingLights then
+		if curBeat == 60 or curBeat == 62 then
+			setProperty('whiteFlash.alpha', 0.5)
+			doTweenAlpha('flashOut', 'whiteFlash', 0, 0.5, 'linear')
+		end
+		if curBeat == 64 then
+			setProperty('whiteFlash.alpha', 1)
+			doTweenAlpha('flashOut', 'whiteFlash', 0, 1, 'linear')
 		end
 	end
 end

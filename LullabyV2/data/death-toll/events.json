@@ -382,12 +382,32 @@
         ]
       ],
       [
+        100930,
+        [
+          [
+            "Set Property",
+            "defaultCamZoom",
+            "1"
+          ]
+        ]
+      ],
+      [
         101090,
         [
           [
             "Play Animation",
             "Laugh",
             "dad"
+          ]
+        ]
+      ],
+      [
+        103244,
+        [
+          [
+            "Set Property",
+            "defaultCamZoom",
+            "0.75"
           ]
         ]
       ],
