@@ -88,3 +88,11 @@ function onCreate()
 	contractY=getProperty('ContractBF.y')
     
 end
+
+function onMoveCamera(focus)
+    if focus == 'boyfriend' then
+        setProperty('defaultCamZoom', 0.6)
+    elseif focus == 'dad' then
+       setProperty('defaultCamZoom', 0.75)
+    end
+end
