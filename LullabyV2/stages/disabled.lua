@@ -118,7 +118,7 @@ function onEvent(name, value1, value2)
         setProperty('camHUD.alpha', 0)
         setProperty('questionare.alpha', 1)
         setProperty('wigglesEnd.alpha', 1)
-        objectPlayAnimation('wigglesEnd', 'idle', true)
+        playAnim('wigglesEnd', 'idle', true)
         doTweenAlpha('amusiaStaticOut', 'static', 0.1, (stepCrochet / 1000) * 64, 'linear')
         doTweenAlpha('amusiaRedStaticOut', 'redStatic', 0, (stepCrochet / 1000) * 64, 'linear')
     end

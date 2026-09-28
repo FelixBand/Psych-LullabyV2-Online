@@ -406,6 +406,7 @@ function advanceAmusiaDialogue()
 		-- First answer is intentionally rejected.
 		if selectedAnswer == 1 then
 			playSound('errorMenu', 0.6)
+			cameraFlash('other', 'red', 0.25, true)
 			return
 		end
 
