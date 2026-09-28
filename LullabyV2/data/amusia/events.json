@@ -410,6 +410,106 @@
 						"wigglytuff-terror"
 					]
 				]
+			],
+			[
+				165333.333333333,
+				[
+					[
+						"Vignette Fade",
+						"1",
+						"32"
+					]
+				]
+			],
+			[
+				169666.666666667,
+				[
+					[
+						"Amusia Run Away",
+						"",
+						""
+					]
+				]
+			],
+			[
+				171333.333333333,
+				[
+					[
+						"Progress Dialouge",
+						"I just wanted to sing...",
+						""
+					]
+				]
+			],
+			[
+				171333.333333333,
+				[
+					[
+						"Amusia Music Box",
+						"",
+						""
+					]
+				]
+			],
+			[
+				174000,
+				[
+					[
+						"Progress Dialouge",
+						"Why... why... why... can't I sing?",
+						""
+					]
+				]
+			],
+			[
+				177333.333333333,
+				[
+					[
+						"Progress Dialouge",
+						"Just... Sing... Sing...",
+						""
+					]
+				]
+			],
+			[
+				180333.333333333,
+				[
+					[
+						"Progress Dialouge",
+						"Why can't I sing? Why? Why?",
+						""
+					]
+				]
+			],
+			[
+				183333.333333333,
+				[
+					[
+						"Progress Dialouge",
+						"Can you sing?",
+						"Question"
+					]
+				]
+			],
+			[
+				213333.333333334,
+				[
+					[
+						"Force dialouge end",
+						"",
+						""
+					]
+				]
+			],
+			[
+				214250,
+				[
+					[
+						"Jumpscare Amusia",
+						"",
+						""
+					]
+				]
 			]
 		]
 	}

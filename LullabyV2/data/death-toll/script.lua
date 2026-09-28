@@ -255,7 +255,7 @@ function onUpdate(elapsed)
 		fadeProgress = 1
 	end
 	fadeProgress = math.max(0, math.min(1, fadeProgress))
-	setProperty('boyfriendGroup.alpha', 1 - fadeProgress)
+	setProperty('boyfriend.alpha', 1 - fadeProgress)
 	setProperty('gfGroup.alpha', fadeProgress)
 	setProperty('ContractBF.y', getCharacterY('dad') + 115 + math.sin(((getSongPosition() - 103404.255319149) / 2500) * math.pi) * 10)
 end

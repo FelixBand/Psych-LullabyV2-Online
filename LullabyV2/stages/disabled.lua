@@ -1,4 +1,5 @@
 local dir = 'stages/disabled/images/'
+local amusiaRunningAway = false
 
 function onCreate()
     setProperty('skipCountdown', true)
@@ -11,9 +12,9 @@ function onCreate()
     addLuaSprite('questionare')
 
     makeAnimatedLuaSprite('wigglesEnd', dir .. 'wiggles_questionare', 509, 230)
-    addAnimationByPrefix('wigglesEnd', 'idle', 'angry', 24, true)
-    addAnimationByPrefix('wigglesEnd', 'idle', 'Give me your sing', 24, true)
     addAnimationByPrefix('wigglesEnd', 'idle', 'questionnaire idle', 24, true)
+    addAnimationByPrefix('wigglesEnd', 'give', 'Give me your sing', 24, false)
+    addAnimationByPrefix('wigglesEnd', 'angry', 'angry', 24, true)
     scaleObject('wigglesEnd', 1, 1)
     setObjectCamera('wigglesEnd', 'other')
     setProperty('wigglesEnd.alpha', 0.0001)
@@ -91,6 +92,10 @@ function onCreate()
 end
 
 function onUpdate(elapsed)
+    if amusiaRunningAway then
+        setProperty('boyfriend.x', getProperty('boyfriend.x') - elapsed * 960)
+    end
+
     if shadersEnabled then
         setShaderFloat('background', 'time', os.clock())
     end
@@ -99,6 +104,25 @@ function onUpdate(elapsed)
 end
 
 function onEvent(name, value1, value2)
+    if name == 'Amusia Run Away' then
+        amusiaRunningAway = true
+        doTweenAlpha('amusiaStaticIn', 'static', 1, (stepCrochet / 1000) * 8, 'linear')
+        doTweenAlpha('amusiaRedStaticIn', 'redStatic', 1, (stepCrochet / 1000) * 8, 'linear')
+    elseif name == 'Amusia Music Box' then
+        setProperty('dad.visible', false)
+        setProperty('boyfriend.visible', false)
+        setProperty('background.visible', false)
+        setProperty('plateL.visible', false)
+        setProperty('plateR.visible', false)
+        setProperty('camZooming', false)
+        setProperty('camHUD.alpha', 0)
+        setProperty('questionare.alpha', 1)
+        setProperty('wigglesEnd.alpha', 1)
+        objectPlayAnimation('wigglesEnd', 'idle', true)
+        doTweenAlpha('amusiaStaticOut', 'static', 0.1, (stepCrochet / 1000) * 64, 'linear')
+        doTweenAlpha('amusiaRedStaticOut', 'redStatic', 0, (stepCrochet / 1000) * 64, 'linear')
+    end
+
     if name == 'Amusia Background Change' then
 		loadGraphic('background', dir .. 'background2')
         setShaderFloat('background', 'prob', 0.75)
