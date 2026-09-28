@@ -17,7 +17,7 @@
 				4,
 				0
 			],
-			"anim": "idle-cover",
+			"anim": "idle-alt",
 			"fps": 24,
 			"name": "dawn cover idle",
 			"indices": []
@@ -28,7 +28,7 @@
 				6,
 				0
 			],
-			"anim": "transcover",
+			"anim": "cover",
 			"fps": 24,
 			"name": "dawn cover coverup",
 			"indices": []
@@ -213,7 +213,7 @@
 				2
 			],
 			"fps": 24,
-			"anim": "singLEFT-cover",
+			"anim": "singLEFT-alt",
 			"loop": false,
 			"name": "dawn cover left"
 		},
@@ -231,7 +231,7 @@
 				2
 			],
 			"fps": 24,
-			"anim": "singDOWN-cover",
+			"anim": "singDOWN-alt",
 			"loop": false,
 			"name": "dawn cover down"
 		},
@@ -249,7 +249,7 @@
 				2
 			],
 			"fps": 24,
-			"anim": "singUP-cover",
+			"anim": "singUP-alt",
 			"loop": false,
 			"name": "dawn cover up"
 		},
@@ -267,7 +267,7 @@
 				2
 			],
 			"fps": 24,
-			"anim": "singRIGHT-cover",
+			"anim": "singRIGHT-alt",
 			"loop": false,
 			"name": "dawn cover right"
 		},

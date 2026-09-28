@@ -18,7 +18,7 @@
 			],
 			"loop": false,
 			"fps": 24,
-			"anim": "singRIGHT-cover",
+			"anim": "singRIGHT-alt",
 			"indices": [
 				0,
 				0,
@@ -36,7 +36,7 @@
 			],
 			"loop": false,
 			"fps": 24,
-			"anim": "singUP-cover",
+			"anim": "singUP-alt",
 			"indices": [
 				0,
 				0,
@@ -54,7 +54,7 @@
 			],
 			"loop": false,
 			"fps": 24,
-			"anim": "singDOWN-cover",
+			"anim": "singDOWN-alt",
 			"indices": [
 				0,
 				0,
@@ -72,7 +72,7 @@
 			],
 			"loop": false,
 			"fps": 24,
-			"anim": "transcover",
+			"anim": "cover",
 			"indices": [],
 			"name": "dtbf cover cover"
 		},
@@ -234,7 +234,7 @@
 				2
 			],
 			"fps": 24,
-			"anim": "singLEFT-cover",
+			"anim": "singLEFT-alt",
 			"loop": false,
 			"name": "dtbf cover left"
 		}

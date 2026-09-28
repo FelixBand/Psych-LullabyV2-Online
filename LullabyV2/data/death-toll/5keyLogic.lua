@@ -123,6 +123,8 @@ function onCreatePost()
             if getPropertyFromGroup('unspawnNotes', i, 'mustPress')
                 and getPropertyFromGroup('unspawnNotes', i, 'noteData') == 2 then
 
+				setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true)
+
                 -- Disable the note RGB shader.
                 setPropertyFromGroup('unspawnNotes', i, 'rgbShader.enabled', false)
 
@@ -136,7 +138,7 @@ function onCreatePost()
 	end
 end
 
-function onSpawnNote(id)
+function onSpawnNote(id) -- Disable RGB shader on middle lane
 	if getPropertyFromGroup('notes', id, 'mustPress')
 		and getPropertyFromGroup('notes', id, 'noteData') == 2 then
 
@@ -146,11 +148,44 @@ function onSpawnNote(id)
 	end
 end
 
-function onUpdatePost()
+function onUpdatePost() -- Flip healthbar logic
     setProperty('iconP1.x',getProperty('healthBar.x') + ((getProperty('healthBar.width') *        getProperty('healthBar.percent') * 0.01) + (150 * getProperty('iconP1.scale.x') - 150) / 2 - 26) - 110)
     setProperty('iconP1.origin.x',240)
     setProperty('iconP1.flipX',true)
     setProperty('iconP2.x',getProperty('healthBar.x') + ((getProperty('healthBar.width') * getProperty('healthBar.percent') * 0.01) - (150 * getProperty('iconP2.scale.x')) / 2 - 26 * 2) + 110)
     setProperty('iconP2.origin.x',-100)
     setProperty('iconP2.flipX',true)
+end
+
+local singAlt = false
+
+function goodNoteHit(id, direction, noteType, isSustainNote)
+	if noteType == 'Bell' then
+		singAlt = true
+		triggerEvent('Alt Idle Animation', 'bf', '-alt')
+		triggerEvent('Alt Idle Animation', 'gf', '-alt')
+		runTimer('bell', 0.5)
+		if not isSustainNote then
+			playAnim('boyfriend', 'cover', true)
+			playAnim('gf', 'cover', true)
+		end
+	end
+
+	playAnim('gf', getProperty('singAnimations')[direction+1], true)
+
+	if singAlt then -- Play alt animations (covering ears) when hitting Bell notes
+		if getProperty('boyfriend.animation.curAnim.name') == getProperty('singAnimations')[direction+1] then
+			playAnim('boyfriend', getProperty('boyfriend.animation.curAnim.name') .. '-alt', true)
+		end
+		if getProperty('gf.animation.curAnim.name') == getProperty('singAnimations')[direction+1] then
+			playAnim('gf', getProperty('gf.animation.curAnim.name') .. '-alt', true)
+		end
+	end
+end
+
+function onTimerCompleted(tag, loops, loopsLeft)
+	if tag == 'bell' then
+		singAlt = false
+		triggerEvent('Alt Idle Animation', 'bf', '')
+	end
 end
