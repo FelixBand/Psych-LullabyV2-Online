@@ -28,6 +28,8 @@ function remapOpponentStrums()
 end
 
 function onCreatePost()
+	setProperty('gfGroup.alpha', 0.0001)
+	setObjectOrder('gfGroup', getObjectOrder('boyfriendGroup') + 1)
 	setProperty('healthBar.flipX', true)
 	if getProperty('playerStrums.length') == 5 then -- if 5 key
 		local centerShift = 80
@@ -119,11 +121,13 @@ function onCreatePost()
         setPropertyFromGroup('playerStrums', 2, 'y', getPropertyFromGroup('playerStrums', 2, 'y') + centerDown) -- shift the center key down a tad, because the texture is too high up
 
 		-- Disable RGB shader on the player's special center lane.
+
         for i = 0, getProperty('unspawnNotes.length') - 1 do
             if getPropertyFromGroup('unspawnNotes', i, 'mustPress')
                 and getPropertyFromGroup('unspawnNotes', i, 'noteData') == 2 then
 
 				setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true)
+				setPropertyFromGroup('unspawnNotes', i, "missHealth", 0.25)
 
                 -- Disable the note RGB shader.
                 setPropertyFromGroup('unspawnNotes', i, 'rgbShader.enabled', false)
@@ -134,6 +138,11 @@ function onCreatePost()
                 -- Disable RGB on the splash too.
                 setPropertyFromGroup('unspawnNotes', i, 'noteSplashData.useRGBShader', false)
             end
+
+			-- Beelze plays his alt animations from this point onward
+			if getPropertyFromGroup('unspawnNotes', i, 'strumTime') >= 102127 and not getPropertyFromGroup('unspawnNotes', i, 'mustPress') then
+				setPropertyFromGroup('unspawnNotes', i, 'noteType', 'Alt Animation')
+			end
         end
 	end
 end
@@ -158,27 +167,28 @@ function onUpdatePost() -- Flip healthbar logic
 end
 
 local singAlt = false
+local bfIdle = ''
 
-function goodNoteHit(id, direction, noteType, isSustainNote)
+function goodNoteHit(id, direction, noteType, isSustainNote) -- this whole system for manually animating p3 could've been entirely avoided if there was a note type for BF and GF to sing simultaneously
 	if noteType == 'Bell' then
 		singAlt = true
-		triggerEvent('Alt Idle Animation', 'bf', '-alt')
-		triggerEvent('Alt Idle Animation', 'gf', '-alt')
+		bfIdle = '-alt'
 		runTimer('bell', 0.5)
 		if not isSustainNote then
 			playAnim('boyfriend', 'cover', true)
 			playAnim('gf', 'cover', true)
 		end
+		triggerEvent('Alt Idle Animation', 'bf', '-alt')
 	end
 
-	playAnim('gf', getProperty('singAnimations')[direction+1], true)
-
-	if singAlt then -- Play alt animations (covering ears) when hitting Bell notes
-		if getProperty('boyfriend.animation.curAnim.name') == getProperty('singAnimations')[direction+1] then
-			playAnim('boyfriend', getProperty('boyfriend.animation.curAnim.name') .. '-alt', true)
-		end
-		if getProperty('gf.animation.curAnim.name') == getProperty('singAnimations')[direction+1] then
-			playAnim('gf', getProperty('gf.animation.curAnim.name') .. '-alt', true)
+	if noteType ~= 'Bell' then
+		triggerEvent('Alt Idle Animation', 'gf', '-disabled')
+		runTimer('allowBFidle', 0.55)
+		if singAlt then -- Play alt animations (covering ears) when hitting Bell notes
+			playAnim('boyfriend', getProperty('singAnimations')[direction+1] .. '-alt', true)
+			playAnim('gf', getProperty('singAnimations')[direction+1] .. '-alt', true)
+		else
+			playAnim('gf', getProperty('singAnimations')[direction+1], true)
 		end
 	end
 end
@@ -187,5 +197,65 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	if tag == 'bell' then
 		singAlt = false
 		triggerEvent('Alt Idle Animation', 'bf', '')
+		bfIdle = ''
 	end
+	if tag == 'allowBFidle' then
+		triggerEvent('Alt Idle Animation', 'gf', bfIdle)
+	end
+	if tag == 'hellBellIdle' then
+		playAnim('hellBell', 'idle', true)
+	end
+end
+
+-- "boyfriend" is actually Dawn and "gf" is actually Boyfriend
+
+local contractProgress = 0
+
+function onEvent(name, value1, value2)
+	if name == 'Bong' then
+		playAnim('hellBell', 'bong', true)
+		cameraShake('game', 0.015, 0.35)
+		runTimer('hellBellIdle', 0.5)
+	end
+	if name == "Beelze Walk" then
+		triggerEvent('Alt Idle Animation', 'dad', '-disabled')
+		playAnim('dad', 'Walk', true)
+	end
+	if name == "Contract Appear" then
+		setProperty('ContractBF.alpha', 1)
+	end
+	if name == "Contract Advance" then
+		contractProgress = contractProgress + 1
+		playAnim('ContractBF', contractProgress)
+		debugPrint(contractProgress)
+		if contractProgress == 10 then
+			setProperty('ContractBF.color', getColorFromHex('FF0000'))
+			doTweenX('contractXscale', 'ContractBF.scale', 0, 1, 'backIn')
+			doTweenY('contractYscale', 'ContractBF.scale', 0, 1, 'backIn')
+			doTweenAlpha('contractAlphaOut', 'ContractBF', 0, 1, 'backIn')
+		end
+	end
+	if name == "Dawn Transform" then
+		triggerEvent('Change Character', 'bf', 'dawn-fading')
+		playAnim('bf', 'transmorph', true)
+	end
+	if name == 'Set Health Icon' then
+		if value1 == '2' then
+			setHealthBarColors('7E5D91', '31B0D1')
+		end
+	end
+end
+
+function onUpdate(elapsed)
+	local fadeProgress = contractProgress * contractProgress / 100
+	if contractProgress > 4 then
+		fadeProgress = fadeProgress + math.sin((getSongPosition() / (stepCrochet * 16)) * math.pi) * (contractProgress / 10) * 0.25
+	end
+	if contractProgress > 9 then
+		fadeProgress = 1
+	end
+	fadeProgress = math.max(0, math.min(1, fadeProgress))
+	setProperty('boyfriendGroup.alpha', 1 - fadeProgress)
+	setProperty('gfGroup.alpha', fadeProgress)
+	setProperty('ContractBF.y', getCharacterY('dad') + 115 + math.sin(((getSongPosition() - 103404.255319149) / 2500) * math.pi) * 10)
 end

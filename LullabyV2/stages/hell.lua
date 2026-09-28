@@ -52,7 +52,7 @@ function onCreate()
 	makeLuaSprite('Pillar',dir..'pil',840, 553);
 	setGraphicSize('Pillar',  getProperty('Pillar.width')* 0.75*2, getProperty('Pillar.height')* 0.75*2)
 
-	makeAnimatedLuaSprite('ContractBF', 'characters/Beelze/ContractBF', getCharacterX('dad')- 232, getCharacterY('dad')+115)
+	makeAnimatedLuaSprite('ContractBF', 'characters/beelze/ContractBF', getCharacterX('dad')- 232, getCharacterY('dad')+115)
     setGraphicSize('ContractBF',  getProperty('ContractBF.width')* 0.95, getProperty('ContractBF.height')* 0.95)
     addAnimationByPrefix('ContractBF', 'idle', 'ContractIdle',24,true)
 	addAnimationByPrefix('ContractBF', '1', 'Contract_BF_01',24,false)
@@ -65,9 +65,15 @@ function onCreate()
 	addAnimationByPrefix('ContractBF', '8', 'Contract_BF_08',24,false)
 	addAnimationByPrefix('ContractBF', '9', 'Contract_BF_09',24,false)
     playAnim('ContractBF','idle')
+	setProperty('ContractBF.alpha', 0.0001)
 
-
-
+	makeAnimatedLuaSprite('hellBell', 'characters/beelze/HellBell', 1260, 580)
+	addAnimationByPrefix('hellBell', 'bong', 'BongLmao', 24, false)
+	addAnimationByPrefix('hellBell', 'idle', 'BellIdle', 24, true)
+	scaleObject('hellBell', 0.7, 0.7)
+	
+	
+	
 	addLuaSprite('Wall', false);
 	addLuaSprite('Lavabottom', false);
 	addLuaSprite('Rocks', false);
@@ -77,6 +83,9 @@ function onCreate()
 	addLuaSprite('Glowright', false);
 	addLuaSprite('Floor', false);
 	addLuaSprite('Roof', false);
+	addLuaSprite('hellBell')
+	addLuaSprite('ContractBF', false);
+	setObjectOrder('ContractBF', getObjectOrder('dadGroup') + 1)
 	addLuaSprite('Pilfor', false);
 	addLuaSprite('Pillar', false);
 
@@ -87,6 +96,10 @@ function onCreate()
 	glowRY=getProperty('Glowright.y')
 	contractY=getProperty('ContractBF.y')
     
+end
+
+function onUpdate(elapsed)
+	setProperty('hellBell.y', 580 + math.sin((os.clock() / 8) * math.pi) * 50)
 end
 
 function onMoveCamera(focus)

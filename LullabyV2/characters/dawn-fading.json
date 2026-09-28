@@ -1,0 +1,139 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				8,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "transmorph",
+			"indices": [],
+			"name": "dawn cover morph"
+		},
+		{
+			"offsets": [
+				5,
+				-6
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "dawn morph idle"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				6,
+				-7
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "dawn morph left",
+			"indices": [
+				0,
+				0,
+				1,
+				1,
+				2,
+				2
+			]
+		},
+		{
+			"loop": false,
+			"offsets": [
+				11,
+				-37
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "dawn morph down",
+			"indices": [
+				0,
+				0,
+				1,
+				1,
+				2,
+				2
+			]
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-1,
+				-8
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "dawn morph right",
+			"indices": [
+				0,
+				0,
+				1,
+				1,
+				2,
+				2
+			]
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-2,
+				11
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "dawn morph up",
+			"indices": [
+				0,
+				0,
+				1,
+				1,
+				2,
+				2
+			]
+		},
+		{
+			"offsets": [
+				6,
+				-7
+			],
+			"indices": [
+				0,
+				0,
+				1,
+				1,
+				2,
+				2
+			],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "dawn morph left"
+		}
+	],
+	"vocals_file": null,
+	"results_character": null,
+	"no_antialiasing": false,
+	"image": "characters/dawn/dawn",
+	"position": [
+		-300,
+		50
+	],
+	"speaker": null,
+	"healthicon": "dawn",
+	"flip_x": true,
+	"healthbar_colors": [
+		200,
+		200,
+		200
+	],
+	"camera_position": [
+		-300,
+		-200
+	],
+	"sing_duration": 6.1,
+	"dead_character": null,
+	"scale": 1.2
+}
