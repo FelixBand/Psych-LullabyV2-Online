@@ -1,6 +1,6 @@
 {
 	"name": "Hypno's Lullaby V2",
-	"description": "Psych Online compatible recreation by FelixBand",
+	"description": "Psych Online compatible port by FelixBand",
 	"restart":false,
 	"color": [170, 0, 255]
 }
