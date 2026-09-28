@@ -178,3 +178,7 @@ end
 function onResume()
 	tranceSound()
 end
+
+function onEndSong()
+	close()
+end
