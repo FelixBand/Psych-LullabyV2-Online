@@ -3,15 +3,11 @@ local newZoom=0
 local SongStart=false
 function onEvent(eventName, value1, value2)
     if eventName=='MissingnoZoomIn' then
-        runTimer('Delay',(((timestep / 4) * stepCrochet) / 1000))
+        doTweenY('Ins','CameraSpeedZoomIns', 1, 30,'expoIn')
+        doTweenX('Desaturation','Desaturation', 1, 30,'expoIn')
     end
 end
-function onTimerCompleted(tag, loops, loopsLeft)
-    if tag=='Delay' then
-        doTweenY('Ins','CameraSpeedZoomIns',newZoom,((timestep * (3 / 4)) * stepCrochet) / 1000,'expoIn')
-        doTweenX('Desaturation','Desaturation',newZoom,((timestep * (3 / 4)) * stepCrochet) / 1000,'expoIn')
-    end
-end
+
 function onTweenCompleted(tag)
     if tag=='Desaturation' then
         setProperty('defaultCamZoom',0.8)
@@ -23,7 +19,6 @@ function onSongStart()
     makeLuaSprite('CameraSpeedZoomIns',nil,0,0)
     makeLuaSprite('Desaturation',nil,0,0)
     if shadersEnabled then
-    initLuaShader('desaturation')
 	setSpriteShader('background', 'desaturation')
 	setSpriteShader('missingnoOcean', 'desaturation')
 	setSpriteShader('ground', 'desaturation')
