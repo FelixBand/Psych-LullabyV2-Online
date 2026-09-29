@@ -1,0 +1,56 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				-160
+			],
+			"anim": "firstDeath",
+			"fps": 24,
+			"name": "bf_misngno_death",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				0,
+				-160
+			],
+			"anim": "deathLoop",
+			"fps": 24,
+			"name": "bf_misngno_death0061",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				-160
+			],
+			"anim": "deathConfirm",
+			"fps": 24,
+			"name": "bf_misngno_death0061",
+			"indices": []
+		}
+	],
+	"no_antialiasing": true,
+	"image": "characters/death/BF_Death_Missingno",
+	"position": [
+		0,
+		150
+	],
+	"healthicon": "bf-pixel",
+	"flip_x": true,
+	"healthbar_colors": [
+		123,
+		214,
+		246
+	],
+	"camera_position": [
+		0,
+		240
+	],
+	"sing_duration": 4,
+	"scale": 6
+}

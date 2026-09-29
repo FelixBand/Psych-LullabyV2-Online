@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="Mike_Bed.png">
+<SubTexture name="Mike_Bed DOWN0000" x="0" y="0" width="1034" height="521" frameX="0" frameY="-91" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed DOWN0001" x="1034" y="0" width="1034" height="521" frameX="0" frameY="-91" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed DOWN0002" x="0" y="521" width="1034" height="521" frameX="0" frameY="-91" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed idle0000" x="984" y="2552" width="977" height="461" frameX="-58" frameY="-149" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed idle0001" x="1961" y="2552" width="976" height="461" frameX="-59" frameY="-149" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed idle0002" x="3102" y="0" width="976" height="460" frameX="-59" frameY="-149" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed idle0003" x="3102" y="460" width="976" height="460" frameX="-59" frameY="-149" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed LEFT0000" x="1034" y="521" width="1034" height="521" frameX="0" frameY="-91" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed LEFT0001" x="0" y="1042" width="1034" height="521" frameX="0" frameY="-91" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed LEFT0002" x="1034" y="1042" width="1034" height="521" frameX="0" frameY="-91" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed MissDOWN0000" x="0" y="2084" width="984" height="468" frameX="-55" frameY="-144" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed MissLEFT0000" x="984" y="2084" width="984" height="468" frameX="-55" frameY="-144" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed MissRIGHT0000" x="1968" y="2084" width="984" height="468" frameX="-55" frameY="-144" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed MissUp0000" x="0" y="2552" width="984" height="468" frameX="-55" frameY="-144" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed RIGHT0000" x="2068" y="0" width="1034" height="521" frameX="0" frameY="-91" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed RIGHT0001" x="2068" y="521" width="1034" height="521" frameX="0" frameY="-91" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed RIGHT0002" x="2068" y="1042" width="1034" height="521" frameX="0" frameY="-91" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed UP0000" x="0" y="1563" width="1034" height="521" frameX="0" frameY="-91" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed UP0001" x="1034" y="1563" width="1034" height="521" frameX="0" frameY="-91" frameWidth="1269" frameHeight="769" />
+<SubTexture name="Mike_Bed UP0002" x="2068" y="1563" width="1034" height="521" frameX="0" frameY="-91" frameWidth="1269" frameHeight="769" />
+</TextureAtlas>

@@ -1,0 +1,162 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "Mike_Bed idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				1,
+				0
+			],
+			"anim": "singDOWNmiss",
+			"fps": 24,
+			"name": "Mike_Bed MissDOWN",
+			"indices": [
+				0,
+				0
+			]
+		},
+		{
+			"loop": false,
+			"offsets": [
+				1,
+				0
+			],
+			"anim": "singRIGHTmiss",
+			"fps": 24,
+			"name": "Mike_Bed MissRIGHT",
+			"indices": [
+				0,
+				0
+			]
+		},
+		{
+			"loop": false,
+			"offsets": [
+				1,
+				0
+			],
+			"anim": "singLEFTmiss",
+			"fps": 24,
+			"name": "Mike_Bed MissLEFT",
+			"indices": [
+				0,
+				0
+			]
+		},
+		{
+			"loop": false,
+			"offsets": [
+				1,
+				0
+			],
+			"anim": "singUPmiss",
+			"fps": 24,
+			"name": "Mike_Bed MissUp",
+			"indices": [
+				0,
+				0
+			]
+		},
+		{
+			"offsets": [
+				1,
+				0
+			],
+			"indices": [
+				2,
+				2,
+				1,
+				1,
+				0,
+				0
+			],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "Mike_Bed LEFT"
+		},
+		{
+			"offsets": [
+				1,
+				0
+			],
+			"indices": [
+				2,
+				2,
+				1,
+				1,
+				0,
+				0
+			],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "Mike_Bed DOWN"
+		},
+		{
+			"offsets": [
+				1,
+				0
+			],
+			"indices": [
+				2,
+				2,
+				1,
+				1,
+				0,
+				0
+			],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "Mike_Bed UP"
+		},
+		{
+			"offsets": [
+				1,
+				0
+			],
+			"indices": [
+				2,
+				2,
+				1,
+				1,
+				0,
+				0
+			],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "Mike_Bed RIGHT"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/mike/Mike_Bed",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "mike",
+	"flip_x": true,
+	"healthbar_colors": [
+		248,
+		143,
+		60
+	],
+	"camera_position": [
+		-300,
+		-50
+	],
+	"sing_duration": 6.1,
+	"scale": 0.8
+}
