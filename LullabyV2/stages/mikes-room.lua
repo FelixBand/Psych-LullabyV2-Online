@@ -1,5 +1,9 @@
-local lowHealthFX=false
-local Path='stages/mikes-room/images/'
+local lowHealthFX = false
+local strumShakeActive = false
+local strumShakeTime = 0
+local strumShakeDuration = 0.1
+local pussyMode = false
+local Path = 'stages/mikes-room/images/'
 function onCreate()
 	setProperty('skipCountdown',true)
 	consistentResize=1
@@ -62,13 +66,40 @@ function StageStuff(tag)
     end
 	setProperty(tag..'.visible',false)
 end
+
 function onUpdate(elapsed)
     if lowHealthFX then
 		cameraShake('hud',0.002, 0.01)
 		cameraShake('game',0.002, 0.01)
 	end
-	
+
+	if strumShakeActive then
+		strumShakeTime = strumShakeTime - elapsed
+
+		local strumCount = getProperty('playerStrums.length')
+
+		if strumShakeTime <= 0 then
+			strumShakeTime = 0
+			strumShakeActive = false
+
+			-- Reset every strum to its normal offset.
+			for i = 0, strumCount - 1 do
+				setPropertyFromGroup('playerStrums', i, 'offset.x', 23)
+				setPropertyFromGroup('playerStrums', i, 'offset.y', 23)
+			end
+		else
+			-- One shared random offset for ALL opponent strums.
+			local shakeX = getRandomInt(20, 26)
+			local shakeY = getRandomInt(20, 26)
+
+			for i = 0, strumCount - 1 do
+				setPropertyFromGroup('playerStrums', i, 'offset.x', shakeX)
+				setPropertyFromGroup('playerStrums', i, 'offset.y', shakeY)
+			end
+		end
+	end
 end
+
 function onUpdatePost(elapsed)
 	if dadName~='StevenFp' then
 		setProperty('iconP2.animation.curAnim.curFrame',0)
@@ -90,7 +121,7 @@ function onEvent(eventName, value1, value2)
         setProperty('laalmuada.visible',false)
         triggerEvent('Change Character', 'dad', 'StevenFp')
         triggerEvent('Change Character', 'bf', 'MikeFp')
-        if not getDataFromSave('HypnosPref','Pussy mode',false) then
+        if not pussyMode then
             strangling = true
         end
         
@@ -110,10 +141,18 @@ function onEvent(eventName, value1, value2)
 	end
     if eventName=='Steven Goodbye' then
 		lowHealthFX = not lowHealthFX
+		--strumShakeActive = true
 
 		if lowHealthFX then
 			setProperty('camGame.visible',false)
-			setProperty('camHUD.visible',false)
+			
+			setProperty('healthBar.visible', false)
+			setProperty('timeBar.visible', false)
+			setProperty('timeTxt.visible', false)
+			setProperty('scoreTxt.visible', false)
+			setProperty('iconP1.visible', false)
+			setProperty('iconP2.visible', false)
+
             runTimer('Spawn',1)
 
 			setProperty('dad.alpha',0.45)
@@ -143,7 +182,12 @@ end
 function onTimerCompleted(tag, loops, loopsLeft)
     if tag=='Spawn' then
 		setProperty('camGame.visible',true)
-		setProperty('camHUD.visible',true)
+		setProperty('healthBar.visible', true)
+		setProperty('timeBar.visible', true)
+		setProperty('timeTxt.visible', true)
+		setProperty('scoreTxt.visible', true)
+		setProperty('iconP1.visible', true)
+		setProperty('iconP2.visible', true)
 	end
 	if tag == 'allowGFidle' then
 		triggerEvent('Alt Idle Animation', 'gf', '')
