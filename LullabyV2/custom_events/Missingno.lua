@@ -1,51 +1,156 @@
-function onEvent(eventName, value1, value2)
-    if eventName=='Missingno' then
-        if not lowQuality then
-            setShaderFloat('FiltreRef','prob',0.25)
-            setShaderFloat('FiltreRef','time',getSongPosition()/ 1000)
-        end
-        if not isPussy then
-            for i=0,3 do
-                setPropertyFromGroup('strumLineNotes',i,'alpha',0)
-            end
-    
-            local isDownscroll=getRandomBool(50)
-            for i=4,7 do
-                setPropertyFromGroup('strumLineNotes',i,'downScroll',isDownscroll)
-            end
-            for i=4,7 do
-                if i==4 then
-                setPropertyFromGroup('strumLineNotes',i,'x',getRandomInt(100, screenWidth / 3)- 25)
-                if isDownscroll then
-                    setPropertyFromGroup('strumLineNotes',i,'y',getRandomInt(screenHeight / 2,screenHeight-200))
-                else
-                    setPropertyFromGroup('strumLineNotes',i,'y',getRandomInt(100, 300))
-                end
-                else
-                    local futurex = getRandomInt(getPropertyFromGroup('strumLineNotes',i-1,'x') + 80,getPropertyFromGroup('strumLineNotes',i-1,'x')+400)
-                    if futurex>screenWidth-100 then
-                        futurex=screenWidth-100
-                    end
-                    setPropertyFromGroup('strumLineNotes',i,'x',futurex)
-                    setPropertyFromGroup('strumLineNotes',i,'y',getRandomInt(getPropertyFromGroup('strumLineNotes',4,'y')- 100,getPropertyFromGroup('strumLineNotes',4,'y')+ 100))
-                end
-    
-            end
-        end
+local isPussy = false
 
-    end
-end
-function onUpdate(elapsed)
-    for i=0,getProperty('notes.length')-1 do
-        if getPropertyFromGroup('notes',i,'mustPress') then
-            if getPropertyFromGroup('notes',i,'isSustainNote') then
-                setPropertyFromGroup('notes',i,'flipY',getPropertyFromGroup('playerStrums',getPropertyFromGroup('notes',i,'noteData'),'downScroll'))
-            end
-        end
-    end
-end
 function onCreate()
-    initSaveData('HypnosPref')
-    isPussy=getDataFromSave('HypnosPref','Pussy mode',false)
-    --callOnLuas('SetShader')
+	initSaveData('HypnosPref')
+	isPussy = getDataFromSave('HypnosPref', 'Pussy mode', false)
+end
+
+function onEvent(eventName, value1, value2)
+	if eventName ~= 'Missingno' then
+		return
+	end
+
+	-- Shader glitch
+	if not lowQuality then
+		setShaderFloat('FiltreRef', 'prob', 0.25)
+		setShaderFloat('FiltreRef', 'time', getSongPosition() / 1000)
+	end
+
+	if isPussy then
+		return
+	end
+
+	-- Determine which strum group is actually playable.
+	local playerGroup
+
+	if playsAsBF() then
+		playerGroup = 'playerStrums'
+	else
+		playerGroup = 'opponentStrums'
+	end
+
+	local keyCount = getProperty(playerGroup .. '.length')
+
+	-- Hide the other side.
+	local otherGroup
+
+	if playsAsBF() then
+		otherGroup = 'opponentStrums'
+	else
+		otherGroup = 'playerStrums'
+	end
+
+	for i = 0, getProperty(otherGroup .. '.length') - 1 do
+		setPropertyFromGroup(otherGroup, i, 'alpha', 0)
+	end
+
+	-- Random downscroll state for the playable side.
+	local isDownscroll = getRandomBool(50)
+
+	for i = 0, keyCount - 1 do
+		setPropertyFromGroup(
+			playerGroup,
+			i,
+			'downScroll',
+			isDownscroll
+		)
+	end
+
+	-- Randomize the playable strums.
+	for i = 0, keyCount - 1 do
+
+		-- First key gets a completely random starting position.
+		if i == 0 then
+			local randomX = getRandomInt(100, screenWidth / 3) - 25
+			local randomY
+
+			if isDownscroll then
+				randomY = getRandomInt(
+					screenHeight / 2,
+					screenHeight - 200
+				)
+			else
+				randomY = getRandomInt(100, 300)
+			end
+
+			setPropertyFromGroup(playerGroup, i, 'x', randomX)
+			setPropertyFromGroup(playerGroup, i, 'y', randomY)
+
+		else
+			-- Each following key is placed somewhere to the
+			-- right of the previous key.
+			local previousX = getPropertyFromGroup(
+				playerGroup,
+				i - 1,
+				'x'
+			)
+
+			local futureX = getRandomInt(
+				previousX + 80,
+				previousX + 400
+			)
+
+			if futureX > screenWidth - 100 then
+				futureX = screenWidth - 100
+			end
+
+			local firstY = getPropertyFromGroup(
+				playerGroup,
+				0,
+				'y'
+			)
+
+			local randomY = getRandomInt(
+				firstY - 100,
+				firstY + 100
+			)
+
+			setPropertyFromGroup(
+				playerGroup,
+				i,
+				'x',
+				futureX
+			)
+
+			setPropertyFromGroup(
+				playerGroup,
+				i,
+				'y',
+				randomY
+			)
+		end
+	end
+end
+
+function onUpdate(elapsed)
+	local playableMustPress = playsAsBF()
+
+	for i = 0, getProperty('notes.length') - 1 do
+		local mustPress = getPropertyFromGroup('notes', i, 'mustPress')
+
+		if mustPress == playableMustPress
+			and getPropertyFromGroup('notes', i, 'isSustainNote') then
+
+			local noteData = getPropertyFromGroup(
+				'notes',
+				i,
+				'noteData'
+			)
+
+			local strumGroup = playsAsBF()
+				and 'playerStrums'
+				or 'opponentStrums'
+
+			setPropertyFromGroup(
+				'notes',
+				i,
+				'flipY',
+				getPropertyFromGroup(
+					strumGroup,
+					noteData,
+					'downScroll'
+				)
+			)
+		end
+	end
 end
