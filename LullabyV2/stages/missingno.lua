@@ -63,7 +63,7 @@ function onCreatePost()
 	setSpriteShader('boyfriend','individualGlitches')
 	setShaderFloat('boyfriend','binaryIntensity',1000)
 
-	setProperty('iconP2.alpha', 0.0001)
+	setProperty('iconP2.visible', false)
 	for i = 0,getProperty('opponentStrums.length') - 1 do
         setPropertyFromGroup('strumLineNotes',i,'visible',false)
     end
@@ -124,7 +124,7 @@ function onEvent(eventName, value1, value2)
 		triggerEvent('Camera Follow Pos', '', '')
 		addLuaScript('scripts/camFollow')
 
-		setProperty('iconP2.alpha', 1)
+		setProperty('iconP2.visible', true)
         setShaderFloat('FiltreRef','intensityChromatic',0)
         setProperty('CameraSpeedZoomIns.y',0)
 
@@ -154,7 +154,7 @@ function onEvent(eventName, value1, value2)
 	if eventName == 'MissingnoZoomIn' then
 		debugPrint('I am zooming right now')
 		doTweenZoom('camIn','camGame', 1, 28, 'expoIn')
-		doTweenX('camRight','camFollowPosition', 600, 28, 'expoIn')
+		doTweenX('camRight','camFollowPosition', 640, 28, 'expoIn')
 		doTweenY('camDown','camFollowPosition', 450, 28, 'expoIn')
 	end
     if eventName=='Missingno Tempo Change' then
