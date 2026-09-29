@@ -13,13 +13,21 @@ function onTimerCompleted(tag)
     if tag == 'startsong' then
         startCountdown()
         setProperty('dadGroup.visible', true)
-        characterPlayAnim('dad', 'fadeIn', true)
+        playAnim('dad', 'fadeIn', true)
         if playsAsBF() then
             for i = 0,getProperty('opponentStrums.length') - 1 do
                 setPropertyFromGroup('opponentStrums', i, 'x', -5000)
             end
         end
     end
+    if tag == 'spawnCNotes' then
+        spawnCelebiNotes()
+	end
+    if tag == 'celebiNotesFadeOut' then
+        for i = 1, 3 do
+            doTweenAlpha('CnoteOut' .. i, 'celebiNote'..i, 0, 1, 'linear')
+        end
+	end
 end
 
 function onCreate()
@@ -28,12 +36,13 @@ function onCreate()
 
     addCharacterToList('gold-headless', 'dad')
 
-    makeAnimatedLuaSprite('celebi', 'characters/gold/Celebi_Assets', 400, 200)
-    addAnimationByPrefix('celebi', 'idle', 'Celebi Spawn Full', 24, true)
-    --addLuaSprite('celebi')
+    makeAnimatedLuaSprite('celebi', 'characters/gold/Celebi_Assets', 570, 100)
+    addAnimationByPrefix('celebi', 'idle', 'Celebi Spawn Full', 24, false)
+    setProperty('celebi.alpha', 0.0001)
+    addLuaSprite('celebi')
 
-    makeAnimatedLuaSprite('celebiNote', 'characters/gold/Note_asset', 600, 200)
-    addAnimationByIndices('celebiNote', 'idle', 'Note Full', '18', 1)
+    makeAnimatedLuaSprite('celebiNoteExample', 'characters/gold/Note_asset', 600, 200)
+    addAnimationByIndices('celebiNoteExample', 'idle', 'Note Full', '18', 1)
     --addLuaSprite('celebiNote', true)
 
     makeAnimatedLuaSprite('no more', 'characters/gold/GOLD_NO_MORE', getProperty('dadGroup.x') - 73, getProperty('dadGroup.y') - 112)
@@ -47,6 +56,101 @@ function onCreate()
     setProperty('headrip.alpha', 0)
     scaleObject('headrip', 1.3, 1.3)
     addLuaSprite('headrip')
+
+    -- UI
+    makeLuaSprite('celebiHealth', '', getProperty('healthBar.x'), getProperty('healthBar.y'))
+
+	makeGraphic('celebiHealth', getProperty('healthBarBG.width') - 2, getProperty('healthBarBG.height') - 2, 'FFFFFF')
+    setProperty('celebiHealth.offset.x', -1)
+    setProperty('celebiHealth.offset.y', -1)
+
+	setObjectCamera('celebiHealth', 'hud')
+    setObjectOrder('celebiHealth')
+	setProperty('celebiHealth.alpha', 1)
+	addLuaSprite('celebiHealth', true)
+end
+
+local celebiNotes = {}
+local celebiNotesActive = false
+local celebiNoteTime = 0
+local celebiNoteStartAngle = 0
+local celebiDamage = 0
+
+function spawnCelebiNotes()
+	celebiNotesActive = true
+	celebiNoteTime = 0
+
+	-- Random starting direction.
+	celebiNoteStartAngle = getRandomFloat(0, math.pi * 2)
+
+	local celebiX = getProperty('celebi.x') + 140
+	local celebiY = getProperty('celebi.y') + 140
+
+	for i = 1, 3 do
+		local tag = 'celebiNote' .. i
+        removeLuaSprite(tag, true)
+
+		makeAnimatedLuaSprite(tag, 'characters/gold/Note_asset', celebiX, celebiY)
+	    addAnimationByIndices(tag, 'idle', 'Note Full', '18', 1)
+        scaleObject(tag, 0.75, 0.75)
+
+		playAnim(tag, 'idle', true)
+		addLuaSprite(tag, true)
+
+		celebiNotes[i] = tag
+	end
+
+    runTimer('celebiNotesFadeOut', 1)
+end
+
+local celebiHealthSubtract = 0
+
+function onEvent(name, value1, value2)
+    if name == 'Celebi' then
+        setProperty('celebi.alpha', 1)
+        setProperty('celebi.x', value2)
+        playAnim('celebi', 'idle', true)
+        runTimer('spawnCNotes', 0.5)
+
+        -- In this overengineered piece the right portion of the health bar (bf's bar) gets scaled down
+        -- and offset to the left to create a gap in the healthbar, representing the floor of the
+        -- minimum amount of health you may have.
+        celebiHealthSubtract = tonumber(value1)
+        scale = 1 - (value1 / 2)
+        setProperty('healthBar.rightBar.scale.x', scale)
+        -- Shift to the left by half of the scaled-down difference
+        setProperty('healthBar.rightBar.offset.x', (getProperty('healthBar.rightBar.width') * (1 - scale)) / 2)
+    end
+end
+
+function onUpdate(elapsed)
+    if getProperty('health') < celebiHealthSubtract then
+        setProperty('health', -1)
+    end
+
+
+	if celebiNotesActive then
+		celebiNoteTime = celebiNoteTime + elapsed
+
+		local celebiX = getProperty('celebi.x') + 140
+		local celebiY = getProperty('celebi.y') + 140
+
+		local angleSpeed = 3.5
+		local radiusSpeed = 180
+
+		local radius = celebiNoteTime * radiusSpeed
+		local angle = celebiNoteStartAngle + celebiNoteTime * angleSpeed
+
+		for i = 1, 3 do
+			local noteAngle = angle + ((i - 1) * (math.pi * 2 / 3))
+
+			local x = celebiX + math.cos(noteAngle) * radius
+			local y = celebiY + math.sin(noteAngle) * radius
+
+			setProperty(celebiNotes[i] .. '.x', x)
+			setProperty(celebiNotes[i] .. '.y', y)
+		end
+	end
 end
 
 function onCreatePost()
@@ -72,8 +176,6 @@ function onStepHit()
         triggerEvent('Change Character', 'dad', 'gold-headless')
         setProperty('dadGroup.visible', true)
         setProperty('defaultCamZoom', 0.7)
-    elseif curStep == 16 then
-        playAnim('celebi', 'spawn', true)
     end
 end
 
