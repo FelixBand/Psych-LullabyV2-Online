@@ -1,7 +1,4 @@
 local lowHealthFX = false
-local strumShakeActive = false
-local strumShakeTime = 0
-local strumShakeDuration = 0.1
 local pussyMode = false
 local Path = 'stages/mikes-room/images/'
 function onCreate()
@@ -69,34 +66,8 @@ end
 
 function onUpdate(elapsed)
     if lowHealthFX then
-		cameraShake('hud',0.002, 0.01)
-		cameraShake('game',0.002, 0.01)
-	end
-
-	if strumShakeActive then
-		strumShakeTime = strumShakeTime - elapsed
-
-		local strumCount = getProperty('playerStrums.length')
-
-		if strumShakeTime <= 0 then
-			strumShakeTime = 0
-			strumShakeActive = false
-
-			-- Reset every strum to its normal offset.
-			for i = 0, strumCount - 1 do
-				setPropertyFromGroup('playerStrums', i, 'offset.x', 23)
-				setPropertyFromGroup('playerStrums', i, 'offset.y', 23)
-			end
-		else
-			-- One shared random offset for ALL opponent strums.
-			local shakeX = getRandomInt(20, 26)
-			local shakeY = getRandomInt(20, 26)
-
-			for i = 0, strumCount - 1 do
-				setPropertyFromGroup('playerStrums', i, 'offset.x', shakeX)
-				setPropertyFromGroup('playerStrums', i, 'offset.y', shakeY)
-			end
-		end
+		cameraShake('hud',0.0015, 0.01)
+		cameraShake('game',0.0015, 0.01)
 	end
 end
 
@@ -141,7 +112,6 @@ function onEvent(eventName, value1, value2)
 	end
     if eventName=='Steven Goodbye' then
 		lowHealthFX = not lowHealthFX
-		--strumShakeActive = true
 
 		if lowHealthFX then
 			setProperty('camGame.visible',false)
