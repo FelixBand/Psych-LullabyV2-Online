@@ -45,6 +45,13 @@ function onCreatePost()
 	setProperty('camHUD.alpha', 0.0001)
 	setProperty('gf.alpha', 0.0001)
 	setObjectOrder('gfGroup', getObjectOrder('boyfriendGroup') + 1)
+
+	for i = 0, getProperty('unspawnNotes.length') - 1 do
+		if getPropertyFromGroup('unspawnNotes', i, 'mustPress') and not getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
+			setPropertyFromGroup('unspawnNotes', i, "hitHealth", 0.035)
+		end
+	end
+
 end
 
 function onGameOverStart()
@@ -68,14 +75,6 @@ function onUpdate(elapsed)
     if lowHealthFX then
 		cameraShake('hud',0.0015, 0.01)
 		cameraShake('game',0.0015, 0.01)
-	end
-end
-
-function onUpdatePost(elapsed)
-	if dadName~='StevenFp' then
-		setProperty('iconP2.animation.curAnim.curFrame',0)
-	else
-		setProperty('iconP2.animation.curAnim.curFrame',1)
 	end
 end
 
@@ -175,6 +174,14 @@ function onBeatHit()
     if lowHealthFX then
         setProperty('redOverlay.alpha',0.85)
 		doTweenAlpha('redOverlay','redOverlay',0.65,0.25,'quadInOut')
+	end
+end
+
+function onStepHit()
+	if strangling then
+		if getProperty('health') > 0.3 then
+			setProperty('health', getProperty('health') - 0.02)
+		end
 	end
 end
 
