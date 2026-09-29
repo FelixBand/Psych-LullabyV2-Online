@@ -207,6 +207,7 @@ end
 
 function onCreatePost()
 	setProperty('camHUD.zoom', 0.6)
+	setProperty('camGame.zoom', 0.55)
 	setProperty('camHUD.alpha', 0.0001)
 	setProperty('gfGroup.alpha', 0.0001)
 	setObjectOrder('gfGroup', getObjectOrder('boyfriendGroup') + 1)
@@ -277,6 +278,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		doTweenX('dsInX', 'ds.scale', getProperty('ds.scale.x') + 0.4, 1.5, 'backIn')
 		doTweenY('dsInY', 'ds.scale', getProperty('ds.scale.y') + 0.4, 1.5, 'backIn')
 		doTweenZoom('hudIn', 'camHUD', 1, 1.5, 'backIn')
+		doTweenZoom('gameIn', 'camGame', 0.75, 1.5, 'backIn')
 	end
 	if tag == 'FUCKING RUN THE FUCKING CODE BRO??' then
 		setupStrums()
@@ -376,7 +378,7 @@ function onUpdate(elapsed)
 	setProperty('gfGroup.alpha', fadeProgress)
 	setProperty('ContractBF.y', getCharacterY('dad') + 115 + math.sin(((getSongPosition() - 103404.255319149) / 2500) * math.pi) * 10)
 
-	if curBeat > 582 then
+	if curBeat > 582 or curBeat < 7 then
 		setProperty('camZooming', false)
 	end
 end
