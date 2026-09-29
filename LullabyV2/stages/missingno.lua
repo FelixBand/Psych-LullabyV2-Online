@@ -41,7 +41,6 @@ function onCreate()
 
 	precacheSound('missingnospawn')
 
-	initLuaShader('individualGlitches')
 	SetShader()
 end
 

@@ -6,6 +6,24 @@ uniform float amplitude = -0.1;
 uniform float frequency = 8.0;
 
 void main() {
-    vec4 desatTexture = texture2D(bitmap, vec2(openfl_TextureCoordv.x + sin((openfl_TextureCoordv.y * frequency) + distortionTime) * amplitude, openfl_TextureCoordv.y));
-    gl_FragColor = vec4(mix(vec3(dot(desatTexture.xyz, vec3(.2126, .7152, .0722))), desatTexture.xyz, desaturationAmount), desatTexture.a);
+    vec2 uv = openfl_TextureCoordv.xy;
+
+    float offset = sin((uv.y * frequency) + distortionTime) * amplitude;
+
+    vec4 texColor = texture2D(
+        bitmap,
+        vec2(uv.x + offset, uv.y)
+    );
+
+    float luminance = dot(
+        texColor.rgb,
+        vec3(0.2126, 0.7152, 0.0722)
+    );
+
+    vec3 desaturated = vec3(luminance);
+
+    gl_FragColor = vec4(
+        mix(desaturated, texColor.rgb, desaturationAmount),
+        texColor.a
+    );
 }
