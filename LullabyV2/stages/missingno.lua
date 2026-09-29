@@ -46,11 +46,13 @@ function onCreate()
 end
 
 function onCreatePost()
+	removeLuaScript('scripts/camFollow')
+
 	setProperty('dad.visible',false)
 	setSpriteShader('boyfriend','individualGlitches')
 	setShaderFloat('boyfriend','binaryIntensity',1000)
 
-	setProperty('iconP2.visible',false)
+	setProperty('iconP2.alpha', 0.0001)
 	for i = 0,getProperty('opponentStrums.length') - 1 do
         setPropertyFromGroup('strumLineNotes',i,'visible',false)
     end
@@ -63,9 +65,13 @@ local curFrame=0
 local endGlitching=false
 local startGlitching=false
 local glitchAmount=0
+
+camStartingPos = {'500', '370'}
+
 function onUpdate(elapsed)
-	if curBeat < 100 then
+	if curBeat < 97 then
 		setProperty('camZooming', false)
+		triggerEvent('Camera Follow Pos', '500', '370')
 	end
 
 
@@ -101,7 +107,22 @@ function onUpdate(elapsed)
 end
 
 function onEvent(eventName, value1, value2)
+	if eventName == 'Hud Fade' then
+		debugPrint('name: ' .. eventName .. ' value1: '  .. value1 .. ' value2: ' .. value2)
+		cancelTween('hudFade')
+		doTweenAlpha('hudFade', 'camHUD', value1, (stepCrochet / 1000) * value2, 'linear')
+	end
 	if eventName=='MissingnoIntro' then
+		cancelTween('Ins')
+		cancelTween('Desaturation')
+		
+		triggerEvent('Camera Follow Pos', '', '')
+		addLuaScript('scripts/camFollow')
+
+		setProperty('iconP2.alpha', 1)
+        setShaderFloat('FiltreRef','intensityChromatic',0)
+        setProperty('CameraSpeedZoomIns.y',0)
+
         setProperty('dad.visible',true)
         playSound('missingnospawn',1)
         playAnim('dad','Intro',true)
@@ -160,5 +181,13 @@ end
 function onTweenCompleted(tag)
     if tag=='Glitch' then
         endGlitching=true
+    end
+end
+
+function onMoveCamera(focus)
+    if focus == 'boyfriend' then
+        setProperty('defaultCamZoom', 0.75)
+    elseif focus == 'dad' then
+       setProperty('defaultCamZoom', 0.65)
     end
 end

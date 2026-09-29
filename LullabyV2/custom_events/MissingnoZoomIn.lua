@@ -8,13 +8,6 @@ function onEvent(eventName, value1, value2)
     end
 end
 
-function onTweenCompleted(tag)
-    if tag=='Desaturation' then
-        setProperty('defaultCamZoom',0.8)
-        setShaderFloat('FiltreRef','intensityChromatic',0)
-        setProperty('CameraSpeedZoomIns.y',0)
-    end
-end
 function onSongStart()
     makeLuaSprite('CameraSpeedZoomIns',nil,0,0)
     makeLuaSprite('Desaturation',nil,0,0)
