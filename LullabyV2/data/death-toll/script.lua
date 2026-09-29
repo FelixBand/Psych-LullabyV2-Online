@@ -275,8 +275,8 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	end
 	if tag == 'startSong' then
 		startCountdown()
-		doTweenX('dsInX', 'ds.scale', getProperty('ds.scale.x') + 0.4, 1.5, 'backIn')
-		doTweenY('dsInY', 'ds.scale', getProperty('ds.scale.y') + 0.4, 1.5, 'backIn')
+		doTweenX('dsInX', 'ds.scale', getProperty('ds.scale.x') + 0.45, 1.5, 'backIn')
+		doTweenY('dsInY', 'ds.scale', getProperty('ds.scale.y') + 0.45, 1.5, 'backIn')
 		doTweenZoom('hudIn', 'camHUD', 1, 1.5, 'backIn')
 		doTweenZoom('gameIn', 'camGame', 0.75, 1.5, 'backIn')
 	end
