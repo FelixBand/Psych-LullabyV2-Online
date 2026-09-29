@@ -29,6 +29,11 @@ function onCreate()
             ]);
         ]]);
     end
+
+	precacheImage('UI/base/hypno/Extras')
+    precacheImage('UI/base/hypno/StaticHypno')
+    precacheImage('UI/base/hypno/Pendelum_Phase2')
+    precacheImage('UI/base/hypno/Psyshock')
 end
 
 function setupStrums()
