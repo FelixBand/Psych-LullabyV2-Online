@@ -42,7 +42,19 @@ function onCreate()
 	precacheSound('missingnospawn')
 
 	SetShader()
+
+	makeLuaSprite('camFollowPosition', '', 500, 370)
 end
+
+local dadY=nil
+local Change=false
+local LetterCrazy=false
+local curFrame=0
+local endGlitching=false
+local startGlitching=false
+local glitchAmount=0
+
+local camFollowPosition = {'0', '0'}
 
 function onCreatePost()
 	removeLuaScript('scripts/camFollow')
@@ -57,20 +69,14 @@ function onCreatePost()
     end
 end
 
-local dadY=nil
-local Change=false
-local LetterCrazy=false
-local curFrame=0
-local endGlitching=false
-local startGlitching=false
-local glitchAmount=0
-
-camStartingPos = {'500', '370'}
-
 function onUpdate(elapsed)
-	if curBeat < 97 then
+	if curBeat < 95 then
+		camFollowPosition = {tostring(getProperty('camFollowPosition.x')), tostring(getProperty('camFollowPosition.y'))}
+		debugPrint(camFollowPosition)
 		setProperty('camZooming', false)
-		triggerEvent('Camera Follow Pos', '500', '370')
+		triggerEvent('Camera Follow Pos', camFollowPosition[1], camFollowPosition[2])
+	else
+		triggerEvent('Camera Follow Pos', '', '')
 	end
 
 
@@ -148,6 +154,8 @@ function onEvent(eventName, value1, value2)
 	if eventName == 'MissingnoZoomIn' then
 		debugPrint('I am zooming right now')
 		doTweenZoom('camIn','camGame', 1, 28, 'expoIn')
+		doTweenX('camRight','camFollowPosition', 600, 28, 'expoInOut')
+		doTweenY('camDown','camFollowPosition', 450, 28, 'expoInOut')
 	end
     if eventName=='Missingno Tempo Change' then
 		startGlitching=true
