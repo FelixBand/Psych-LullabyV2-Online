@@ -7,6 +7,7 @@ uniform float time = 0.0;
 uniform float prob = 0.0;
 uniform float intensityChromatic = 0.0;
 const int sampleCount = 50;
+#define texture flixel_texture2D
 
 float _round(float n) {
     return floor(n + .5);
@@ -18,7 +19,7 @@ vec2 _round(vec2 n) {
 
 vec3 tex2D(sampler2D _tex,vec2 _p)
 {
-    vec3 col=texture(_tex,_p).xyz;
+    vec3 col=texture2D(_tex,_p).xyz;
     if(.5<abs(_p.x-.5)){
         col=vec3(.1);
     }
@@ -223,14 +224,18 @@ void glitchTime(vec2 p, inout float time) {
    freezeTime(p, time, vec2(.5) * glitchScale, 2.);
 }
 
-void glitchColor(vec2 p, inout vec3 color) {
+void glitchColor(vec2 p, inout vec3 color,inout bool WasSet) {
     vec2 groupSize = vec2(.75,.125) * glitchScale;
     vec2 subGrid = vec2(0,6);
     float speed = 5.;
     GlitchSeed seed = glitchSeed(glitchCoord(p, groupSize), speed);
     seed.prob *= .3;
-    if (shouldApply(seed) == 1.) 
+    if (shouldApply(seed) == 1.) {
         color = vec3(0, 0, 0);
+        WasSet=true;
+    }
+    else WasSet=false;
+        
 }
 
 vec4 transverseChromatic(vec2 p) {
@@ -241,31 +246,36 @@ vec4 transverseChromatic(vec2 p) {
     
     mat3x2 increments = mat3x2(velocity * 1.0 * inverseSampleCount, velocity * 2.0 * inverseSampleCount, velocity * 4.0 * inverseSampleCount);
 
-    vec3 accumulator = vec3(0);
+    vec4 accumulator = vec4(0);
     mat3x2 offsets = mat3x2(0); 
     for (int i = 0; i < sampleCount; i++) {
-        accumulator.r += texture(bitmap, destCoord + offsets[0]).r; 
-        accumulator.g += texture(bitmap, destCoord + offsets[1]).g; 
-        accumulator.b += texture(bitmap, destCoord + offsets[2]).b;         
+        accumulator.r += flixel_texture2D(bitmap, destCoord + offsets[0]).r; 
+        accumulator.g += flixel_texture2D(bitmap, destCoord + offsets[1]).g; 
+        accumulator.b += flixel_texture2D(bitmap, destCoord + offsets[2]).b;      
+        accumulator.a += flixel_texture2D(bitmap, destCoord + offsets[2]).a;         
         offsets -= increments;
     }
-    vec4 newColor = vec4(accumulator / float(sampleCount), 1.0);
+    vec4 newColor = vec4(accumulator.rgb / float(sampleCount),accumulator.a / float(sampleCount));
 	return newColor;
 }
 
 void main() {
     // time = mod(time, 1.);
+    
     float alpha = openfl_Alphav;
     vec2 p = openfl_TextureCoordv.xy;
-    vec3 color = texture2D(bitmap, p).rgb;
-    
+    vec4 color = flixel_texture2D(bitmap, p).rgba;
+    bool wasBlack=false;
     glitchSwap(p);
     // glitchTime(p, time);
     glitchStatic(p);
 
-    color = transverseChromatic(p).rgb;
-    glitchColor(p, color);
+    color.rgba = transverseChromatic(p).rgba;
+    glitchColor(p, color.rgb,wasBlack);
+    if(wasBlack){
+        color.a=1;
+    }
     // color = linearToScreen(color);
 
-    gl_FragColor = vec4(color.r * alpha, color.g * alpha, color.b * alpha, alpha);
+    gl_FragColor = vec4(color.r, color.g, color.b, color.a);
 }
