@@ -154,8 +154,8 @@ function onEvent(eventName, value1, value2)
 	if eventName == 'MissingnoZoomIn' then
 		debugPrint('I am zooming right now')
 		doTweenZoom('camIn','camGame', 1, 28, 'expoIn')
-		doTweenX('camRight','camFollowPosition', 600, 28, 'expoInOut')
-		doTweenY('camDown','camFollowPosition', 450, 28, 'expoInOut')
+		doTweenX('camRight','camFollowPosition', 600, 28, 'expoIn')
+		doTweenY('camDown','camFollowPosition', 450, 28, 'expoIn')
 	end
     if eventName=='Missingno Tempo Change' then
 		startGlitching=true
