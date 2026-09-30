@@ -162,96 +162,11 @@ function onUpdate(elapsed)
 	updateAmusiaDialogue(elapsed)
 end
 
-function getSingAnimation(noteData)
-	local keyCount = getProperty('opponentStrums.length')
-
-	-- 4K
-	if keyCount == 4 then
-		local directions = {
-			'singLEFT',
-			'singDOWN',
-			'singUP',
-			'singRIGHT'
-		}
-
-		return directions[noteData + 1]
-	end
-
-	-- 5K
-	-- LEFT, DOWN, UP, UP, RIGHT
-	if keyCount == 5 then
-		local directions = {
-			'singLEFT',
-			'singDOWN',
-			'singUP',
-			'singUP',
-			'singRIGHT'
-		}
-
-		return directions[noteData + 1]
-	end
-
-	-- 6K
-	-- LEFT, DOWN, RIGHT, LEFT, UP, RIGHT
-	if keyCount == 6 then
-		local directions = {
-			'singLEFT',
-			'singDOWN',
-			'singRIGHT',
-			'singLEFT',
-			'singUP',
-			'singRIGHT'
-		}
-
-		return directions[noteData + 1]
-	end
-
-	-- Generic fallback for other key counts.
-	-- Odd key counts get UP in the center.
-	if keyCount % 2 == 1 then
-		local center = math.floor(keyCount / 2)
-
-		if noteData == center then
-			return 'singUP'
-		end
-
-		if noteData < center then
-			if noteData % 2 == 0 then
-				return 'singLEFT'
-			else
-				return 'singDOWN'
-			end
-		else
-			local distance = noteData - center
-
-			if distance % 2 == 1 then
-				return 'singRIGHT'
-			else
-				return 'singUP'
-			end
-		end
-	end
-
-	-- Generic fallback for even key counts.
-	local directions = {
-		'singLEFT',
-		'singDOWN',
-		'singRIGHT',
-		'singUP'
-	}
-
-	return directions[(noteData % #directions) + 1]
-end
-
 function singDirection(noteData)
 	callOnLuas('follow', {noteData, false, nil})
 	setProperty('vocals.volume', 1)
 
-	local animation = getSingAnimation(noteData)
-
-	if animation ~= nil then
-		triggerEvent('Play Animation', animation, 'dad')
-	end
+	triggerEvent('Play Animation', getProperty('singAnimations')[noteData+1], 'dad')
 end
 
 function onEvent(name, value1, value2)
