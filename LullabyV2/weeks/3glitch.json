@@ -1,12 +1,12 @@
 {
-	"storyName": "Hypno's Lullaby",
+	"storyName": "Glitch",
 	"hideFreeplay": false,
-	"weekBackground": "",
+	"weekBackground": "black",
 	"weekBefore": "",
 	"startUnlocked": true,
 	"weekCharacters": [
-		"",
-		"",
+		"glitchweek",
+		"campaignboy",
 		""
 	],
 	"songs": [
@@ -29,7 +29,7 @@
 			]
 		]
 	],
-	"hideStoryMode": true,
-	"weekName": "Hypno's Lullaby",
+	"hideStoryMode": false,
+	"weekName": "Glitch",
 	"difficulties": "hard"
 }
