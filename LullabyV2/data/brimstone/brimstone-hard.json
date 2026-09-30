@@ -14984,7 +14984,7 @@
 		"player2": "buryman",
 		"song": "Brimstone",
 		"needsVoices": true,
-		"arrowSkin": "buried",
+		"arrowSkin": "noteSkins/NOTE_assets-buried",
 		"stage": "buried",
 		"validScore": true,
 		"bpm": 197,
