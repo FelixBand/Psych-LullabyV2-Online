@@ -1,0 +1,11 @@
+{
+	"idle_anim": "GlitchWeekIdle",
+	"confirm_anim": "GlitchWeekConfirm",
+	"position": [
+		-129,
+		-76
+	],
+	"scale": 0.75,
+	"flipX": false,
+	"image": "GlitchWeek"
+}
