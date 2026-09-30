@@ -54,15 +54,23 @@ end
 
 local scale = 3
 
-function onSpawnNote(_, _, _, s)
-	local n = 'notes.members[0]'
-	if s then -- if sustain
-		setProperty(n..'.scale.x', scale)
-		setProperty(n..'.offset.x', -55)
-		setProperty(n..'.offset.y', -90)
-	else
-		scaleObject(n, scale, scale, false)
-	end
+function onSpawnNote(a, id, c, sustain) -- no onUpdate bullshit! efficiency baby!!!
+    --debugPrint(a..' '..id..' '..c)
+
+    local n = 'notes.members[' .. a .. ']'
+
+    if sustain then
+        setProperty(n..'.scale.x', scale)
+        setProperty(n..'.offset.x', -55)
+        setProperty(n..'.offset.y', -90)
+
+        -- Flip opponent sustains.
+        if not getPropertyFromGroup('notes', a, 'mustPress') then
+            setProperty(n..'.flipY', true)
+        end
+    else
+        scaleObject(n, scale, scale, false)
+    end
 end
 
 local strumSpacing = 95 -- Smaller = more compact
@@ -79,14 +87,6 @@ function compactStrums(group)
 	for i = 0, count - 1 do
 		local offset = (i - (count - 1) / 2) * strumSpacing
 		setPropertyFromGroup(group, i, 'x', centerX + offset)
-	end
-end
-
-function onUpdatePost()
-	for i = 0, getProperty('notes.length') - 1 do
-		if not getPropertyFromGroup('notes', i, 'mustPress') and getPropertyFromGroup('notes', i, 'isSustainNote') then
-			setPropertyFromGroup('notes', i, 'flipY', true)
-		end
 	end
 end
 
