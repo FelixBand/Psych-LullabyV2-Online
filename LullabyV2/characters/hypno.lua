@@ -365,6 +365,15 @@ function onEndSong()
 		setProperty('camHUD.visible', false)
 		setProperty('camOther.visible', false)
 		playSound('transitionSplatter', 1)
+
+		removeLuaSprite('pendulum', true)
+		removeLuaSprite('pendulumTrail', true)
+		removeLuaSprite('daFlash', true)
+		removeLuaSprite('trance', true)
+		removeLuaSprite('psyshockParticle', true)
+		removeLuaSprite('tutorial', true)
+		removeLuaSprite('pendFeedback', true)
+
 		runTimer('next', 2)
 		return Function_Stop
 	end

@@ -33,7 +33,6 @@ function onEndSong()
     if not cutscened and isStoryMode then
         setProperty('camGame.visible', false);
 		setProperty('camHUD.visible', false);
-		setProperty('camOther.visible', false);
         startVideo('monochrome_cutscene');
         cutscened = true;
         return Function_Stop;

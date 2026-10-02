@@ -190,5 +190,12 @@ function onResume()
 end
 
 function onEndSong()
+	removeLuaSprite('pendulum', true)
+	removeLuaSprite('pendulumTrail', true)
+	removeLuaSprite('daFlash', true)
+	removeLuaSprite('trance', true)
+	removeLuaSprite('psyshockParticle', true)
+	removeLuaSprite('tutorial', true)
+	removeLuaSprite('pendFeedback', true)
 	close()
 end
