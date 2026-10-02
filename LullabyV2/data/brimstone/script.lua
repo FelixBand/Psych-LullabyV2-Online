@@ -8,6 +8,28 @@ function onCreate()
 	   addLuaSprite('Bar'..i,false)
 	   table.insert(BarsStart, 'Bar'..i)
 	end
+
+	-- characters!
+	makeAnimatedLuaSprite('enterGengar', 'characters/buried/enter_gengar', -320, -110)
+	addAnimationByPrefix('enterGengar', 'enter', 'gengar entrance', 24, false)
+	scaleObject('enterGengar', 6, 6)
+	setObjectOrder('enterGengar', getObjectOrder('dadGroup') + 1)
+	setProperty('enterGengar.antialiasing', false)
+	setProperty('enterGengar.alpha', 0.0001)
+	addLuaSprite('enterGengar')
+
+	makeAnimatedLuaSprite('gengar', 'characters/buried/gengar_assets', 35, 142)
+	addAnimationByPrefix('gengar', 'idle', 'gengar idle', 24, false)
+	addAnimationByPrefix('gengar', 'singLEFT', 'gengar left', 24, false)
+	addAnimationByPrefix('gengar', 'singDOWN', 'gengar down', 24, false)
+	addAnimationByPrefix('gengar', 'singUP', 'gengar up', 24, false)
+	addAnimationByPrefix('gengar', 'singODD', 'gengar up', 24, false)
+	addAnimationByPrefix('gengar', 'singRIGHT', 'gengar right', 24, false)
+	scaleObject('gengar', 6, 6)
+	setObjectOrder('gengar', getObjectOrder('dadGroup') + 1)
+	setProperty('gengar.antialiasing', false)
+	setProperty('gengar.alpha', 0.0001)
+	addLuaSprite('gengar')
 end
 
 local bfStartPosition=0
@@ -17,8 +39,25 @@ function onCreatePost()
 	setProperty('dad.specialAnim',true)
 	bfStartPosition=getProperty('boyfriend.x')
 	setProperty('boyfriend.x',getProperty('boyfriend.x')+screenWidth*2)
+
+	for i = 0, getProperty('unspawnNotes.length') - 1 do
+		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Gengar Sing' then
+			setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true)
+		end
+	end
 end
 
+function opponentNoteHit(id, direction, noteType, isSustainNote)
+	if noteType == 'Gengar Sing' then
+		playAnim('gengar', getProperty('singAnimations')[direction+1], true)
+	end
+end
+
+function onBeatHit()
+	if curBeat % 2 == 0 then
+		playAnim('gengar', 'idle')
+	end
+end
 
 
 local shakeProgress = {-13, 26, -16, 4, -1}
@@ -151,9 +190,15 @@ function brimstoneIntro()
 	buriedIntroInterval=buriedIntroInterval+1
 end
 
-function onEvent(eventName, value1, value2)
-    if eventName=='brimstone Intro' then
+function onEvent(name, value1, value2)
+    if name == 'brimstone Intro' then
 		brimstoneIntro()
+	end
+	if name == 'Spawn' then
+		if value1 == 'Gengar' then
+			playAnim('enterGengar', 'enter', true)
+			setProperty('enterGengar.alpha', 1)
+		end
 	end
 end
 
