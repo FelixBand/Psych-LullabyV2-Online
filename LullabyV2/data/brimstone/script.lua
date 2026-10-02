@@ -9,20 +9,34 @@ function onCreate()
 	   table.insert(BarsStart, 'Bar'..i)
 	end
 
-	makeAnimatedLuaSprite('bhudleft', 'UI/pixel/buried_hud', 0, 50)
-	addAnimationByPrefix('bhudleft', 'idle', 'left', 1, false)
-	setObjectCamera('bhudleft', 'hud')
-	scaleObject('bhudleft', 3, 3)
-	setProperty('bhudleft.antialiasing', false)
-	addLuaSprite('bhudleft')
+	if not middlescroll then
+		makeAnimatedLuaSprite('bhudleft', 'UI/pixel/buried_hud', 0, 50)
+		addAnimationByPrefix('bhudleft', 'idle', 'left', 1, false)
+		setObjectCamera('bhudleft', 'hud')
+		scaleObject('bhudleft', 3, 3)
+		setProperty('bhudleft.antialiasing', false)
+		addLuaSprite('bhudleft')
 
-	makeAnimatedLuaSprite('bhudright', 'UI/pixel/buried_hud', 0, 525)
-	addAnimationByPrefix('bhudright', 'idle', 'right', 1, false)
-	setObjectCamera('bhudright', 'hud')
-	scaleObject('bhudright', 3, 3)
-	setProperty('bhudright.antialiasing', false)
-	setProperty('bhudright.x', screenWidth - getProperty('bhudright.width'))
-	addLuaSprite('bhudright')
+		makeAnimatedLuaSprite('bhudright', 'UI/pixel/buried_hud', 0, 525)
+		addAnimationByPrefix('bhudright', 'idle', 'right', 1, false)
+		setObjectCamera('bhudright', 'hud')
+		scaleObject('bhudright', 3, 3)
+		setProperty('bhudright.antialiasing', false)
+		setProperty('bhudright.x', screenWidth - getProperty('bhudright.width'))
+		addLuaSprite('bhudright')
+	else
+		makeLuaSprite('bhud', 'UI/pixel/buried_center', 0, 50)
+		setObjectCamera('bhud', 'hud')
+		scaleObject('bhud', 3, 3)
+		setProperty('bhud.antialiasing', false)
+		screenCenter('bhud', 'x')
+		if not downscroll then
+			setProperty('bhud.y', 50)
+		else
+			setProperty('bhud.y', 515)
+		end
+		addLuaSprite('bhud')
+	end
 end
 
 local bfStartPosition=0
@@ -33,12 +47,35 @@ function onCreatePost()
 	bfStartPosition=getProperty('boyfriend.x')
 	setProperty('boyfriend.x',getProperty('boyfriend.x')+screenWidth*2)
 
+
+	-- ensue the note scaling/positioning spaghetti
 	for i = 0, getProperty('opponentStrums.length') - 1 do
 		if getPropertyFromGroup('opponentStrums', i, 'texture') == 'noteSkins/NOTE_assets-buried' then
 			setPropertyFromGroup('opponentStrums', i, 'scale.x', 3)
 			setPropertyFromGroup('opponentStrums', i, 'scale.y', 3)
 		end
-		setPropertyFromGroup('opponentStrums', i, 'y', 500)
+		if not middlescroll then
+			if not downscroll then
+				setPropertyFromGroup('opponentStrums', i, 'y', 500)
+			else
+				setPropertyFromGroup('opponentStrums', i, 'y', 24)
+			end
+		else
+			for i = 0, getProperty('opponentStrums.length') - 1 do
+				if getPropertyFromGroup('opponentStrums', i, 'texture') == 'noteSkins/NOTE_assets-buried' then
+					setPropertyFromGroup('playerStrums', i, 'x', _G['defaultPlayerStrumX'..i] - 35)
+					setPropertyFromGroup('opponentStrums', i, 'x', _G['defaultOpponentStrumX'..i] - 35)
+
+					if not downscroll then
+						setPropertyFromGroup('playerStrums', i, 'y', _G['defaultPlayerStrumY'..i] - 25)
+						setPropertyFromGroup('opponentStrums', i, 'y', _G['defaultOpponentStrumY'..i] - 25)
+					else	
+						setPropertyFromGroup('playerStrums', i, 'y', _G['defaultPlayerStrumY'..i] - 80)
+						setPropertyFromGroup('opponentStrums', i, 'y', _G['defaultOpponentStrumY'..i] - 80)
+					end
+				end
+			end
+		end
 	end
 	for i = 0, getProperty('playerStrums.length') - 1 do
 		if getPropertyFromGroup('playerStrums', i, 'texture') == 'noteSkins/NOTE_assets-buried' then
@@ -49,23 +86,45 @@ function onCreatePost()
 
 	-- swap strum positions
 	if not middlescroll then
-		for i = 0,getProperty('opponentStrums.length') - 1 do
-			setPropertyFromGroup('playerStrums', i, 'x', _G['defaultOpponentStrumX'..i] - 150)
-			setPropertyFromGroup('opponentStrums', i, 'x', _G['defaultPlayerStrumX'..i] + 85)
-		end
-		for i = 0,getProperty('playerStrums.length') - 1 do
-			setPropertyFromGroup('playerStrums', i, 'y', _G['defaultPlayerStrumY'..i] - 25)
+		if not downscroll then
+			for i = 0,getProperty('opponentStrums.length') - 1 do
+				setPropertyFromGroup('playerStrums', i, 'x', _G['defaultOpponentStrumX'..i] - 150)
+				setPropertyFromGroup('opponentStrums', i, 'x', _G['defaultPlayerStrumX'..i] + 85)
+			end
+			for i = 0,getProperty('playerStrums.length') - 1 do
+				setPropertyFromGroup('playerStrums', i, 'y', _G['defaultPlayerStrumY'..i] - 25)
+			end
+		else
+			for i = 0,getProperty('opponentStrums.length') - 1 do
+				setPropertyFromGroup('playerStrums', i, 'x', _G['defaultPlayerStrumX'..i] + 80)
+				setPropertyFromGroup('opponentStrums', i, 'x', _G['defaultOpponentStrumX'..i] - 150)
+			end
+			for i = 0,getProperty('playerStrums.length') - 1 do
+				setPropertyFromGroup('playerStrums', i, 'y', _G['defaultPlayerStrumY'..i] - 70)
+			end
 		end
 	end
 
+	if not middlescroll then
+		if not downscroll then
+			for i = 0, getProperty('opponentStrums.length') - 1 do
+				setPropertyFromGroup('opponentStrums', i, 'downScroll', true)
+			end
+		else
+			for i = 0, getProperty('opponentStrums.length') - 1 do
+				setPropertyFromGroup('opponentStrums', i, 'downScroll', false)
+			end
+		end
+	end
 
-
-	for i = 0, getProperty('opponentStrums.length') - 1 do
-		setPropertyFromGroup('opponentStrums', i, 'downScroll', true)
+	if downscroll and playsAsBF() then
+		setProperty('scoreTxt.y', 5)
 	end
 
 	compactStrums('playerStrums')
-	compactStrums('opponentStrums')
+	if not middlescroll then
+		compactStrums('opponentStrums')
+	end
     
     setProperty('healthBar.visible', false)
     setProperty('iconP2.visible', false)
@@ -78,16 +137,32 @@ function onSpawnNote(a, id, c, sustain) -- no onUpdate bullshit! efficiency baby
     --debugPrint(a..' '..id..' '..c)
 
     local n = 'notes.members[' .. a .. ']'
-
+	
     if sustain then
         setProperty(n..'.scale.x', scale)
         setProperty(n..'.offset.x', -55)
         setProperty(n..'.offset.y', -90)
 
         -- Flip opponent sustains.
-        if not getPropertyFromGroup('notes', a, 'mustPress') then
-            setProperty(n..'.flipY', true)
-        end
+		if not middlescroll then
+			if playsAsBF() then
+				if not getPropertyFromGroup('notes', a, 'mustPress') then
+					if not downscroll then
+						setProperty(n..'.flipY', true)
+					else
+						setProperty(n..'.flipY', false)
+					end
+				end
+			else
+				if getPropertyFromGroup('notes', a, 'mustPress') then
+					if not downscroll then
+						setProperty(n..'.flipY', true)
+					else
+						setProperty(n..'.flipY', false)
+					end
+				end
+			end
+		end
     else
         scaleObject(n, scale, scale, false)
     end
