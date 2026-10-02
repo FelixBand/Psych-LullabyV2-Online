@@ -106,24 +106,67 @@ function onCreatePost()
 	end
 
 	if not middlescroll then
-		if not downscroll then
-			for i = 0, getProperty('opponentStrums.length') - 1 do
-				setPropertyFromGroup('opponentStrums', i, 'downScroll', true)
+		if playsAsBF() then
+			if not downscroll then
+				for i = 0, getProperty('opponentStrums.length') - 1 do
+					setPropertyFromGroup('opponentStrums', i, 'downScroll', true)
+				end
+			else
+				for i = 0, getProperty('opponentStrums.length') - 1 do
+					setPropertyFromGroup('opponentStrums', i, 'downScroll', false)
+				end
 			end
 		else
-			for i = 0, getProperty('opponentStrums.length') - 1 do
-				setPropertyFromGroup('opponentStrums', i, 'downScroll', false)
+			if not downscroll then
+				for i = 0, getProperty('playerStrums.length') - 1 do
+					setPropertyFromGroup('playerStrums', i, 'downScroll', true)
+				end
+			else
+				for i = 0, getProperty('playerStrums.length') - 1 do
+					setPropertyFromGroup('playerStrums', i, 'downScroll', false)
+				end
 			end
 		end
 	end
 
-	if downscroll and playsAsBF() then
+	if downscroll then
 		setProperty('scoreTxt.y', 5)
 	end
 
-	compactStrums('playerStrums')
-	if not middlescroll then
+	if middlescroll then
+		if playsAsBF() then
+			compactStrums('playerStrums')
+		else
+			compactStrums('opponentStrums')
+		end
+	else
+		compactStrums('playerStrums')
 		compactStrums('opponentStrums')
+	end
+
+	-- Hack fix: swap final strum positions when playing as the opponent.
+	if not playsAsBF() and not middlescroll then
+		local playerX = {}
+		local playerY = {}
+		local opponentX = {}
+		local opponentY = {}
+
+		for i = 0, getProperty('playerStrums.length') - 1 do
+			playerX[i] = getPropertyFromGroup('playerStrums', i, 'x')
+			playerY[i] = getPropertyFromGroup('playerStrums', i, 'y')
+		end
+
+		for i = 0, getProperty('opponentStrums.length') - 1 do
+			opponentX[i] = getPropertyFromGroup('opponentStrums', i, 'x')
+			opponentY[i] = getPropertyFromGroup('opponentStrums', i, 'y')
+		end
+
+		for i = 0, math.min(getProperty('playerStrums.length'), getProperty('opponentStrums.length')) - 1 do
+			setPropertyFromGroup('playerStrums', i, 'x', opponentX[i])
+			setPropertyFromGroup('playerStrums', i, 'y', opponentY[i])
+			setPropertyFromGroup('opponentStrums', i, 'x', playerX[i])
+			setPropertyFromGroup('opponentStrums', i, 'y', playerY[i])
+		end
 	end
     
     setProperty('healthBar.visible', false)
