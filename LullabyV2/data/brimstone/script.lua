@@ -8,6 +8,21 @@ function onCreate()
 	   addLuaSprite('Bar'..i,false)
 	   table.insert(BarsStart, 'Bar'..i)
 	end
+
+	makeAnimatedLuaSprite('bhudleft', 'UI/pixel/buried_hud', 0, 50)
+	addAnimationByPrefix('bhudleft', 'idle', 'left', 1, false)
+	setObjectCamera('bhudleft', 'hud')
+	scaleObject('bhudleft', 3, 3)
+	setProperty('bhudleft.antialiasing', false)
+	addLuaSprite('bhudleft')
+
+	makeAnimatedLuaSprite('bhudright', 'UI/pixel/buried_hud', 0, 525)
+	addAnimationByPrefix('bhudright', 'idle', 'right', 1, false)
+	setObjectCamera('bhudright', 'hud')
+	scaleObject('bhudright', 3, 3)
+	setProperty('bhudright.antialiasing', false)
+	setProperty('bhudright.x', screenWidth - getProperty('bhudright.width'))
+	addLuaSprite('bhudright')
 end
 
 local bfStartPosition=0
@@ -35,10 +50,15 @@ function onCreatePost()
 	-- swap strum positions
 	if not middlescroll then
 		for i = 0,getProperty('opponentStrums.length') - 1 do
-			setPropertyFromGroup('playerStrums', i, 'x', _G['defaultOpponentStrumX'..i])
-			setPropertyFromGroup('opponentStrums', i, 'x', _G['defaultPlayerStrumX'..i])
+			setPropertyFromGroup('playerStrums', i, 'x', _G['defaultOpponentStrumX'..i] - 150)
+			setPropertyFromGroup('opponentStrums', i, 'x', _G['defaultPlayerStrumX'..i] + 85)
+		end
+		for i = 0,getProperty('playerStrums.length') - 1 do
+			setPropertyFromGroup('playerStrums', i, 'y', _G['defaultPlayerStrumY'..i] - 25)
 		end
 	end
+
+
 
 	for i = 0, getProperty('opponentStrums.length') - 1 do
 		setPropertyFromGroup('opponentStrums', i, 'downScroll', true)
