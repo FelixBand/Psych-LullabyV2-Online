@@ -13,5 +13,5 @@ function onCreate()
 end
 
 function onCreatePost()
-	setProperty('boyfriend.visible', false)
+	setProperty('boyfriendGroup.visible', false)
 end
