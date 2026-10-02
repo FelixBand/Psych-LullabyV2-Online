@@ -38,7 +38,7 @@ function onCreatePost()
 			setPropertyFromGroup('opponentStrums', i, 'scale.x', 3)
 			setPropertyFromGroup('opponentStrums', i, 'scale.y', 3)
 		end
-		setPropertyFromGroup('opponentStrums', i, 'y', 570)
+		setPropertyFromGroup('opponentStrums', i, 'y', 500)
 	end
 	for i = 0, getProperty('playerStrums.length') - 1 do
 		if getPropertyFromGroup('playerStrums', i, 'texture') == 'noteSkins/NOTE_assets-buried' then
