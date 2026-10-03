@@ -1,0 +1,192 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "BA_Missingno_Left0"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "BA_Missingno_Down0"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "BA_Missingno_Right0"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "BA_Missingno_Up0"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFTmiss",
+			"indices": [],
+			"name": "BA_Missingno_Left Miss"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWNmiss",
+			"indices": [],
+			"name": "BA_Missingno_Down Miss"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHTmiss",
+			"indices": [],
+			"name": "BA_Missingno_Right Miss"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUPmiss",
+			"indices": [],
+			"name": "BA_Missingno_Up Miss"
+		},
+		{
+			"offsets": [
+				-90,
+				-350
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "ballbreak1",
+			"indices": [],
+			"name": "Ball_Break01"
+		},
+		{
+			"offsets": [
+				-80,
+				-350
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "ballbreak2",
+			"indices": [],
+			"name": "Ball_Break02"
+		},
+		{
+			"offsets": [
+				-90,
+				-350
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "ballidlebreak",
+			"indices": [],
+			"name": "Ball_Idle_Break"
+		},
+		{
+			"offsets": [
+				-90,
+				-350
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "ballfinalburst",
+			"indices": [],
+			"name": "Ball_FinalBurst"
+		},
+		{
+			"offsets": [
+				-90,
+				-350
+			],
+			"loop": true,
+			"fps": 24,
+			"anim": "idle-normal",
+			"indices": [],
+			"name": "Ball_Idle_Normal"
+		},
+		{
+			"offsets": [
+				-90,
+				-350
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "ballthrow",
+			"indices": [],
+			"name": "Ball_Throw"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "BA_Missingno_Idle",
+			"indices": []
+		}
+	],
+	"vocals_file": null,
+	"results_character": null,
+	"no_antialiasing": true,
+	"image": "characters/buried/ba_missingno_assets",
+	"position": [
+		70,
+		170
+	],
+	"speaker": null,
+	"healthicon": "missingno",
+	"flip_x": false,
+	"healthbar_colors": [
+		128,
+		112,
+		152
+	],
+	"camera_position": [
+		-1430,
+		0
+	],
+	"sing_duration": 6.1,
+	"dead_character": null,
+	"scale": 6
+}

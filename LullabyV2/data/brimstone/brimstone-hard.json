@@ -1,7 +1,7 @@
 {
   "song": {
     "player1": "ba_BF",
-    "gfVersion": "No_GF",
+    "gfVersion": "ba_missingno",
     "notes": [
       {
         "sectionBeats": 4,
@@ -4809,55 +4809,55 @@
             130964.467005076,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             130964.467005076,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             131116.751269036,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             131116.751269036,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             131269.035532995,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             131269.035532995,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             131421.319796954,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             131421.319796954,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             131497.461928934,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -4874,55 +4874,55 @@
             131573.604060914,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             131725.888324873,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             131878.172588833,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             132030.456852792,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             132182.741116751,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             132258.883248731,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             132335.025380711,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             132411.16751269,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             132487.30964467,
             1,
             228.426395939086,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -4939,49 +4939,49 @@
             132791.878172589,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             132944.162436548,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             133096.446700508,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             133248.730964467,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             133401.015228426,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             133553.299492386,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             133705.583756345,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             133857.868020305,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -4998,55 +4998,55 @@
             134010.152284264,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             134162.436548223,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             134314.720812183,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             134467.005076142,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             134619.289340102,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             134695.431472081,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             134771.573604061,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             134847.715736041,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             134923.85786802,
             2,
             228.426395939086,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -5063,43 +5063,43 @@
             135228.426395939,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             135380.710659899,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             135532.994923858,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             135685.279187817,
             2,
             228.426395939086,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             135989.847715736,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             136142.131979695,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             136294.416243655,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -5170,7 +5170,7 @@
             136446.700507614,
             0,
             913.705583756345,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -5235,7 +5235,7 @@
             137664.974619289,
             2,
             913.705583756345,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -5306,7 +5306,7 @@
             138883.248730965,
             1,
             913.705583756345,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -5323,7 +5323,7 @@
             140101.52284264,
             3,
             913.705583756345,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             140101.52284264,
@@ -5876,19 +5876,19 @@
             156395.939086294,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             155939.086294416,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             156852.791878173,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -5905,37 +5905,37 @@
             157157.360406091,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             157309.644670051,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             157461.92893401,
             3,
             228.426395939086,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             157766.497461929,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             157918.781725888,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             158071.065989848,
             3,
             228.426395939086,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -5952,37 +5952,37 @@
             158375.634517767,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             158527.918781726,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             158832.487309645,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             158984.771573604,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             159137.055837564,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             159289.340101523,
             0,
             152.284263959391,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -5999,31 +5999,31 @@
             159593.908629442,
             3,
             228.426395939086,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             159898.47715736,
             2,
             228.426395939086,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             160203.045685279,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             160355.329949239,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             160507.614213198,
             0,
             228.426395939086,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -6082,7 +6082,7 @@
             160812.182741117,
             1,
             913.705583756345,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -6258,43 +6258,43 @@
             165685.279187817,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             165837.563451777,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             165989.847715736,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             166142.131979695,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             166446.700507614,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             166598.984771574,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             166751.269035533,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -6311,43 +6311,43 @@
             166903.553299492,
             3,
             228.426395939086,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             167208.121827411,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             167360.406091371,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             167512.69035533,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             167664.974619289,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             167817.258883249,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             167969.543147208,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -6364,37 +6364,37 @@
             168121.827411168,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             168274.111675127,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             168578.680203046,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             168883.248730965,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             169035.532994924,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             169187.817258883,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -6411,43 +6411,43 @@
             169340.101522843,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             169492.385786802,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             169644.670050761,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             169796.954314721,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             170101.52284264,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             170253.807106599,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             170406.091370558,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -6524,7 +6524,7 @@
             170558.375634518,
             1,
             989.847715736041,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -6577,7 +6577,7 @@
             171776.649746193,
             2,
             989.847715736041,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -6618,7 +6618,7 @@
             172994.923857868,
             0,
             989.847715736041,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -6635,7 +6635,7 @@
             174213.197969543,
             3,
             989.847715736041,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             175126.9035533,
@@ -6688,61 +6688,61 @@
             175507.614213198,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             175659.898477157,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             175583.756345178,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             175431.472081218,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             175736.040609137,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             175888.324873097,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             176040.609137056,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             176192.893401015,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             176345.177664975,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             176497.461928934,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             175431.472081218,
@@ -6765,37 +6765,37 @@
             176649.746192893,
             1,
             228.426395939086,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             176954.314720812,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             177106.598984772,
             3,
             228.426395939086,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             177411.16751269,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             177563.45177665,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             177715.736040609,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -6812,25 +6812,25 @@
             177868.020304569,
             0,
             228.426395939086,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             178324.873096447,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             178629.441624366,
             1,
             228.426395939086,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             178934.010152284,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -6847,37 +6847,37 @@
             179086.294416244,
             2,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             179238.578680203,
             3,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             179390.862944163,
             1,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             179543.147208122,
             0,
             0,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             179695.431472081,
             1,
             228.426395939086,
-            "Missingno Sing"
+            "GF Sing"
           ],
           [
             180000,
             2,
             228.426395939086,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,
@@ -6894,7 +6894,7 @@
             180304.568527919,
             3,
             2360.40609137056,
-            "Missingno Sing"
+            "GF Sing"
           ]
         ],
         "sectionBeats": 4,

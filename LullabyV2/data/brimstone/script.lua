@@ -9,6 +9,10 @@ function onCreate()
 	   table.insert(BarsStart, 'Bar'..i)
 	end
 
+	precacheImage('Mechanics/muksludge')
+	precacheSound('MukCums')
+	setProperty('skipCountdown', true)
+
 	-- characters!
 	makeAnimatedLuaSprite('enterGengar', 'characters/buried/enter_gengar', -320, -110)
 	addAnimationByPrefix('enterGengar', 'enter', 'gengar entrance', 24, false)
@@ -39,6 +43,7 @@ function onCreatePost()
 	setProperty('dad.specialAnim',true)
 	bfStartPosition=getProperty('boyfriend.x')
 	setProperty('boyfriend.x',getProperty('boyfriend.x')+screenWidth*2)
+	setObjectOrder('gfGroup', getObjectOrder('boyfriendGroup') + 1)
 
 	for i = 0, getProperty('unspawnNotes.length') - 1 do
 		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Gengar Sing' then
@@ -55,7 +60,13 @@ end
 
 function onBeatHit()
 	if curBeat % 2 == 0 then
-		playAnim('gengar', 'idle')
+		playIdle('gengar')
+	end
+end
+
+function playIdle(char)
+	if getProperty(char .. '.animation.curAnim.finished') then
+		playAnim(char, 'idle')
 	end
 end
 
@@ -198,6 +209,11 @@ function onEvent(name, value1, value2)
 		if value1 == 'Gengar' then
 			playAnim('enterGengar', 'enter', true)
 			setProperty('enterGengar.alpha', 1)
+		end
+		if value1 == 'Missingno' then
+			playAnim('boyfriend', 'throw', true)
+			playAnim('gf', 'ballthrow', true)
+			setProperty('gfGroup.alpha', 1)
 		end
 	end
 end
