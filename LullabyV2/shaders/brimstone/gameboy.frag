@@ -9,148 +9,191 @@
 
 uniform float interpolation = 0.5;
 
-float threshold = 0.125;
-mat2 dither_2 = mat2(0.,1.,1.,0.);
+const float threshold = 0.125;
 
-struct dither_tile {
-    float height;
-};
+// Game Boy palette
+const vec3 GB0 = vec3(8.0, 24.0, 32.0) / 255.0;
+const vec3 GB1 = vec3(52.0, 104.0, 86.0) / 255.0;
+const vec3 GB2 = vec3(136.0, 192.0, 112.0) / 255.0;
+const vec3 GB3 = vec3(224.0, 248.0, 208.0) / 255.0;
 
-vec3 tex2D(sampler2D _tex,vec2 _p)
+vec3 tex2D(vec2 p)
 {
-    vec3 col=texture(_tex,_p).xyz;
-    if(.5<abs(_p.x-.5)){
-        col=vec3(.1);
-    }
+    vec3 col = texture2D(bitmap, p).xyz;
+
+    if (abs(p.x - 0.5) > 0.5)
+        col = vec3(0.1);
+
     return col;
 }
 
-vec3[4] gb_colors() {
- 	vec3 gb_colors[4];
-    gb_colors[0] = vec3(8., 24., 32.) / 255.;
-    gb_colors[1] = vec3(52., 104., 86.) / 255.;
-    gb_colors[2] = vec3(136., 192., 112.) / 255.;
-    gb_colors[3] = vec3(224., 248., 208.) / 255.;
-    return gb_colors;
+float colorDistance(vec3 a, vec3 b)
+{
+    return distance(a, b);
 }
 
-float[4] gb_colors_distance(vec3 color) {
-    float distances[4];
-    distances[0] = distance(color, gb_colors()[0]);
-    distances[1] = distance(color, gb_colors()[1]);
-    distances[2] = distance(color, gb_colors()[2]);
-    distances[3] = distance(color, gb_colors()[3]);
-    return distances;
-}
+vec3 closest_gb(vec3 color)
+{
+    vec3 result = GB0;
+    float best = colorDistance(color, GB0);
 
-vec3 closest_gb(vec3 color) {
-    int best_i = 0;
-    float best_d = 2.;
-    
-    vec3 gb_colors[4] = gb_colors();
-    
-    for (int i = 0; i < 4; i++) {
-        float dis = distance(gb_colors[i], color);;
-        if (dis < best_d) {
-            best_d = dis;
-            best_i = i;
-        }
+    float d = colorDistance(color, GB1);
+    if (d < best)
+    {
+        best = d;
+        result = GB1;
     }
-    return gb_colors[best_i];
-}
 
-vec2 get_tile_sample(vec2 coords, vec2 res) {
-    return floor(coords * res / 2.) * 2. / res;
-}
-
-vec3[2] gb_2_closest(vec3 color) {
- 	float distances[4] = gb_colors_distance(color);
-    
-    int first_i = 0;
-    float first_d = 2.;
-    
-    int second_i = 0;
-    float second_d = 2.;
-    
-    for (int i = 0; i < distances.length(); i++) {
-        float d = distances[i];
-        if (distances[i] <= first_d) {
-            second_i = first_i;
-            second_d = first_d;
-            first_i = i;
-            first_d = d;
-        } else if (distances[i] <= second_d) {
-            second_i = i;
-            second_d = d;
-        }
+    d = colorDistance(color, GB2);
+    if (d < best)
+    {
+        best = d;
+        result = GB2;
     }
-    vec3 colors[4] = gb_colors();
-    vec3 result[2];
-    if (first_i < second_i)
-        result = vec3[2](colors[first_i], colors[second_i]);
-    else
-     	result = vec3[2](colors[second_i], colors[first_i]);   
+
+    d = colorDistance(color, GB3);
+    if (d < best)
+    {
+        result = GB3;
+    }
+
     return result;
 }
 
-bool needs_dither(vec3 color) {
-    float distances[4] = gb_colors_distance(color);
-    
-    int first_i = 0;
-    float first_d = 2.;
-    
-    int second_i = 0;
-    float second_d = 2.;
-    
-    for (int i = 0; i < distances.length(); i++) {
-        float d = distances[i];
-        if (d <= first_d) {
-            second_i = first_i;
-            second_d = first_d;
-            first_i = i;
-            first_d = d;
-        } else if (d <= second_d) {
-            second_i = i;
-            second_d = d;
-        }
+void getClosestTwo(
+    vec3 color,
+    out vec3 firstColor,
+    out vec3 secondColor,
+    out float firstDistance,
+    out float secondDistance
+)
+{
+    firstColor = GB0;
+    secondColor = GB1;
+
+    firstDistance = colorDistance(color, GB0);
+    secondDistance = colorDistance(color, GB1);
+
+    float d;
+
+    d = colorDistance(color, GB2);
+
+    if (d < firstDistance)
+    {
+        secondDistance = firstDistance;
+        secondColor = firstColor;
+
+        firstDistance = d;
+        firstColor = GB2;
     }
-    return abs(first_d - second_d) <= threshold;
+    else if (d < secondDistance)
+    {
+        secondDistance = d;
+        secondColor = GB2;
+    }
+
+    d = colorDistance(color, GB3);
+
+    if (d < firstDistance)
+    {
+        secondDistance = firstDistance;
+        secondColor = firstColor;
+
+        firstDistance = d;
+        firstColor = GB3;
+    }
+    else if (d < secondDistance)
+    {
+        secondDistance = d;
+        secondColor = GB3;
+    }
 }
 
-vec3 return_gbColor(vec3 sampleColor) {
-    vec3 endColor;
-    if (needs_dither(sampleColor)) {
-        endColor = vec3(gb_2_closest(sampleColor)[int(dither_2[openfl_TextureCoordv.x][openfl_TextureCoordv.y])]);
-    } else
-        endColor = vec3(closest_gb(tex2D(bitmap, openfl_TextureCoordv).xyz));
-    return endColor;
+bool needs_dither(vec3 color)
+{
+    vec3 firstColor;
+    vec3 secondColor;
+    float firstDistance;
+    float secondDistance;
+
+    getClosestTwo(
+        color,
+        firstColor,
+        secondColor,
+        firstDistance,
+        secondDistance
+    );
+
+    return abs(firstDistance - secondDistance) <= threshold;
 }
 
-vec3 buried_eye_color = vec3(255.0, 0.0, 0.0) / 255.0;
-vec3 buried_grave_color = vec3(121.0, 133.0, 142.0) / 255.0;
+vec3 return_gbColor(vec3 sampleColor)
+{
+    vec3 firstColor;
+    vec3 secondColor;
+    float firstDistance;
+    float secondDistance;
 
-void main() {
+    getClosestTwo(
+        sampleColor,
+        firstColor,
+        secondColor,
+        firstDistance,
+        secondDistance
+    );
 
+    if (needs_dither(sampleColor))
+    {
+        // 2x2 Game Boy dithering pattern.
+        //
+        // Use integer-ish pixel coordinates instead of trying
+        // to use floating point texture coordinates as array indices.
+
+        vec2 pixel = openfl_TextureCoordv * openfl_TextureSize;
+        int x = int(mod(floor(pixel.x), 2.0));
+        int y = int(mod(floor(pixel.y), 2.0));
+
+        // Pattern:
+        // 0 1
+        // 1 0
+        bool useSecond = (x != y);
+
+        if (useSecond)
+            return secondColor;
+        else
+            return firstColor;
+    }
+
+    return closest_gb(tex2D(openfl_TextureCoordv));
+}
+
+const vec3 buried_eye_color =
+    vec3(255.0, 0.0, 0.0) / 255.0;
+
+const vec3 buried_grave_color =
+    vec3(121.0, 133.0, 142.0) / 255.0;
+
+void main()
+{
     vec4 color = texture2D(bitmap, openfl_TextureCoordv);
-    vec3 sampleColor = color.xyz;
-    // gb colors
-    vec3 colors[4] = gb_colors();
-    if (color.a != 0.0) {
-        vec3 colorA = sampleColor;
-        vec3 colorB = return_gbColor(sampleColor);
 
-        vec3 newColor;
-        // if colorA is just buried alive's fucking eye
-        if (colorA == buried_eye_color)
-            colorB = colors[2];
-        if (colorA == buried_grave_color)
-            colorB = colors[2];
-        newColor = mix(colorA, colorB, interpolation);
-        gl_FragColor = vec4(newColor, 1.0);
-    } else
-        gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
+    if (color.a <= 0.0)
+    {
+        gl_FragColor = vec4(0.0);
+        return;
+    }
+
+    vec3 colorA = color.rgb;
+    vec3 colorB = return_gbColor(colorA);
+
+    // Keep these special colors mapped to GB2.
+    if (distance(colorA, buried_eye_color) < 0.001)
+        colorB = GB2;
+
+    if (distance(colorA, buried_grave_color) < 0.001)
+        colorB = GB2;
+
+    vec3 newColor = mix(colorA, colorB, interpolation);
+
+    gl_FragColor = vec4(newColor, color.a);
 }
-
-/*
- *
- */

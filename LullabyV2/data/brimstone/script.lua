@@ -13,6 +13,28 @@ function onCreate()
 	precacheSound('MukCums')
 	setProperty('skipCountdown', true)
 
+	if shadersEnabled then
+		makeLuaSprite('greenController', '', 0, 0)
+
+		runHaxeCode([[
+			game.initLuaShader('brimstone/gameboy');
+
+			var gameboyShader = game.createRuntimeShader('brimstone/gameboy');
+
+			game.getLuaObject('greenController').shader = gameboyShader;
+
+			game.camGame.setFilters([
+				new ShaderFilter(gameboyShader)
+			]);
+
+			game.camHUD.setFilters([
+				new ShaderFilter(gameboyShader)
+			]);
+		]])
+
+		setShaderFloat('greenController', 'interpolation', 0)
+	end
+
 	-- characters!
 	makeAnimatedLuaSprite('enterGengar', 'characters/buried/enter_gengar', -320, -110)
 	addAnimationByIndices('enterGengar', 'leave', 'gengar entrance', '56,55,54,53,52,51,50,49,48', 24, false)
@@ -126,6 +148,7 @@ end
 local curFrame=0
 
 function onUpdate(elapsed)
+	setShaderFloat('greenController', 'interpolation', getProperty('greenController.x'))
     if curStep > 1 then
 		if curFrame % math.floor(4 * ( getPropertyFromClass('flixel.FlxG','drawFramerate')/ 60)) == 0 then
 		
@@ -226,6 +249,9 @@ function onEvent(name, value1, value2)
 			setProperty('enterGengar.alpha', 1)
 			removeLuaSprite('gengar', true)
 		end
+	end
+	if name == 'Gameboy Filter' then
+		doTweenX('gbFilterUp', 'greenController', tonumber(value1), tonumber(value2), 'linear')
 	end
 end
 
