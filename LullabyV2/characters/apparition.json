@@ -1,0 +1,115 @@
+{
+	"animations": [
+		{
+			"loop": true,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "WH_Idle",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				162,
+				90
+			],
+			"anim": "idle-alt",
+			"fps": 24,
+			"name": "BAGF_Idle",
+			"indices": []
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "transform",
+			"loop": false,
+			"name": "WH_ToGF"
+		},
+		{
+			"offsets": [
+				162,
+				90
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "BAGF_Left"
+		},
+		{
+			"offsets": [
+				162,
+				90
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "BAGF_Down"
+		},
+		{
+			"offsets": [
+				162,
+				90
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "BAGF_Up"
+		},
+		{
+			"offsets": [
+				162,
+				90
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "BAGF_Right"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "intro",
+			"loop": false,
+			"name": "WH_Intro"
+		}
+	],
+	"vocals_file": null,
+	"results_character": null,
+	"no_antialiasing": true,
+	"image": "characters/buried/WH_apparitionGF_assets",
+	"position": [
+		260,
+		450
+	],
+	"speaker": null,
+	"healthicon": "face",
+	"flip_x": false,
+	"healthbar_colors": [
+		255,
+		255,
+		255
+	],
+	"camera_position": [
+		-1430,
+		0
+	],
+	"sing_duration": 6.1,
+	"dead_character": null,
+	"scale": 6
+}

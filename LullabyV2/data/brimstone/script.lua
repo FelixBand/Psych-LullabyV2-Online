@@ -262,6 +262,21 @@ function onEvent(name, value1, value2)
 		if value1 == 'Leanmonster' then
 			playAnim('muk', 'intro', true)
 			setProperty('muk.alpha', 1)
+
+			-- might as well do this here
+			triggerEvent('Change Character', 'gf', 'apparition')
+			setObjectOrder('gfGroup', getObjectOrder('muk'))
+		end
+		if value1 == 'ApparitionGF' then
+			if value2 == 'Hand' then
+				triggerEvent('Alt Idle Animation', 'gf', '-disabled')
+				setProperty('gfGroup.x', 205)
+				setProperty('gfGroup.y', -40)
+				playAnim('gf', 'intro', true)
+			elseif value2 == 'Apparition' then
+				triggerEvent('Alt Idle Animation', 'gf', '-disabled')
+				playAnim('gf', 'transform', true)
+			end
 		end
 	end
 	if name == 'Leave' then
