@@ -15,6 +15,7 @@ function onCreate()
 
 	-- characters!
 	makeAnimatedLuaSprite('enterGengar', 'characters/buried/enter_gengar', -320, -110)
+	addAnimationByIndices('enterGengar', 'leave', 'gengar entrance', '56,55,54,53,52,51,50,49,48', 24, false)
 	addAnimationByPrefix('enterGengar', 'enter', 'gengar entrance', 24, false)
 	scaleObject('enterGengar', 6, 6)
 	setObjectOrder('enterGengar', getObjectOrder('dadGroup') + 1)
@@ -221,7 +222,9 @@ function onEvent(name, value1, value2)
 			doTweenY('missingnoDown', 'gfGroup', getProperty('gf.y') + 600, 1, 'cubeIn')
 		end
 		if value1 == 'Gengar' then
-			
+			playAnim('enterGengar', 'leave', true)
+			setProperty('enterGengar.alpha', 1)
+			removeLuaSprite('gengar', true)
 		end
 	end
 end
