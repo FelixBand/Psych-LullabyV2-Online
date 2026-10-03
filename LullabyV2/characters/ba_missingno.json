@@ -101,7 +101,7 @@
 		},
 		{
 			"offsets": [
-				-80,
+				-90,
 				-350
 			],
 			"loop": false,
@@ -115,11 +115,22 @@
 				-90,
 				-350
 			],
-			"loop": false,
+			"loop": true,
 			"fps": 24,
-			"anim": "ballidlebreak",
+			"anim": "idle-break1",
 			"indices": [],
-			"name": "Ball_Idle_Break"
+			"name": "Ball_Idle_Break01"
+		},
+		{
+			"offsets": [
+				-90,
+				-350
+			],
+			"loop": true,
+			"fps": 24,
+			"anim": "idle-break2",
+			"indices": [],
+			"name": "Ball_Idle_Break02"
 		},
 		{
 			"offsets": [

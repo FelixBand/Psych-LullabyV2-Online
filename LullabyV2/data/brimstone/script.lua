@@ -44,6 +44,7 @@ function onCreatePost()
 	bfStartPosition=getProperty('boyfriend.x')
 	setProperty('boyfriend.x',getProperty('boyfriend.x')+screenWidth*2)
 	setObjectOrder('gfGroup', getObjectOrder('boyfriendGroup') + 1)
+	setProperty('gfGroup.alpha', 0.0001)
 
 	for i = 0, getProperty('unspawnNotes.length') - 1 do
 		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Gengar Sing' then
@@ -211,9 +212,16 @@ function onEvent(name, value1, value2)
 			setProperty('enterGengar.alpha', 1)
 		end
 		if value1 == 'Missingno' then
+			triggerEvent('Alt Idle Animation', 'bf', '-disabled')
 			playAnim('boyfriend', 'throw', true)
-			playAnim('gf', 'ballthrow', true)
-			setProperty('gfGroup.alpha', 1)
+		end
+	end
+	if name == 'Leave' then
+		if value1 == 'Missingno' then
+			doTweenY('missingnoDown', 'gfGroup', getProperty('gf.y') + 600, 1, 'cubeIn')
+		end
+		if value1 == 'Gengar' then
+			
 		end
 	end
 end
