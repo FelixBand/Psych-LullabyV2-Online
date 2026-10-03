@@ -67,6 +67,8 @@ function onCreate()
 	addAnimationByPrefix('muk', 'singODD', 'Muk_Up', 24, false)
 	addAnimationByPrefix('muk', 'singRIGHT', 'Muk_Right', 24, false)
 	addAnimationByPrefix('muk', 'intro', 'Muk_Intro', 24, false)
+	addAnimationByPrefix('muk', 'leave', 'Muk_Intro', 24, false)
+	addAnimationByIndices('muk', 'leave', 'Muk_Intro', '34,33,32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0', 24, false)
 	addAnimationByPrefix('muk', 'puke', 'Muk_Puke', 24, false)
 	scaleObject('muk', 6, 6)
 	setObjectOrder('muk', getObjectOrder('dadGroup') + 1)
@@ -287,6 +289,9 @@ function onEvent(name, value1, value2)
 			playAnim('enterGengar', 'leave', true)
 			setProperty('enterGengar.alpha', 1)
 			removeLuaSprite('gengar', true)
+		end
+		if value1 == 'Leanmonster' then
+			playAnim('muk', 'leave', true)
 		end
 	end
 	if name == 'Gameboy Filter' then
