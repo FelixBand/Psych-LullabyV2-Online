@@ -57,6 +57,22 @@ function onCreate()
 	setProperty('gengar.antialiasing', false)
 	setProperty('gengar.alpha', 0.0001)
 	addLuaSprite('gengar')
+
+
+	makeAnimatedLuaSprite('muk', 'characters/buried/leanmonster', 310, 250)
+	addAnimationByPrefix('muk', 'idle', 'Muk_Idle', 24, false)
+	addAnimationByPrefix('muk', 'singLEFT', 'Muk_Left', 24, false)
+	addAnimationByPrefix('muk', 'singDOWN', 'Muk_Down', 24, false)
+	addAnimationByPrefix('muk', 'singUP', 'Muk_Up', 24, false)
+	addAnimationByPrefix('muk', 'singODD', 'Muk_Up', 24, false)
+	addAnimationByPrefix('muk', 'singRIGHT', 'Muk_Right', 24, false)
+	addAnimationByPrefix('muk', 'intro', 'Muk_Intro', 24, false)
+	addAnimationByPrefix('muk', 'puke', 'Muk_Puke', 24, false)
+	scaleObject('muk', 6, 6)
+	setObjectOrder('muk', getObjectOrder('dadGroup') + 1)
+	setProperty('muk.antialiasing', false)
+	setProperty('muk.alpha', 0.0001)
+	addLuaSprite('muk')
 end
 
 local bfStartPosition=0
@@ -70,7 +86,7 @@ function onCreatePost()
 	setProperty('gfGroup.alpha', 0.0001)
 
 	for i = 0, getProperty('unspawnNotes.length') - 1 do
-		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Gengar Sing' then
+		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Gengar Sing' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Muk Sing' or getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Apparition Sing' then
 			setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true)
 		end
 	end
@@ -80,11 +96,15 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 	if noteType == 'Gengar Sing' then
 		playAnim('gengar', getProperty('singAnimations')[direction+1], true)
 	end
+	if noteType == 'Muk Sing' then
+		playAnim('muk', getProperty('singAnimations')[direction+1], true)
+	end
 end
 
 function onBeatHit()
 	if curBeat % 2 == 0 then
 		playIdle('gengar')
+		playIdle('muk')
 	end
 end
 
@@ -238,6 +258,10 @@ function onEvent(name, value1, value2)
 		if value1 == 'Missingno' then
 			triggerEvent('Alt Idle Animation', 'bf', '-disabled')
 			playAnim('boyfriend', 'throw', true)
+		end
+		if value1 == 'Leanmonster' then
+			playAnim('muk', 'intro', true)
+			setProperty('muk.alpha', 1)
 		end
 	end
 	if name == 'Leave' then
