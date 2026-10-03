@@ -212,6 +212,8 @@ function onCreatePost()
 	setProperty('gfGroup.alpha', 0.0001)
 	setObjectOrder('gfGroup', getObjectOrder('boyfriendGroup') + 1)
 	setProperty('healthBar.flipX', true)
+	setProperty('camFollowPos.x', 1000)
+	setProperty('camFollowPos.y', 500)
 end
 
 function onSpawnNote(id) -- Disable RGB shader on middle lane
