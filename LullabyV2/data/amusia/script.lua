@@ -193,7 +193,7 @@ function onEvent(name, value1, value2)
 		doTweenAlpha('whiteOut', 'white', 0, 1, 'linear')
 
 		setProperty('cameraSpeed', 1)
-		triggerEvent('Camera Follow Pos', nil, nil)
+		triggerEvent('Camera Follow Pos', '', '')
 
 		setProperty('boyfriendGroup.color', 0xFFFFFFF)
 		setProperty('dadGroup.color', 0xFFFFFFF)
@@ -475,22 +475,13 @@ end
 function onStepHit()
 	if not endingStarted then
 		if curStep == 13 then
-			doTweenX(
-				'dadIn',
-				'dadGroup',
-				getProperty('dad.x') - screenWidth,
-				(stepCrochet / 1000) * 12,
-				'circInOut'
-			)
-
+			doTweenX('dadIn', 'dadGroup', getProperty('dad.x') - screenWidth, (stepCrochet / 1000) * 12, 'circInOut')
 		elseif curStep == 19 then
-			doTweenX(
-				'bfIn',
-				'boyfriendGroup',
-				getProperty('boyfriend.x') + screenWidth,
-				(stepCrochet / 1000) * 12,
-				'circInOut'
-			)
+			doTweenX('bfIn', 'boyfriendGroup', getProperty('boyfriend.x') + screenWidth, (stepCrochet / 1000) * 12, 'circInOut')
+		end
+		
+		if curStep == 33 then
+			cameraSetTarget('dad')
 		end
 
 		if curStep == 272 then
@@ -571,37 +562,13 @@ function onStepHit()
 			setProperty('boyfriendGroup.x', 1640)
 			setProperty('boyfriendGroup.y', 680)
 
-			doTweenX(
-				'dadSlideBack',
-				'dadGroup',
-				getProperty('dadGroup.x') + 1100,
-				0.75,
-				'quartOut'
-			)
+			doTweenX('dadSlideBack', 'dadGroup', getProperty('dadGroup.x') + 1100, 0.75, 'quartOut')
 
-			doTweenX(
-				'bfSlideBack',
-				'boyfriendGroup',
-				getProperty('boyfriendGroup.x') - 1100,
-				0.75,
-				'quartOut'
-			)
+			doTweenX('bfSlideBack', 'boyfriendGroup', getProperty('boyfriendGroup.x') - 1100, 0.75, 'quartOut')
 
-			doTweenX(
-				'plateLback',
-				'plateL',
-				getProperty('plateL.x') - 1100,
-				0.75,
-				'quartOut'
-			)
+			doTweenX('plateLback', 'plateL', getProperty('plateL.x') - 1100, 0.75, 'quartOut')
 
-			doTweenX(
-				'plateRback',
-				'plateR',
-				getProperty('plateR.x') + 1100,
-				0.75,
-				'quartOut'
-			)
+			doTweenX('plateRback', 'plateR', getProperty('plateR.x') + 1100, 0.75, 'quartOut')
 
 			setProperty('healthBar.flipX', true)
 		end
@@ -649,8 +616,8 @@ end
 function onSectionHit() getPropertyFromGroup('opponentStrums', i, 'angle')
 	if curSection >= 82 and curSection % 2 == 0 then
 		for i = 0, getProperty('opponentStrums.length') - 1 do
-			noteTweenAngle('noteSpin' .. i, i, getPropertyFromGroup('opponentStrums', i, 'angle') + 360, 1, 'cubeInOut')
-			noteTweenAngle('noteSpin' .. i + getProperty('opponentStrums.length'), i + getProperty('opponentStrums.length'), getPropertyFromGroup('playerStrums', i, 'angle') + 360, 1, 'cubeInOut')
+			noteTweenAngle('noteSpin' .. i, i, getPropertyFromGroup('opponentStrums', i, 'angle') + 360, 0.75, 'cubeInOut')
+			noteTweenAngle('noteSpin' .. i + getProperty('opponentStrums.length'), i + getProperty('opponentStrums.length'), getPropertyFromGroup('playerStrums', i, 'angle') + 360, 0.75, 'cubeInOut')
 		end
 	end
 end

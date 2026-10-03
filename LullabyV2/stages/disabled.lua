@@ -34,8 +34,8 @@ function onCreate()
     setProperty('static.alpha', 0.0001)
     addLuaSprite('static')
 
-    makeLuaSprite('background', dir .. 'background', 0, 200)
-    scaleObject('background', 1.5, 1.5)
+    makeLuaSprite('background', dir .. 'background', -150, 250)
+    scaleObject('background', 1.4, 1.4)
     setScrollFactor('background', 0.125, 0.5)
     addLuaSprite('background')
 
@@ -70,7 +70,7 @@ function onCreate()
         setSpriteShader('background', 'pincushion')
 
         setShaderFloat('background', 'prob', 0.01)
-        setShaderFloat('background', 'distort', 1)
+        setShaderFloat('background', 'distort', 1.5)
         setShaderFloat('background', 'vignetteIntensity', 0.01)
 
         runHaxeCode([[
