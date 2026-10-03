@@ -34,7 +34,7 @@ function onCreate()
 	setProperty('amusiaAnswerBox.antialiasing', false)
 	setProperty('amusiaAnswerBox.visible', false)
 
-	makeLuaText('amusiaDialogueText', '', 680, 205, 540)
+	makeLuaText('amusiaDialogueText', '', 600, 205, 540)
 	setTextFont('amusiaDialogueText', 'poketext.ttf')
 	setTextSize('amusiaDialogueText', 24)
 	setTextColor('amusiaDialogueText', '000000')
