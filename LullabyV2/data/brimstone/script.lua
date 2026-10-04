@@ -15,6 +15,7 @@ function onCreate()
 
 	if shadersEnabled then
 		makeLuaSprite('greenController', '', 0, 0)
+		initLuaShader('desaturation')
 
 		runHaxeCode([[
 			game.initLuaShader('brimstone/gameboy');
@@ -79,6 +80,16 @@ end
 local bfStartPosition=0
 
 function onCreatePost()
+	if shadersEnabled then
+		for _, backgroundSprite in ipairs({'Back', 'Floor', 'Graves'}) do
+			setSpriteShader(backgroundSprite, 'desaturation')
+			setShaderFloat(backgroundSprite, 'desaturationAmount', 1)
+			setShaderFloat(backgroundSprite, 'amplitude', 0)
+			setShaderFloat(backgroundSprite, 'frequency', 8)
+			setShaderFloat(backgroundSprite, 'distortionTime', 0)
+		end
+	end
+
 	playAnim('dad','Ground',true)
 	setProperty('dad.specialAnim',true)
 	bfStartPosition=getProperty('boyfriend.x')
@@ -171,6 +182,11 @@ end
 
 local curFrame=0
 
+local brimstoneWarpActive = false
+local brimstoneWarpTime = 0
+local brimstoneWarpElapsed = 0
+local brimstoneWarpDuration = 0
+
 function onUpdate(elapsed)
 	if curBeat >= 874 then
 		local angle = ((getSongPosition() - 266192) / 4000) * math.pi
@@ -181,6 +197,18 @@ function onUpdate(elapsed)
 	end
 
 	setShaderFloat('greenController', 'interpolation', getProperty('greenController.x'))
+
+	if brimstoneWarpActive then
+		brimstoneWarpTime = brimstoneWarpTime - elapsed * 0.375
+		brimstoneWarpElapsed = math.min(brimstoneWarpElapsed + elapsed, brimstoneWarpDuration)
+		local progress = brimstoneWarpElapsed / brimstoneWarpDuration
+		local easedProgress = 1 - math.cos(progress * math.pi * 0.5)
+		for _, backgroundSprite in ipairs({'Back', 'Floor', 'Graves'}) do
+			setShaderFloat(backgroundSprite, 'distortionTime', brimstoneWarpTime)
+			setShaderFloat(backgroundSprite, 'amplitude', easedProgress * 0.1)
+			setShaderFloat(backgroundSprite, 'desaturationAmount', 1 - easedProgress)
+		end
+	end
 
     if curStep > 1 then
 		if curFrame % math.floor(4 * ( getPropertyFromClass('flixel.FlxG','drawFramerate')/ 60)) == 0 then
@@ -291,6 +319,10 @@ function onEvent(name, value1, value2)
 				triggerEvent('Alt Idle Animation', 'gf', '-alt')
 				--playAnim('gf', 'transform', true)
 				triggerEvent('Play Animation', 'transform', 'gf')
+				if shadersEnabled and not brimstoneWarpActive then
+					brimstoneWarpActive = true
+					brimstoneWarpDuration = (stepCrochet * 32) / 1000
+				end
 			end
 		end
 	end
