@@ -9,7 +9,7 @@ function onCreate()
 	   table.insert(BarsStart, 'Bar'..i)
 	end
 
-	precacheImage('Mechanics/muksludge')
+	precacheImage('characters/buried/muksludge')
 	precacheSound('MukCums')
 	setProperty('skipCountdown', true)
 
@@ -74,6 +74,7 @@ function onCreate()
 	setObjectOrder('muk', getObjectOrder('dadGroup') + 1)
 	setProperty('muk.antialiasing', false)
 	setProperty('muk.alpha', 0.0001)
+	setProperty('muk.visible', false)
 	addLuaSprite('muk')
 end
 
@@ -124,8 +125,53 @@ function onBeatHit()
 end
 
 function playIdle(char)
+	if char == 'muk' and not getProperty('muk.visible') then
+		return
+	end
 	if getProperty(char .. '.animation.curAnim.finished') then
-		playAnim(char, 'idle')
+		if char == 'muk' and getProperty('muk.animation.curAnim.name') == 'leave' then
+			setProperty('muk.visible', false)
+		else
+			playAnim(char, 'idle')
+		end
+	end
+end
+
+local mukPukeCooldown = 80
+local mukPukePending = false
+local mukSplatFadeStarted = false
+
+local function hasHittablePlayerTapNote()
+	for noteIndex = 0, getProperty('notes.length') - 1 do
+		if getPropertyFromGroup('notes', noteIndex, 'mustPress')
+			and getPropertyFromGroup('notes', noteIndex, 'canBeHit')
+			and not getPropertyFromGroup('notes', noteIndex, 'isSustainNote')
+			and not getPropertyFromGroup('notes', noteIndex, 'tooLate')
+			and not getPropertyFromGroup('notes', noteIndex, 'wasGoodHit') then
+			return true
+		end
+	end
+	return false
+end
+
+local function startMukPuke()
+	if mukPukePending or not getProperty('muk.visible') then
+		return false
+	end
+
+	mukPukePending = true
+	mukPukeCooldown = 80
+	playAnim('muk', 'puke', true)
+	runTimer('CUm', (stepCrochet * 4) / 1000, 1)
+	return true
+end
+
+function onStepHit()
+	if getProperty('muk.visible') and getProperty('muk.animation.curAnim.name') == 'idle' then
+		mukPukeCooldown = mukPukeCooldown - 1
+		if mukPukeCooldown <= 0 and hasHittablePlayerTapNote() then
+			startMukPuke()
+		end
 	end
 end
 
@@ -136,47 +182,26 @@ local myShake={}
 local brimstoneShaking=false
 
 function onTimerCompleted(tag, loops, loopsLeft)
-    if tag=='CUm' then
-	    brimstoneShaking = true
-        myShake = shakeProgress
-		playSound('MukCums',1)
-        makeAnimatedLuaSprite('muksludge', 'Mechanics/muksludge', 0, 0)
-        addAnimationByPrefix('muksludge', '0', 'Sludge_01', 24,false)
-        addAnimationByPrefix('muksludge', '1', 'Sludge_02', 24,false)
-        addAnimationByPrefix('muksludge', '2', 'Sludge_03', 24,false)
-        setGraphicSize('muksludge', screenWidth,screenHeight)
-        setProperty('muksludge.antialiasing',false)
-        cancelTween('Cumleave')
-        setProperty('muksludge.alpha',1)
-        playAnim('muksludge',tostring(math.random(0,2)),true)
-        setObjectCamera('muksludge', 'other')
-        addLuaSprite('muksludge',false)
-      
-    end
-	if tag=='Idle' then
-        playAnim('Boyfriend','idle')
-	end
+	if tag == 'CUm' then
+		brimstoneShaking = true
+		myShake = shakeProgress
+		playSound('MukCums', 1)
 
-end
-
-function onTweenCompleted(tag)
-   if tag =='Cumleave'then
-		removeLuaSprite('muksludge',false)
-   end
-end
-
-local CumColdown=80
-function onStepHit()
-    if getProperty('Muk.visible') and getProperty('Muk.animation.curAnim.name')=='idle' then
-        CumColdown=CumColdown-1
-		if CumColdown<=0 then
-			if getProperty('Muk.animation.curAnim.name')~= "Intro" then
-				playAnim('Muk','Puke',true)
-				setProperty('Muk.specialAnim',true)
-				runTimer('CUm',(stepCrochet * 4) / 1000,1)
-			end
-			CumColdown=80
-	    end
+		if luaSpriteExists('muksludge') then
+			removeLuaSprite('muksludge', true)
+		end
+		makeAnimatedLuaSprite('muksludge', 'characters/buried/muksludge', 0, 0)
+		addAnimationByPrefix('muksludge', '0', 'Sludge_01', 24, false)
+		addAnimationByPrefix('muksludge', '1', 'Sludge_02', 24, false)
+		addAnimationByPrefix('muksludge', '2', 'Sludge_03', 24, false)
+		setProperty('muksludge.antialiasing', false)
+		scaleObject('muksludge', 4, 4)
+		setObjectCamera('muksludge', 'other')
+		addLuaSprite('muksludge', false)
+		screenCenter('muksludge')
+		setProperty('muksludge.alpha', 1)
+		mukSplatFadeStarted = false
+		playAnim('muksludge', tostring(math.random(0, 2)), true)
 	end
 end
 
@@ -208,6 +233,12 @@ function onUpdate(elapsed)
 			setShaderFloat(backgroundSprite, 'amplitude', easedProgress * 0.1)
 			setShaderFloat(backgroundSprite, 'desaturationAmount', 1 - easedProgress)
 		end
+	end
+
+	if luaSpriteExists('muksludge') and not mukSplatFadeStarted
+		and getProperty('muksludge.animation.curAnim.finished') then
+		mukSplatFadeStarted = true
+		doTweenAlpha('Cumleave', 'muksludge', 0, (stepCrochet * 4) / 1000, 'linear')
 	end
 
     if curStep > 1 then
@@ -242,6 +273,14 @@ function onUpdate(elapsed)
 		end
 		brimstoneShakes()
 		curFrame=curFrame+1
+	end
+end
+
+function onTweenCompleted(tag)
+	if tag == 'Cumleave' then
+		removeLuaSprite('muksludge', true)
+		mukSplatFadeStarted = false
+		mukPukePending = false
 	end
 end
 
@@ -303,6 +342,7 @@ function onEvent(name, value1, value2)
 		if value1 == 'Leanmonster' then
 			playAnim('muk', 'intro', true)
 			setProperty('muk.alpha', 1)
+			setProperty('muk.visible', true)
 
 			-- might as well do this here
 			triggerEvent('Change Character', 'gf', 'apparition')
@@ -325,6 +365,9 @@ function onEvent(name, value1, value2)
 				end
 			end
 		end
+	end
+	if name == 'Muk Puke' then
+		startMukPuke()
 	end
 	if name == 'Leave' then
 		if value1 == 'Missingno' then
