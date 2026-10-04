@@ -9,6 +9,12 @@ function onCreate()
 	   table.insert(BarsStart, 'Bar'..i)
 	end
 
+	makeLuaSprite('redvignette', 'stages/buried/images/apparitionVignette', 0, 0)
+	setObjectCamera('redvignette', 'other')
+	scaleObject('redvignette', 1.251, 1.251)
+	setProperty('redvignette.alpha', 0.0001)
+	addLuaSprite('redvignette')
+
 	precacheImage('characters/buried/muksludge')
 	precacheSound('MukCums')
 	setProperty('skipCountdown', true)
@@ -211,6 +217,7 @@ local brimstoneWarpActive = false
 local brimstoneWarpTime = 0
 local brimstoneWarpElapsed = 0
 local brimstoneWarpDuration = 0
+local apparitionVignetteStartTime = nil
 
 function onUpdate(elapsed)
 	if curBeat >= 874 then
@@ -232,6 +239,13 @@ function onUpdate(elapsed)
 			setShaderFloat(backgroundSprite, 'distortionTime', brimstoneWarpTime)
 			setShaderFloat(backgroundSprite, 'amplitude', easedProgress * 0.1)
 			setShaderFloat(backgroundSprite, 'desaturationAmount', 1 - easedProgress)
+		end
+	end
+
+	if apparitionVignetteStartTime ~= nil then
+		if getSongPosition() >= apparitionVignetteStartTime then
+			local vignetteTime = getSongPosition() / (stepCrochet * 8)
+			setProperty('redvignette.alpha', 0.75 * math.sin(vignetteTime * math.pi))
 		end
 	end
 
@@ -350,21 +364,28 @@ function onEvent(name, value1, value2)
 		end
 		if value1 == 'ApparitionGF' then
 			if value2 == 'Hand' then
-				--triggerEvent('Alt Idle Animation', 'gf', '-disabled')
 				setProperty('gfGroup.x', 205)
 				setProperty('gfGroup.y', -40)
 				triggerEvent('Play Animation', 'intro', 'gf')
-				--playAnim('gf', 'intro', true)
 			elseif value2 == 'Apparition' then
 				triggerEvent('Alt Idle Animation', 'gf', '-alt')
-				--playAnim('gf', 'transform', true)
 				triggerEvent('Play Animation', 'transform', 'gf')
+				apparitionVignetteStartTime = getSongPosition() + (stepCrochet * 32)
 				if shadersEnabled and not brimstoneWarpActive then
 					brimstoneWarpActive = true
 					brimstoneWarpDuration = (stepCrochet * 32) / 1000
 				end
+				doTweenZoom('camIn', 'camGame', 0.9, ((stepCrochet / 1000) * 32), 'quadIn')
+				setProperty('defaultCamZoom', 0.9)
+				triggerEvent('Camera Follow Pos', '350', '400')
 			end
 		end
+	end
+	if name == 'zoom back out' then
+		doTweenZoom('camOut', 'camGame', 0.55, ((stepCrochet / 1000) * 32), 'quadOut')
+		setProperty('defaultCamZoom', 0.55)
+		triggerEvent('Camera Follow Pos', '', '')
+		cameraSetTarget('bf')
 	end
 	if name == 'Muk Puke' then
 		startMukPuke()
