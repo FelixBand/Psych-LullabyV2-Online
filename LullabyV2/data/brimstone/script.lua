@@ -100,6 +100,9 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 	if noteType == 'Muk Sing' then
 		playAnim('muk', getProperty('singAnimations')[direction+1], true)
 	end
+	if noteType == 'Buried GF Sing' then
+		triggerEvent('Play Animation', getProperty('singAnimations')[direction+1], 'gf')
+	end
 end
 
 function onBeatHit()
@@ -169,7 +172,16 @@ end
 local curFrame=0
 
 function onUpdate(elapsed)
+	if curBeat >= 874 then
+		local angle = ((getSongPosition() - 266192) / 4000) * math.pi
+		setProperty('gfGroup.x', 205 + math.sin(angle) * 40)
+		setProperty('gfGroup.y', -10 - math.cos(angle) * 40)
+	elseif curBeat >= 808 then
+		setProperty('gfGroup.y', -50 + math.sin(((getSongPosition() - 266192) / 4000) * math.pi) * -40)
+	end
+
 	setShaderFloat('greenController', 'interpolation', getProperty('greenController.x'))
+
     if curStep > 1 then
 		if curFrame % math.floor(4 * ( getPropertyFromClass('flixel.FlxG','drawFramerate')/ 60)) == 0 then
 		
@@ -270,13 +282,15 @@ function onEvent(name, value1, value2)
 		end
 		if value1 == 'ApparitionGF' then
 			if value2 == 'Hand' then
-				triggerEvent('Alt Idle Animation', 'gf', '-disabled')
+				--triggerEvent('Alt Idle Animation', 'gf', '-disabled')
 				setProperty('gfGroup.x', 205)
 				setProperty('gfGroup.y', -40)
-				playAnim('gf', 'intro', true)
+				triggerEvent('Play Animation', 'intro', 'gf')
+				--playAnim('gf', 'intro', true)
 			elseif value2 == 'Apparition' then
-				triggerEvent('Alt Idle Animation', 'gf', '-disabled')
-				playAnim('gf', 'transform', true)
+				triggerEvent('Alt Idle Animation', 'gf', '-alt')
+				--playAnim('gf', 'transform', true)
+				triggerEvent('Play Animation', 'transform', 'gf')
 			end
 		end
 	end

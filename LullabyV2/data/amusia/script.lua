@@ -675,28 +675,12 @@ function updateHealthIcons()
 	if curStep >= 804 then
 		setProperty(
 			'iconP1.x',
-			getProperty('healthBar.x')
-				+ (
-					getProperty('healthBar.width') * getProperty('healthBar.percent') * 0.01
-					+ (150 * getProperty('iconP1.scale.x') - 150) / 2
-					- 26
-				)
-				- 110
-		)
+			getProperty('healthBar.x') + (getProperty('healthBar.width') * getProperty('healthBar.percent') * 0.01 + (150 * getProperty('iconP1.scale.x') - 150) / 2 - 26) - 110)
 
 		setProperty('iconP1.origin.x', 240)
 		setProperty('iconP1.flipX', true)
 
-		setProperty(
-			'iconP2.x',
-			getProperty('healthBar.x')
-				+ (
-					getProperty('healthBar.width') * getProperty('healthBar.percent') * 0.01
-					- (150 * getProperty('iconP2.scale.x')) / 2
-					- 26 * 2
-				)
-				+ 110
-		)
+		setProperty('iconP2.x', getProperty('healthBar.x') + (getProperty('healthBar.width') * getProperty('healthBar.percent') * 0.01 - (150 * getProperty('iconP2.scale.x')) / 2 - 26 * 2)+ 110)
 
 		setProperty('iconP2.origin.x', -100)
 		setProperty('iconP2.flipX', true)
