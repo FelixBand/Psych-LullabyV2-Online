@@ -254,3 +254,13 @@ function onUpdatePost()
 		end
 	end
 end
+
+function goodNoteHit()
+    for i = 0, getProperty('grpNoteSplashes.length')-1 do
+       setPropertyFromGroup('grpNoteSplashes', i, 'scale.x', 0.75)
+	   setPropertyFromGroup('grpNoteSplashes', i, 'scale.y', 0.75)
+
+	   setPropertyFromGroup('grpNoteSplashes', i, 'offset.x', -55)
+	   setPropertyFromGroup('grpNoteSplashes', i, 'offset.y', -40)
+    end
+end
