@@ -79,6 +79,11 @@ function onUpdate(elapsed)
 end
 
 function onEvent(eventName, value1, value2)
+	if eventName=='Fade In Intro' then
+		doTweenAlpha('gameIn', 'camGame', 1, 3, 'linear')
+		doTweenZoom('camZoom', 'camGame', 1, 5, 'cubeOut')
+		setProperty('defaultCamZoom', 1)
+	end
 	if eventName=='Mike Strangle Scene' then
 		setProperty('defaultCamZoom', 0.9)
 		triggerEvent('Camera Follow Pos', '400', '650')
@@ -141,9 +146,6 @@ function onEvent(eventName, value1, value2)
         setProperty('lacama.visible',true)
         setProperty('laalmuada.visible',true)
         setProperty('iconP1.visible',true)
-        for i=0,3 do
-            setPropertyFromGroup('playerStrums',i,'visible',true)
-        end
         triggerEvent('Change Character', 'dad', 'Steven')
     end
 end
@@ -158,16 +160,8 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		setProperty('iconP1.visible', true)
 		setProperty('iconP2.visible', true)
 	end
-	if tag == 'allowGFidle' then
-		triggerEvent('Alt Idle Animation', 'gf', '')
-	end
 end
 function onBeatHit()
-	if curBeat == 1 then
-		doTweenAlpha('gameIn', 'camGame', 1, 3, 'linear')
-		doTweenZoom('camZoom', 'camGame', 1, 5, 'cubeOut')
-		setProperty('defaultCamZoom', 1)
-	end
 	if curBeat == 4 then
 		setProperty('cameraSpeed', 1)
 	end
@@ -195,7 +189,5 @@ function Set(tag,Var,X,Y)
 end
 
 function opponentNoteHit(id, direction, noteType, isSustainNote) -- sync the two Stevens
-	triggerEvent('Alt Idle Animation', 'gf', '-disabled')
-	runTimer('allowGFidle', 0.55)
-	playAnim('gf', getProperty('singAnimations')[direction+1], true)
+	triggerEvent('Play Animation', getProperty('singAnimations')[direction+1], 'gf')
 end

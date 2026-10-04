@@ -244,20 +244,18 @@ function goodNoteHit(id, direction, noteType, isSustainNote) -- this whole syste
 		bfIdle = '-alt'
 		runTimer('bell', 0.5)
 		if not isSustainNote then
-			playAnim('boyfriend', 'cover', true)
-			playAnim('gf', 'cover', true)
+			triggerEvent('Play Animation', 'cover', 'bf')
+			triggerEvent('Play Animation', 'cover', 'gf')
 		end
 		triggerEvent('Alt Idle Animation', 'bf', '-alt')
 	end
 
 	if noteType ~= 'Bell' then
-		triggerEvent('Alt Idle Animation', 'gf', '-disabled')
-		runTimer('allowBFidle', 0.55)
 		if singAlt then -- Play alt animations (covering ears) when hitting Bell notes
-			playAnim('boyfriend', getProperty('singAnimations')[direction+1] .. '-alt', true)
-			playAnim('gf', getProperty('singAnimations')[direction+1] .. '-alt', true)
+			triggerEvent('Play Animation', getProperty('singAnimations')[direction+1] .. '-alt', 'bf')
+			triggerEvent('Play Animation', getProperty('singAnimations')[direction+1] .. '-alt', 'gf')
 		else
-			playAnim('gf', getProperty('singAnimations')[direction+1], true)
+			triggerEvent('Play Animation', getProperty('singAnimations')[direction+1], 'gf')
 		end
 	end
 end
@@ -289,9 +287,6 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		singAlt = false
 		triggerEvent('Alt Idle Animation', 'bf', '')
 		bfIdle = ''
-	end
-	if tag == 'allowBFidle' then
-		triggerEvent('Alt Idle Animation', 'gf', bfIdle)
 	end
 	if tag == 'hellBellIdle' then
 		playAnim('hellBell', 'idle', true)

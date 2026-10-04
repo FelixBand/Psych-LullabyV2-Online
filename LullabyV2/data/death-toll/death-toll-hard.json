@@ -7824,6 +7824,7 @@
     "stage": "hell",
     "speed": 3,
     "bpm": 188,
-    "keyCount": 5
+    "keyCount": 5,
+    "arrowSkin": "noteSkins/NOTE_assets"
   }
 }
