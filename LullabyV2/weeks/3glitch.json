@@ -2,8 +2,8 @@
 	"storyName": "Glitch",
 	"hideFreeplay": false,
 	"weekBackground": "black",
-	"weekBefore": "",
-	"startUnlocked": true,
+	"weekBefore": "2silver",
+	"startUnlocked": false,
 	"weekCharacters": [
 		"glitchweek",
 		"campaignboy",

@@ -2,8 +2,8 @@
 	"storyName": "Lost Silver",
 	"hideFreeplay": false,
 	"weekBackground": "black",
-	"weekBefore": "",
-	"startUnlocked": true,
+	"weekBefore": "1hypno",
+	"startUnlocked": false,
 	"weekCharacters": [
 		"lostsilverweek",
 		"campaignboy",
