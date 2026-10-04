@@ -11,7 +11,8 @@ function onCreate()
 
 	makeLuaSprite('redvignette', 'stages/buried/images/apparitionVignette', 0, 0)
 	setObjectCamera('redvignette', 'other')
-	scaleObject('redvignette', 1.251, 1.251)
+	setProperty('redvignette.scale.x', 1.2) setProperty('redvignette.scale.y', 1.2)
+	setProperty('redvignette.color', getColorFromHex('FF0000'))
 	setProperty('redvignette.alpha', 0.0001)
 	addLuaSprite('redvignette')
 
@@ -97,6 +98,9 @@ function onCreatePost()
 		end
 	end
 
+	setProperty('camFollowPos.x', -379.5)
+	setProperty('camFollowPos.y', 152.75)
+
 	playAnim('dad','Ground',true)
 	setProperty('dad.specialAnim',true)
 	bfStartPosition=getProperty('boyfriend.x')
@@ -147,40 +151,11 @@ local mukPukeCooldown = 80
 local mukPukePending = false
 local mukSplatFadeStarted = false
 
-local function hasHittablePlayerTapNote()
-	for noteIndex = 0, getProperty('notes.length') - 1 do
-		if getPropertyFromGroup('notes', noteIndex, 'mustPress')
-			and getPropertyFromGroup('notes', noteIndex, 'canBeHit')
-			and not getPropertyFromGroup('notes', noteIndex, 'isSustainNote')
-			and not getPropertyFromGroup('notes', noteIndex, 'tooLate')
-			and not getPropertyFromGroup('notes', noteIndex, 'wasGoodHit') then
-			return true
-		end
-	end
-	return false
-end
-
-local function startMukPuke()
-	if mukPukePending or not getProperty('muk.visible') then
-		return false
-	end
-
+function startMukPuke()
 	mukPukePending = true
-	mukPukeCooldown = 80
 	playAnim('muk', 'puke', true)
 	runTimer('CUm', (stepCrochet * 4) / 1000, 1)
-	return true
 end
-
-function onStepHit()
-	if getProperty('muk.visible') and getProperty('muk.animation.curAnim.name') == 'idle' then
-		mukPukeCooldown = mukPukeCooldown - 1
-		if mukPukeCooldown <= 0 and hasHittablePlayerTapNote() then
-			startMukPuke()
-		end
-	end
-end
-
 
 local shakeProgress = {-13, 26, -16, 4, -1}
 local shakeProgressFinal = {-28,52,-38,28,-21,12,-10,5,-1}
@@ -220,6 +195,7 @@ local brimstoneWarpDuration = 0
 local apparitionVignetteStartTime = nil
 
 function onUpdate(elapsed)
+	setProperty('camZooming', false)
 	if curBeat >= 874 then
 		local angle = ((getSongPosition() - 266192) / 4000) * math.pi
 		setProperty('gfGroup.x', 205 + math.sin(angle) * 40)
@@ -245,7 +221,7 @@ function onUpdate(elapsed)
 	if apparitionVignetteStartTime ~= nil then
 		if getSongPosition() >= apparitionVignetteStartTime then
 			local vignetteTime = getSongPosition() / (stepCrochet * 8)
-			setProperty('redvignette.alpha', 0.75 * math.sin(vignetteTime * math.pi))
+			setProperty('redvignette.alpha', 0.4 * math.sin(vignetteTime * math.pi))
 		end
 	end
 
