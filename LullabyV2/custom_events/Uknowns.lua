@@ -1,262 +1,330 @@
-local AllWordsLists={}
+local AllWordsLists = {}
+
+local mechanics = 'Normal'
+local canOpenUknowns = true
+
+local actualWord = {}
+local actualLetter = 1
+local wordObjects = {}
+
+local wordLength = 0
+local letterCount = 0
+
+local offset = 20
+local timeLimit = 15
+
+local currentWord = ''
+local lastStep = -1
+
+local difficulty = 'Normal'
+local unknownsOpen = false
+local wasReset = true
+
 function onCreate()
-    initSaveData('HypnosPref')
-    --Preparer the assets
-    precacheImage('Mechanics/line')
-    precacheImage('Mechanics/Unown_Alphabet')
-    --Get Words
-    local NormalWords=stringSplit(getTextFromFile('WordUnknow/Normal.txt'),'\n')
-    local HardWords=stringSplit(getTextFromFile('WordUnknow/Hard.txt'),'\n')
-    local RareWords=stringSplit(getTextFromFile('WordUnknow/Rare.txt'),'\n')
-    local ImpossibleWords=stringSplit(getTextFromFile('WordUnknow/Impossible.txt'),'\n')
-    local HellWords=stringSplit(getTextFromFile('WordUnknow/Hell.txt'),'\n')
-    local MissingnoWords=stringSplit(getTextFromFile('WordUnknow/Missingno.txt'),'\n')
-    local BrimstoneWords=stringSplit(getTextFromFile('WordUnknow/Brimstone.txt'),'\n')
+	precacheImage('Mechanics/line')
+	precacheImage('Mechanics/Unown_Alphabet')
 
-    AllWordsLists={
-        ['Normal']=NormalWords,
-        ['Hard']=HardWords,
-        ['Rare']=RareWords,
-        ['Impossible']=ImpossibleWords,
-        ['Hell']=HellWords,
-        ['Missingno']=MissingnoWords,
-        ['Brimstone']=BrimstoneWords
-    }
+	AllWordsLists.Normal = stringSplit(getTextFromFile('WordUnknow/Normal.txt'), '\n')
+	AllWordsLists.Hard = stringSplit(getTextFromFile('WordUnknow/Hard.txt'), '\n')
+	AllWordsLists.Rare = stringSplit(getTextFromFile('WordUnknow/Rare.txt'), '\n')
+	AllWordsLists.Impossible = stringSplit(getTextFromFile('WordUnknow/Impossible.txt'), '\n')
+	AllWordsLists.Hell = stringSplit(getTextFromFile('WordUnknow/Hell.txt'), '\n')
+	AllWordsLists.Missingno = stringSplit(getTextFromFile('WordUnknow/Missingno.txt'), '\n')
+	AllWordsLists.Brimstone = stringSplit(getTextFromFile('WordUnknow/Brimstone.txt'), '\n')
 
-    
-    CanOpenUknowns=not getDataFromSave('HypnosPref','Pussy mode',false)
-    if (songName=='Missingno' or songName=='Brimstone') and not getDataFromSave('HypnosPref','Hell mode',false) then
-        CanOpenUknowns=false
-    end
-    UnkownBotplay=false
+	mechanics = getModSetting('mechanics') or 'Normal'
+
+	if mechanics == 'Pussy' then
+		canOpenUknowns = false
+	end
+
+	if (songName == 'Missingno' or songName == 'Brimstone') and mechanics ~= 'Hell' then
+		canOpenUknowns = false
+	end
+
+	UnkownBotplay = false
 end
-local WordLength=0
-local LetterCreates=0
-local UknownsOpen=false
-local ActualWordObjects={}
-local SubstateAdditions={}
-local ActualLetter=1
-local Offset=20
-local Time=15
-local word=''
+
 function onEvent(eventName, value1, value2)
-    if eventName=='Uknowns' and playsAsBF()then
-        --Time in Steps
-        if value1~='' then Time=tonumber(value1)
-        else Time=15 end
-        --The especific word
-        if value2~='' then word=string.upper(value2)
-        else word='' end
+	if eventName ~= 'Uknowns' or not playsAsBF() or not canOpenUknowns then
+		return
+	end
 
-        if CanOpenUknowns then openCustomSubstate('Uknowns',false) end
-    end
+	timeLimit = tonumber(value1) or 15
+	currentWord = value2 ~= '' and string.upper(stringTrim(value2)) or ''
+
+	openUknowns()
 end
-local ActualWord={}
-local Difficulte='Normal'
-local WasReset=false
-function onCustomSubstateCreate(name)
-    if name=='Uknowns' then
-        SubstateAdditions={}
-        setProperty('persistentUpdate',true)
-        UknownsOpen=true
-        WasReset=getProperty("canReset")
-        setProperty('canReset',false)
-        makeLuaSprite('BackUknowns',nil,0,0)
-        makeGraphic('BackUknowns',screenWidth,screenHeight,'FF0000')
-        setProperty('BackUknowns.alpha',0.4)
-        addLuaSpriteSubstate('BackUknowns')
-        if dadName=='Gold-Head' then
-            Difficulte='Hard'
-        else
-            Difficulte='Normal'
-        end
-        if getRandomInt(0,10)==1 then
-            Difficulte='Hard'
-            if getRandomInt(0,10)==1 then
-                Difficulte='Rare'
-                if getRandomInt(0,10)==1 then
-                    Difficulte='Impossible'
-                end
-            end
-        end
-        local randomNumber=1
-        if getDataFromSave('HypnosPref','Hell mode',false) then
-            if songName=='Missingno' then
-                Difficulte='Missingno'
-                
-            elseif songName=='Brimstone' then
-                Difficulte='Brimstone'
-            else
-                Difficulte='Hell'
-            end
-        end
-        randomNumber=getRandomInt(1,#AllWordsLists[Difficulte])
-        local finalWord='NOT FOUND'
-        
-        if word~='' then
-            finalWord=stringTrim(word)
-            
-        else
-            finalWord=stringTrim(AllWordsLists[Difficulte][randomNumber])
-        end
-        ActualWord=stringSplit(finalWord,'')
-        word=''
-        for i, letter in ipairs(ActualWord) do
-            MakeLetter(letter)
-        end
-        FlushLuaSpriteSubstateAdditions()
-        for i=1,#ActualWordObjects do
-            if luaSpriteExists(ActualWordObjects[i].Letter) then
-                WordLength=WordLength+getProperty(ActualWordObjects[i].Letter..'.width')
-                if i<#ActualWordObjects then WordLength=WordLength+Offset end
-            end
-        end
-        for i=1,#ActualWordObjects do
-            if luaSpriteExists(ActualWordObjects[i].Letter) then
-                setProperty(ActualWordObjects[i].Letter..'.x',getProperty(ActualWordObjects[i].Letter..'.x')-WordLength/2)
-                if i>1 then
-                    setProperty(ActualWordObjects[i].Letter..'.x',getProperty(ActualWordObjects[i-1].Letter..'.x')+getProperty(ActualWordObjects[i-1].Letter..'.width')+Offset)
-                end
-                if luaSpriteExists(ActualWordObjects[i].Line) then
-                    setProperty(ActualWordObjects[i].Line..'.x',getProperty(ActualWordObjects[i].Letter..'.x'))
-                end
-            end
-        end
 
-        makeLuaText('UnknownTimer',tostring(Time),0,0,0)
-        setTextSize('UnknownTimer',32)
-        screenCenter('UnknownTimer','xy')
-        setTextBorder('UnknownTimer',0,'FFFFFF')
-        setTextFont('UnknownTimer','metro.otf')
-        setTextAlignment('UnknownTimer','center')
-        runTimer('UnknownTimes',crochet/1000,Time)
-        Time=15
-        addLuaTextSubstate('UnknownTimer')
-        LastStep=curStep
+function chooseDifficulty()
+	if mechanics == 'Hell' then
+		if songName == 'Missingno' then
+			return 'Missingno'
+		elseif songName == 'Brimstone' then
+			return 'Brimstone'
+		end
 
-    end
+		return 'Hell'
+	end
+
+	if dadName == 'Gold-Head' then
+		return 'Hard'
+	end
+
+	local chance = getRandomInt(0, 10)
+
+	if chance == 1 then
+		difficulty = 'Hard'
+
+		if getRandomInt(0, 10) == 1 then
+			difficulty = 'Rare'
+
+			if getRandomInt(0, 10) == 1 then
+				difficulty = 'Impossible'
+			end
+		end
+
+		return difficulty
+	end
+
+	return 'Normal'
 end
+
+function openUknowns()
+	if unknownsOpen then
+		return
+	end
+
+	unknownsOpen = true
+	wasReset = getProperty('canReset')
+	setProperty('canReset', false)
+
+	difficulty = chooseDifficulty()
+
+	local finalWord = currentWord
+
+	if finalWord == '' then
+		local words = AllWordsLists[difficulty]
+
+		if words and #words > 0 then
+			finalWord = stringTrim(words[getRandomInt(1, #words)])
+		else
+			finalWord = 'NOT FOUND'
+		end
+	end
+
+	currentWord = ''
+
+	actualWord = stringSplit(string.upper(finalWord), '')
+	actualLetter = 1
+	wordLength = 0
+	letterCount = 0
+
+	makeLuaSprite('BackUknowns', '', 0, 0)
+	makeGraphic('BackUknowns', screenWidth, screenHeight, 'FF0000')
+	setObjectCamera('BackUknowns', 'other')
+	setProperty('BackUknowns.alpha', 0.4)
+	addLuaSprite('BackUknowns', true)
+
+	for i, letter in ipairs(actualWord) do
+		makeLetter(letter)
+	end
+
+	positionWord()
+
+	makeLuaText('UnknownTimer', tostring(timeLimit), 0, 0, 0)
+	setTextSize('UnknownTimer', 32)
+	setTextFont('UnknownTimer', 'metro.otf')
+	setTextBorder('UnknownTimer', 0, 'FFFFFF')
+	setTextAlignment('UnknownTimer', 'center')
+	setObjectCamera('UnknownTimer', 'other')
+	screenCenter('UnknownTimer', 'xy')
+	addLuaText('UnknownTimer')
+
+	lastStep = curStep
+	runTimer('UnknownTimes', crochet / 1000, timeLimit)
+end
+
+function makeLetter(letter)
+	local id = 'UknownLetter' .. letterCount
+
+	makeAnimatedLuaSprite(id, 'Mechanics/Unown_Alphabet', 0, 0)
+	addAnimationByPrefix(id, 'idle', letter, 24, true)
+	playAnim(id, 'idle', true)
+	setObjectCamera(id, 'other')
+
+	local realScale = math.max(0.2, 1 - (0.05 * #actualWord))
+	scaleObject(id, realScale, realScale)
+
+	screenCenter(id, 'y')
+	setProperty(id .. '.y', getProperty(id .. '.y') - 100)
+
+	if letter == ' ' then
+		setProperty(id .. '.visible', false)
+	else
+		local line = 'UknownLine' .. letterCount
+
+		makeLuaSprite(line, 'Mechanics/line', 0, 0)
+		setObjectCamera(line, 'other')
+		scaleObject(line, realScale, realScale)
+
+		local lineWidth = getProperty(id .. '.width')
+		local lineHeight = getProperty(line .. '.height') * realScale
+
+		setGraphicSize(line, lineWidth, lineHeight)
+		screenCenter(line, 'xy')
+		setProperty(line .. '.y', getProperty(line .. '.y') + 200)
+
+		addLuaSprite(line, true)
+
+		wordObjects[#wordObjects + 1] = {
+			letter = id,
+			line = line
+		}
+	end
+
+	addLuaSprite(id, true)
+
+	if letter == ' ' then
+		wordObjects[#wordObjects + 1] = {
+			letter = id,
+			line = nil
+		}
+	end
+
+	letterCount = letterCount + 1
+end
+
+function positionWord()
+	wordLength = 0
+
+	for i, object in ipairs(wordObjects) do
+		if luaSpriteExists(object.letter) then
+			wordLength = wordLength + getProperty(object.letter .. '.width')
+
+			if i < #wordObjects then
+				wordLength = wordLength + offset
+			end
+		end
+	end
+
+	for i, object in ipairs(wordObjects) do
+		if luaSpriteExists(object.letter) then
+			local x = screenWidth / 2 - wordLength / 2
+
+			if i > 1 then
+				local previous = wordObjects[i - 1].letter
+				x = getProperty(previous .. '.x') + getProperty(previous .. '.width') + offset
+			end
+
+			setProperty(object.letter .. '.x', x)
+
+			if object.line and luaSpriteExists(object.line) then
+				setProperty(object.line .. '.x', x)
+			end
+		end
+	end
+end
+
+function onUpdate(elapsed)
+	if not unknownsOpen then
+		return
+	end
+
+	local letter = actualWord[actualLetter]
+
+	if not letter then
+		closeUknowns()
+		return
+	end
+
+	if letter == ' ' then
+		actualLetter = actualLetter + 1
+		return
+	end
+
+	if keyboardJustPressed(letter) and letter ~= '?' and letter ~= '!' then
+		correctLetter(actualLetter)
+		return
+	end
+
+	if letter == '!' then
+		if keyboardJustPressed('ONE') and keyboardPressed('SHIFT') then
+			correctLetter(actualLetter)
+			return
+		end
+	elseif letter == '?' then
+		if (keyboardPressed('SLASH') or keyboardPressed('MINUS')) and keyboardPressed('SHIFT') then
+			correctLetter(actualLetter)
+			return
+		end
+	end
+
+	if (botPlay or UnkownBotplay) and lastStep ~= curStep then
+		correctLetter(actualLetter)
+		lastStep = curStep
+	end
+end
+
+function correctLetter(letter)
+	local object = wordObjects[letter]
+
+	if object and object.line and luaSpriteExists(object.line) then
+		removeLuaSprite(object.line, true)
+	end
+
+	actualLetter = actualLetter + 1
+
+	if actualLetter > #actualWord then
+		closeUknowns()
+	end
+end
+
+function closeUknowns()
+	if not unknownsOpen then
+		return
+	end
+
+	cancelTimer('UnknownTimes')
+
+	removeLuaSprite('BackUknowns', true)
+	removeLuaText('UnknownTimer', true)
+
+	for _, object in ipairs(wordObjects) do
+		if luaSpriteExists(object.letter) then
+			removeLuaSprite(object.letter, true)
+		end
+
+		if object.line and luaSpriteExists(object.line) then
+			removeLuaSprite(object.line, true)
+		end
+	end
+
+	wordObjects = {}
+	actualWord = {}
+	actualLetter = 1
+	wordLength = 0
+	letterCount = 0
+	unknownsOpen = false
+
+	setProperty('canReset', wasReset)
+end
+
 function onTimerCompleted(tag, loops, loopsLeft)
-    if tag=='UnknownTimes' then
-        if loopsLeft==0 then
-            closeCustomSubstate()
-            setHealth(-2)
-        end
-        setTextString('UnknownTimer',tostring(loopsLeft))
-    end
-end
-function onCustomSubstateUpdate(name, elapsed)
-    if name=='Uknowns' then
-        
-        if ActualWord[ActualLetter]~=' ' then
-            if keyboardJustPressed(ActualWord[ActualLetter]) and ActualWord[ActualLetter]~='?' and ActualWord[ActualLetter]~='!' then
-                CorrectLetter(ActualLetter)
-            else
-                if ActualWord[ActualLetter]=='!' then
-                    if keyboardJustPressed('ONE') and keyboardPressed('SHIFT') then
-                        CorrectLetter(ActualLetter)
-                    end
-                elseif ActualWord[ActualLetter]=='?' then
-                    if (keyboardPressed('SLASH') or keyboardPressed('MINUS')) and keyboardPressed('SHIFT') then
-                        CorrectLetter(ActualLetter)
-                    end
-                end
-                if (botPlay or UnkownBotplay) and LastStep~=curStep then
-                    CorrectLetter(ActualLetter)
-                    LastStep=curStep
-                end
-            end
-        else
-            ActualLetter=ActualLetter+1
-        end
-        if ActualLetter>#ActualWord then
-            cancelTimer('UnknownTimes')
-            closeCustomSubstate()
-        end
-        
-    end
-end
-function onCustomSubstateDestroy(name)
-    if name=='Uknowns' then
-        LetterCreates=0
-        for i,letter in ipairs(ActualWordObjects) do
-            RemoveLuaSpriteSubstate(letter.Letter,false)
-        end
-        ActualWordObjects={}
-        UknownsOpen=false
-        WordLength=0
-        ActualLetter=1
-        setProperty('canReset',WasReset)
-        
-        
-    end
+	if tag ~= 'UnknownTimes' then
+		return
+	end
+
+	if loopsLeft == 0 then
+		closeUknowns()
+		setHealth(-2)
+	else
+		setTextString('UnknownTimer', tostring(loopsLeft))
+	end
 end
 
-function CorrectLetter(letter)
-    RemoveLuaSpriteSubstate(ActualWordObjects[letter].Line,false)
-
-    ActualLetter=ActualLetter+1
-end
-function RemoveLuaSpriteSubstate(tag,destroyIt)
-    runHaxeCode([[
-        var Item= game.getLuaObject("]]..tag..[[");
-        if(Item!=null)
-        CustomSubstate.instance.remove(Item);
-    ]])
-    removeLuaSprite(tag, destroyIt)
-end
 function onPause()
-    if UknownsOpen then
-        return Function_Stop
-    end
+	if unknownsOpen then
+		return Function_Stop
+	end
 end
-function addLuaSpriteSubstate(tag)
-    table.insert(SubstateAdditions,tag)
-end
-function FlushLuaSpriteSubstateAdditions()
-    local code=''
-    for i,tag in ipairs(SubstateAdditions) do
-        local item='Item'..i
-        code=code..'var '..item..'= game.getLuaObject("'..tag..'"); if('..item..'!=null) CustomSubstate.instance.add('..item..');'
-    end
-    if code~='' then runHaxeCode(code) end
-    SubstateAdditions={}
-end
-function addLuaTextSubstate(tag)
-    runHaxeCode([[
-        var Item= game.getLuaObject("]]..tag..[[",true);
-        if(Item!=null){
-            CustomSubstate.instance.add(Item);
-            Item.cameras=[FlxG.cameras.list[FlxG.cameras.list.length - 1] ];
-        }
-    ]])
-end
-function MakeLetter(Letter)
-    makeAnimatedLuaSprite(Letter..LetterCreates,'Mechanics/Unown_Alphabet')
-    setProperty(Letter..LetterCreates..".x", screenWidth/2)
-    setProperty(Letter..LetterCreates..'.visible',true)
-    addAnimationByPrefix(Letter..LetterCreates,'idle',Letter,24,true)
-    addLuaSpriteSubstate(Letter..LetterCreates)
-    local realScale = 1 - (0.05 * #ActualWord)
-    if realScale<0.2 then realScale=0.2 end
-    scaleObject(Letter..LetterCreates,realScale,realScale)
-    screenCenter(Letter..LetterCreates,'y')
-    setProperty(Letter..LetterCreates..'.y',getProperty(Letter..LetterCreates..'.y')-100)
-    
-    if Letter==' ' then
-        setProperty(Letter..LetterCreates..'.visible',false)
-    else
-        if not luaSpriteExists('Line'..LetterCreates) then
-            makeLuaSprite('Line'..LetterCreates,'Mechanics/line',0,0)
-        end
-        addLuaSpriteSubstate('Line'..LetterCreates)
-        scaleObject('Line'..LetterCreates,realScale,realScale)
-        setGraphicSize('Line'..LetterCreates,getProperty(Letter..LetterCreates..'.width'),getProperty('Line'..LetterCreates..'.height')*realScale)
-        screenCenter('Line'..LetterCreates,'xy')
-        setProperty('Line'..LetterCreates..'.y',getProperty('Line'..LetterCreates..'.y')+200)
-    end
-    LetterCreates=LetterCreates+1
-    ActualWordObjects[LetterCreates]={Letter=Letter..tostring(LetterCreates-1),Line='Line'..tostring(LetterCreates-1)}
-
-end
-

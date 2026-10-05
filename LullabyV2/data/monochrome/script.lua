@@ -68,6 +68,10 @@ function onCreate()
     setObjectOrder('celebiHealth')
 	setProperty('celebiHealth.alpha', 1)
 	addLuaSprite('celebiHealth', true)
+
+    if getModSetting('mechanics') == 'Hell' then
+        addLuaScript('pendulum')
+    end
 end
 
 local celebiNotes = {}
