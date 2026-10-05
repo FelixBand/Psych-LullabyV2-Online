@@ -1,8 +1,7 @@
 local isPussy = false
 
 function onCreate()
-	initSaveData('HypnosPref')
-	isPussy = getDataFromSave('HypnosPref', 'Pussy mode', false)
+	isPussy = getModSetting('mechanics') == 'Pussy'
 end
 
 function onEvent(eventName, value1, value2)

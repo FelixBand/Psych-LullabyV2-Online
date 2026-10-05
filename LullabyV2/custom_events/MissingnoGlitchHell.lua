@@ -1,7 +1,7 @@
 function onCreatePost()
     initSaveData('HypnosPref')
     makeLuaSprite('FiltreRef')
-	if shadersEnabled and getDataFromSave('HypnosPref','Hell mode',false) then
+	if shadersEnabled and getModSetting('mechanics') == 'Hell' then
 		runHaxeCode([[
 			var shaderName = "glitch";
     
@@ -25,7 +25,7 @@ end
 --Value1:Update time/Set Actual Time
 --Value2:Set Prop
 function onEvent(eventName, value1, value2)
-    if eventName=='MissingnoGlitchHell' and getDataFromSave('HypnosPref','Hell mode',false) then
+    if eventName=='MissingnoGlitchHell' and getModSetting('mechanics') == 'Hell' then
         local Result=stringSplit(value1,'/')
         if Result[1]=='true' then
             UpdateGlitch=true
@@ -44,7 +44,7 @@ function onEvent(eventName, value1, value2)
     end
 end
 function onGameOver()
-    if shadersEnabled and getDataFromSave('HypnosPref','Hell mode',false) then
+    if shadersEnabled and getModSetting('mechanics') == 'Hell' then
 		runHaxeCode([[
             game.camGame.setFilters([]);
 			game.camHUD.setFilters([]);

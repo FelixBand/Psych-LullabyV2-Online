@@ -307,10 +307,16 @@ function closeUknowns()
 	letterCount = 0
 	unknownsOpen = false
 
-	setProperty('canReset', wasReset)
+	inputLock = true
+	runTimer('UnknownInputLock', 0.1)
 end
 
 function onTimerCompleted(tag, loops, loopsLeft)
+	if tag == 'UnknownInputLock' then
+		setProperty('canReset', wasReset)
+		return
+	end
+
 	if tag ~= 'UnknownTimes' then
 		return
 	end
