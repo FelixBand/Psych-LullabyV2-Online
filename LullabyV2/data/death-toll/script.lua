@@ -3,28 +3,53 @@ local opponentLaneMap = {0, 1, 3, 4}
 local centerShift = 80
 local rightShift = 50
 local centerDown = 20
+local pussyMode = false
 
-function remapOpponentStrums()
-	local leftX = getPropertyFromGroup('opponentStrums', 0, 'x')
-	local rightX = getPropertyFromGroup('opponentStrums', 4, 'x')
+local function normalizeStrums(group, keyCount, middleLane)
+	local leftX = getPropertyFromGroup(group, 0, 'x')
+	local rightX = getPropertyFromGroup(group, keyCount - 1, 'x')
 
-	local spacing = (rightX - leftX) / 4
+	local activeLaneCount = keyCount - 1
+	local spacing = (rightX - leftX) / (activeLaneCount - 1)
 	local centerX = (leftX + rightX) / 2
 
-	for lane = 0, 3 do
-		local strum = opponentLaneMap[lane + 1]
+	for lane = 0, activeLaneCount - 1 do
+		local strum = lane
+		if strum >= middleLane then
+			strum = strum + 1
+		end
 
 		setPropertyFromGroup(
-			'opponentStrums',
+			group,
 			strum,
 			'x',
-			centerX + (lane - 1.5) * spacing
+			centerX + (lane - (activeLaneCount - 1) / 2) * spacing
 		)
 	end
+
+	setPropertyFromGroup(group, middleLane, 'x', -5000)
+	setPropertyFromGroup(group, middleLane, 'alpha', 0)
+end
+
+local function applyBellNote(group, note)
+	setPropertyFromGroup(group, note, 'noteType', 'Bell')
+	setPropertyFromGroup(group, note, 'noAnimation', true)
+	setPropertyFromGroup(group, note, 'missHealth', 0.25)
+	setPropertyFromGroup(group, note, 'rgbShader.enabled', false)
+	setPropertyFromGroup(group, note, 'noteSplashData.disabled', true)
+	setPropertyFromGroup(group, note, 'noteSplashData.useRGBShader', false)
+end
+
+local function ignoreBellLaneNote(group, note)
+	setPropertyFromGroup(group, note, 'ignoreNote', true)
+	setPropertyFromGroup(group, note, 'alpha', 0)
+	setPropertyFromGroup(group, note, 'noteSplashData.disabled', true)
 end
 
 function setupStrums()
-	if getProperty('playerStrums.length') ~= 5 then
+	local keyCount = getProperty('playerStrums.length')
+	if keyCount < 3 then
+		doTweenAlpha('hudFadeIn', 'camHUD', 1, 0.5, 'linear')
 		return
 	end
 
@@ -46,16 +71,35 @@ function setupStrums()
 			)
 		end
 
-		-- Move center to the right.
+	end
+
+	if keyCount % 2 == 0 then
+		for i = 0, getProperty('unspawnNotes.length') - 1 do
+			if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Bell' then
+				applyBellNote('unspawnNotes', i)
+			end
+
+			if getPropertyFromGroup('unspawnNotes', i, 'strumTime') >= 102127
+				and not getPropertyFromGroup('unspawnNotes', i, 'mustPress') then
+				setPropertyFromGroup('unspawnNotes', i, 'noteType', 'Alt Animation')
+			end
+		end
+		doTweenAlpha('hudFadeIn', 'camHUD', 1, 0.5, 'linear')
+		return
+	end
+	local middleLane = math.floor(keyCount / 2)
+
+	if pussyMode then
+		normalizeStrums('playerStrums', keyCount, middleLane)
+	elseif not middlescroll then
 		setPropertyFromGroup(
 			'playerStrums',
-			2,
+			middleLane,
 			'x',
-			getPropertyFromGroup('playerStrums', 2, 'x') + centerShift
+			getPropertyFromGroup('playerStrums', middleLane, 'x') + centerShift
 		)
 
-		-- Move UP and RIGHT further right.
-		for i = 3, 4 do
+		for i = middleLane + 1, keyCount - 1 do
 			setPropertyFromGroup(
 				'playerStrums',
 				i,
@@ -67,7 +111,7 @@ function setupStrums()
 		end
 	else
 		-- Middlescroll
-		for i = 0, 1 do
+		for i = 0, middleLane - 1 do
 			setPropertyFromGroup(
 				'playerStrums',
 				i,
@@ -76,16 +120,14 @@ function setupStrums()
 			)
 		end
 
-		-- Center
 		setPropertyFromGroup(
 			'playerStrums',
-			2,
+			middleLane,
 			'x',
-			getPropertyFromGroup('playerStrums', 2, 'x') + 20
+			getPropertyFromGroup('playerStrums', middleLane, 'x') + 20
 		)
 
-		-- UP/RIGHT
-		for i = 3, 4 do
+		for i = middleLane + 1, keyCount - 1 do
 			setPropertyFromGroup(
 				'playerStrums',
 				i,
@@ -100,52 +142,37 @@ function setupStrums()
 			setPropertyFromGroup('opponentStrums', i, 'x', -5000)
 		end
 	else
-		remapOpponentStrums()
+		normalizeStrums('opponentStrums', keyCount, middleLane)
+	end
 
+	if not pussyMode then
 		setPropertyFromGroup(
-			'opponentStrums',
-			2,
-			'x',
-			-5000
+			'playerStrums',
+			middleLane,
+			'y',
+			getPropertyFromGroup('playerStrums', middleLane, 'y') + centerDown
 		)
 	end
 
-	setPropertyFromGroup(
-		'playerStrums',
-		2,
-		'y',
-		getPropertyFromGroup('playerStrums', 2, 'y') + centerDown
-	)
+	setPropertyFromGroup('playerStrums', middleLane, 'useRGBShader', false)
 
-	if getProperty('playerStrums.length') == 5 then -- if 5 key
-
-		setPropertyFromGroup('playerStrums', 2, 'useRGBShader', false)
-
-		-- Disable RGB shader on the player's special center lane.
-
-        for i = 0, getProperty('unspawnNotes.length') - 1 do
-            if getPropertyFromGroup('unspawnNotes', i, 'mustPress')
-                and getPropertyFromGroup('unspawnNotes', i, 'noteData') == 2 then
-
-				setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true)
-				setPropertyFromGroup('unspawnNotes', i, "missHealth", 0.25)
-
-                -- Disable the note RGB shader.
-                setPropertyFromGroup('unspawnNotes', i, 'rgbShader.enabled', false)
-
-                -- Disable note splash completely.
-                setPropertyFromGroup('unspawnNotes', i, 'noteSplashData.disabled', true)
-
-                -- Disable RGB on the splash too.
-                setPropertyFromGroup('unspawnNotes', i, 'noteSplashData.useRGBShader', false)
-            end
-
-			-- Beelze plays his alt animations from this point onward
-			if getPropertyFromGroup('unspawnNotes', i, 'strumTime') >= 102127 and not getPropertyFromGroup('unspawnNotes', i, 'mustPress') then
-				setPropertyFromGroup('unspawnNotes', i, 'noteType', 'Alt Animation')
+	for i = 0, getProperty('unspawnNotes.length') - 1 do
+		if getPropertyFromGroup('unspawnNotes', i, 'mustPress')
+			and getPropertyFromGroup('unspawnNotes', i, 'noteData') == middleLane then
+			if pussyMode then
+				ignoreBellLaneNote('unspawnNotes', i)
+			else
+				applyBellNote('unspawnNotes', i)
 			end
-        end
+		end
+
+		-- Beelze plays his alt animations from this point onward.
+		if getPropertyFromGroup('unspawnNotes', i, 'strumTime') >= 102127
+			and not getPropertyFromGroup('unspawnNotes', i, 'mustPress') then
+			setPropertyFromGroup('unspawnNotes', i, 'noteType', 'Alt Animation')
+		end
 	end
+
 	doTweenAlpha('hudFadeIn', 'camHUD', 1, 0.5, 'linear')
 end
 
@@ -163,6 +190,8 @@ function onStartCountdown()
 end
 
 function onCreate()
+	pussyMode = (getVar('lullabyMechanics') or getModSetting('mechanics')) == 'Pussy'
+
 	makeLuaSprite('whiteFlash', '', 0, 0)
 	makeGraphic('whiteFlash', screenWidth, screenHeight, 'FFFFFF')
 	setObjectCamera('whiteFlash', 'hud')
@@ -209,13 +238,27 @@ function onCreatePost()
 	setProperty('camFollowPos.y', 500)
 end
 
-function onSpawnNote(id) -- Disable RGB shader on middle lane
-	if getPropertyFromGroup('notes', id, 'mustPress')
-		and getPropertyFromGroup('notes', id, 'noteData') == 2 then
 
-		setPropertyFromGroup('notes', id, 'rgbShader.enabled', false)
-		setPropertyFromGroup('notes', id, 'noteSplashData.disabled', true)
-		setPropertyFromGroup('notes', id, 'noteSplashData.useRGBShader', false)
+function onSpawnNote(id)
+	local keyCount = getProperty('playerStrums.length')
+	if keyCount % 2 == 0 then
+		if getPropertyFromGroup('notes', id, 'noteType') == 'Bell' then
+			applyBellNote('notes', id)
+		end
+		return
+	end
+	if keyCount < 3 then
+		return
+	end
+
+	local middleLane = math.floor(keyCount / 2)
+	if getPropertyFromGroup('notes', id, 'mustPress')
+		and getPropertyFromGroup('notes', id, 'noteData') == middleLane then
+		if pussyMode then
+			ignoreBellLaneNote('notes', id)
+		else
+			applyBellNote('notes', id)
+		end
 	end
 end
 
