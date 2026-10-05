@@ -1,4 +1,6 @@
 local playedNoise = false
+local celebiNoteCount = 3
+
 function onStartCountdown()
     if not playedNoise then
         playSound('ImDead' .. getRandomInt(1,7), 1)
@@ -75,7 +77,6 @@ function onCreate()
     end
 end
 
-local celebiNoteCount = 3
 local celebiNotes = {}
 local celebiNotesActive = false
 local celebiNoteTime = 0

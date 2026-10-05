@@ -1,28 +1,30 @@
 local lowHealthFX = false
 local pussyMode = false
-local Path = 'stages/mikes-room/images/'
+local dir = 'stages/mikes-room/images/'
+local strangleHealthDrain = 0.02
+
 function onCreate()
 	setProperty('skipCountdown',true)
 	consistentResize=1
 	consistentPosition={-300, 100}
 
-	makeLuaSprite('background',Path..'back', consistentPosition[1], consistentPosition[2])
+	makeLuaSprite('background',dir..'back', consistentPosition[1], consistentPosition[2])
 	setScrollFactor('background', 0.7, 0.7)
 	StageStuff('background')
 
-	makeLuaSprite('portrait',Path..'portrait', consistentPosition[1], consistentPosition[2])
+	makeLuaSprite('portrait',dir..'portrait', consistentPosition[1], consistentPosition[2])
 	setScrollFactor('portrait', 0.7, 0.7)
 	StageStuff('portrait')
 
-	makeLuaSprite('lacama',Path..'bed', consistentPosition[1], consistentPosition[2])
+	makeLuaSprite('lacama',dir..'bed', consistentPosition[1], consistentPosition[2])
 	setScrollFactor('lacama', 0.9, 0.9)
 	StageStuff('lacama')
 
-	makeLuaSprite('laalmuada',Path..'pillow', consistentPosition[1], consistentPosition[2])
+	makeLuaSprite('laalmuada',dir..'pillow', consistentPosition[1], consistentPosition[2])
 	setScrollFactor('laalmuada', 0.9, 0.9)
 	StageStuff('laalmuada')
 
-	makeLuaSprite('redOverlay',Path..'redoverlay',0,0)
+	makeLuaSprite('redOverlay',dir..'redoverlay',0,0)
 	setScrollFactor('redOverlay', 0, 0)
     setObjectCamera('redOverlay','hud')
 	addLuaSprite('redOverlay')
@@ -31,6 +33,12 @@ function onCreate()
 	addCharacterToList('Steven','dad')
 	addCharacterToList('StevenFp','dad')
     addCharacterToList('MikeFp','bf')
+
+	pussyMode = getModSetting('mechanics') == 'Pussy'
+
+	if getModSetting('mechanics') == 'Hell' then
+		strangleHealthDrain = 0.035
+	end
 end
 
 function onCreatePost()
@@ -173,7 +181,7 @@ end
 
 function onStepHit()
 	if strangling then
-		if getProperty('health') > 0.3 then
+		if getProperty('health') > 0.395 then
 			setProperty('health', getProperty('health') - 0.02)
 		end
 	end

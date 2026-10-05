@@ -14,7 +14,7 @@ function onCreate()
 	elseif mechanics == 'Hell' then
 		swingTime = 2
 		if songName == 'Brimstone' then
-			swingTime = 4
+			swingTime = 6
 		end
 	end
 
