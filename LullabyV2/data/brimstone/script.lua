@@ -83,6 +83,10 @@ function onCreate()
 	setProperty('muk.alpha', 0.0001)
 	setProperty('muk.visible', false)
 	addLuaSprite('muk')
+
+	if getModSetting('mechanics') == 'Hell' then
+        addLuaScript('pendulum')
+    end
 end
 
 local bfStartPosition=0

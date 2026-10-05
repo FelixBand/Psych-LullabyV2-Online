@@ -13,6 +13,9 @@ function onCreate()
 		return
 	elseif mechanics == 'Hell' then
 		swingTime = 2
+		if songName == 'Brimstone' then
+			swingTime = 4
+		end
 	end
 
 	makeAnimatedLuaSprite('pendulumTrail', 'UI/base/hypno/Pendelum_Phase2', 0, 0)

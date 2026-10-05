@@ -24,7 +24,7 @@ function onTimerCompleted(tag)
         spawnCelebiNotes()
 	end
     if tag == 'celebiNotesFadeOut' then
-        for i = 1, 3 do
+        for i = 1, celebiNoteCount do
             doTweenAlpha('CnoteOut' .. i, 'celebiNote'..i, 0, 1, 'linear')
         end
 	end
@@ -70,10 +70,12 @@ function onCreate()
 	addLuaSprite('celebiHealth', true)
 
     if getModSetting('mechanics') == 'Hell' then
+        celebiNoteCount = 6
         addLuaScript('pendulum')
     end
 end
 
+local celebiNoteCount = 3
 local celebiNotes = {}
 local celebiNotesActive = false
 local celebiNoteTime = 0
@@ -90,19 +92,18 @@ function spawnCelebiNotes()
 	local celebiX = getProperty('celebi.x') + 140
 	local celebiY = getProperty('celebi.y') + 140
 
-	for i = 1, 3 do
-		local tag = 'celebiNote' .. i
+	for i = 1, celebiNoteCount do
+        local tag = 'celebiNote' .. i
         removeLuaSprite(tag, true)
 
-		makeAnimatedLuaSprite(tag, 'characters/gold/Note_asset', celebiX, celebiY)
-	    addAnimationByIndices(tag, 'idle', 'Note Full', '18', 1)
+        makeAnimatedLuaSprite(tag, 'characters/gold/Note_asset', celebiX, celebiY)
+        addAnimationByIndices(tag, 'idle', 'Note Full', '18', 1)
         scaleObject(tag, 0.75, 0.75)
+        playAnim(tag, 'idle', true)
+        addLuaSprite(tag, true)
 
-		playAnim(tag, 'idle', true)
-		addLuaSprite(tag, true)
-
-		celebiNotes[i] = tag
-	end
+        celebiNotes[i] = tag
+    end
 
     runTimer('celebiNotesFadeOut', 1)
 end
@@ -111,19 +112,21 @@ local celebiHealthSubtract = 0
 
 function onEvent(name, value1, value2)
     if name == 'Celebi' then
-        setProperty('celebi.alpha', 1)
-        setProperty('celebi.x', value2)
-        playAnim('celebi', 'idle', true)
-        runTimer('spawnCNotes', 0.5)
+        if getModSetting('mechanics') ~= 'Pussy' then
+            setProperty('celebi.alpha', 1)
+            setProperty('celebi.x', value2)
+            playAnim('celebi', 'idle', true)
+            runTimer('spawnCNotes', 0.5)
 
-        -- In this overengineered piece the right portion of the health bar (bf's bar) gets scaled down
-        -- and offset to the left to create a gap in the healthbar, representing the floor of the
-        -- minimum amount of health you may have.
-        celebiHealthSubtract = tonumber(value1)
-        scale = 1 - (value1 / 2)
-        setProperty('healthBar.rightBar.scale.x', scale)
-        -- Shift to the left by half of the scaled-down difference
-        setProperty('healthBar.rightBar.offset.x', (getProperty('healthBar.rightBar.width') * (1 - scale)) / 2)
+            -- In this overengineered piece the right portion of the health bar (bf's bar) gets scaled down
+            -- and offset to the left to create a gap in the healthbar, representing the floor of the
+            -- minimum amount of health you may have.
+            celebiHealthSubtract = tonumber(value1)
+            scale = 1 - (value1 / 2)
+            setProperty('healthBar.rightBar.scale.x', scale)
+            -- Shift to the left by half of the scaled-down difference
+            setProperty('healthBar.rightBar.offset.x', (getProperty('healthBar.rightBar.width') * (1 - scale)) / 2)
+        end
     end
 end
 
@@ -145,15 +148,15 @@ function onUpdate(elapsed)
 		local radius = celebiNoteTime * radiusSpeed
 		local angle = celebiNoteStartAngle + celebiNoteTime * angleSpeed
 
-		for i = 1, 3 do
-			local noteAngle = angle + ((i - 1) * (math.pi * 2 / 3))
+		for i = 1, celebiNoteCount do
+            local noteAngle = angle + ((i - 1) * (math.pi * 2 / celebiNoteCount))
 
-			local x = celebiX + math.cos(noteAngle) * radius
-			local y = celebiY + math.sin(noteAngle) * radius
+            local x = celebiX + math.cos(noteAngle) * radius
+            local y = celebiY + math.sin(noteAngle) * radius
 
-			setProperty(celebiNotes[i] .. '.x', x)
-			setProperty(celebiNotes[i] .. '.y', y)
-		end
+            setProperty(celebiNotes[i] .. '.x', x)
+            setProperty(celebiNotes[i] .. '.y', y)
+        end
 	end
 end
 
