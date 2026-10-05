@@ -91,6 +91,7 @@ function onEvent(eventName, value1, value2)
 		doTweenAlpha('gameIn', 'camGame', 1, 3, 'linear')
 		doTweenZoom('camZoom', 'camGame', 1, 5, 'cubeOut')
 		setProperty('defaultCamZoom', 1)
+		setProperty('cameraSpeed', 1)
 	end
 	if eventName=='Mike Strangle Scene' then
 		setProperty('defaultCamZoom', 0.9)
@@ -170,9 +171,6 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	end
 end
 function onBeatHit()
-	if curBeat == 4 then
-		setProperty('cameraSpeed', 1)
-	end
     if lowHealthFX then
         setProperty('redOverlay.alpha',0.85)
 		doTweenAlpha('redOverlay','redOverlay',0.65,0.25,'quadInOut')
