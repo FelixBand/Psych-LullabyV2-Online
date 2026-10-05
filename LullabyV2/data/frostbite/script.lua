@@ -11,8 +11,11 @@ local warmingCooldown = false;
 local frostbiteActive = false;
 local frostbiteEnded = false;
 local typhlosionDead = false;
+local pussyMode = false;
 
 function onCreate()
+    pussyMode = getModSetting('mechanics') == 'Pussy';
+
     makeLuaSprite('thermometerBarBG', '', 45, 185);
     makeGraphic('thermometerBarBG', 15, 325, '133551');
     setObjectCamera('thermometerBarBG', 'hud');
@@ -42,6 +45,12 @@ function onCreate()
     addLuaSprite('typhlosionThermometer');
     setObjectOrder('typhlosionThermometer', getObjectOrder('thermometer') - 1);
     playAnim('typhlosionThermometer', '-10', true);
+    if pussyMode then
+        setProperty('thermometerBarBG.visible', false);
+        setProperty('thermometerBar.visible', false);
+        setProperty('thermometer.visible', false);
+        setProperty('typhlosionThermometer.visible', false);
+    end
 
     makeAnimatedLuaSprite('frostbiteGuide', 'UI/base/hypno/Extras', 0, 0);
     addAnimationByPrefix('frostbiteGuide', 'idle', 'Spacebar', 24, true);
@@ -190,7 +199,7 @@ function onUpdate(elapsed)
         setShaderInt('snowfallController', 'amount', getProperty('snowfallController.x'));
     end
 
-    if frostbiteActive and not frostbiteEnded then
+    if not pussyMode and frostbiteActive and not frostbiteEnded then
         if keyJustPressed('space') and warmingCharges > 0 and not warmingCooldown then
             warmUp();
             doTweenAlpha('hideFrostbiteGuide', 'frostbiteGuide', 0.0001, 0.5, 'cubeInOut');
@@ -236,7 +245,7 @@ local intensity = 0.75;
 
 function onEvent(name, value1, value2)
     if name == 'Start Freeze' or name == 'StartFreeze' then
-        if playsAsBF() then
+        if not pussyMode and playsAsBF() then
             frostbiteActive = true;
             frostbiteEnded = false;
             coldnessRate = 0.01;
@@ -352,7 +361,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
 end
 
 function onStepHit()
-    if frostbiteActive and not frostbiteEnded and curStep % 4 == 0 then
+    if not pussyMode and frostbiteActive and not frostbiteEnded and curStep % 4 == 0 then
         coldness = math.min(100, coldness + coldnessRate * 100);
     end
     if curStep == 695 then
@@ -380,6 +389,10 @@ function onEndSong()
 end
 
 function warmUp()
+    if pussyMode then
+        return;
+    end
+
     warmingCharges = warmingCharges - 1;
     warmingCooldown = true;
     playSound('TyphlosionUse', 0.5);
