@@ -164,11 +164,13 @@ local followchars = true;
 local timeValue = nil;
 function onUpdate(elapsed)
     --debugPrint(coldness)
-    xx2 = 700 + (580 - 700) * (getProperty('defaultCamZoom') - 0.8) / 0.2
-    yy2 = 820 + (920 - 820) * (getProperty('defaultCamZoom') - 0.8) / 0.2
+    if followchars then
+        xx2 = 700 + (580 - 700) * (getProperty('defaultCamZoom') - 0.8) / 0.2
+        yy2 = 820 + (920 - 820) * (getProperty('defaultCamZoom') - 0.8) / 0.2
 
-    -- coldness goes up to 80
-    setProperty('defaultCamZoom', 0.8 + ((coldness * 1.25) / 500))
+        -- coldness goes up to 80
+        setProperty('defaultCamZoom', 0.8 + ((coldness * 1.25) / 500))
+    end
 
     if followchars then -- camfollow script
         if getProperty('boyfriend.animation.curAnim.name') == 'singLEFT' then
@@ -301,6 +303,7 @@ function onEvent(name, value1, value2)
         followchars = false;
         setProperty('camZooming', false);
         doTweenZoom('camIn', 'camGame', 1.6, 0.6, 'quadOut');
+        setProperty('defaultCamZoom', 1.6)
         triggerEvent('Camera Follow Pos', '750', '850');
         runTimer('freak', 0.86);
     end
@@ -337,6 +340,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
         doTweenZoom('camIn2', 'camGame', 1.9, 0.2, 'quadOut');
         triggerEvent('Screen Shake', '0.8, 0.001', '');
         triggerEvent('Camera Follow Pos', '775', '870');
+        setProperty('defaultCamZoom', 1.9)
     end
     if tag == 'painsplit' then
         playSound('Frostbite_bite', 1);
