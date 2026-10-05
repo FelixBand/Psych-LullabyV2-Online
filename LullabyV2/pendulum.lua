@@ -419,4 +419,5 @@ end
 function onEndSong()
 	cleanup()
 	close()
+	return Function_Continue
 end
