@@ -16,11 +16,11 @@ local Patterns={
 }
 
 function onEvent(eventName, value1, value2)
-    if getVar('pastaPlayer') ~= 0 then
+    if getVar('pastaPlayer') ~= 0 and getModSetting('mechanics') ~= 'Pussy' then
         if eventName=='Pow' then
             startReverse=0
             doReverse=false
-            if getDataFromSave('HypnosPref','Hell mode',false) then
+            if getModSetting('mechanics') == 'Hell' then
                 moveNotes=Patterns[getRandomInt(1, #Patterns)]
             end
             if luaSpriteExists('MXArms') then
@@ -35,8 +35,7 @@ function onEvent(eventName, value1, value2)
 end
 
 function onCreate()
-    initSaveData('HypnosPref')
-    isPussyMode=getDataFromSave('HypnosPref','Pussy mode',false)
+    isPussyMode=getModSetting('mechanics') == 'Pussy'
     precacheSound('HandUp')
     precacheSound('POW') 
 end

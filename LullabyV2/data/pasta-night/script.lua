@@ -40,63 +40,33 @@ function setupStrums()
 	if pastaPlayer == 1 then
 		if not middleScroll then
 			for i = 0, getProperty('playerStrums.length') - 1 do
-				setPropertyFromGroup(
-					'playerStrums',
-					i,
-					'x',
-					_G['defaultPlayerStrumX' .. i] - 320
-				)
+				setPropertyFromGroup('playerStrums', i, 'x', _G['defaultPlayerStrumX' .. i] - 320)
 			end
 
 			for i = 0, getProperty('opponentStrums.length') - 1 do
-				setPropertyFromGroup(
-					'opponentStrums',
-					i,
-					'x',
-					_G['defaultOpponentStrumX' .. i] + 320
-				)
+				setPropertyFromGroup('opponentStrums', i, 'x', _G['defaultOpponentStrumX' .. i] + 320)
 			end
 		end
 	end
 
 	if pastaPlayer == 0 then
 		for i = 0, getProperty('playerStrums.length') - 1 do
-			setPropertyFromGroup(
-				'playerStrums',
-				i,
-				'x',
-				_G['defaultOpponentStrumX' .. i]
-			)
+			setPropertyFromGroup('playerStrums', i, 'x', _G['defaultOpponentStrumX' .. i])
 		end
 
 	elseif pastaPlayer == 2 then
 		for i = 0, getProperty('opponentStrums.length') - 1 do
-			setPropertyFromGroup(
-				'opponentStrums',
-				i,
-				'x',
-				_G['defaultPlayerStrumX' .. i]
-			)
+			setPropertyFromGroup('opponentStrums', i, 'x', _G['defaultPlayerStrumX' .. i])
 		end
 	end
 
 	if not playsAsBF() then
 		for i = 0, getProperty('playerStrums.length') - 1 do
-			setPropertyFromGroup(
-				'playerStrums',
-				i,
-				'x',
-				-5000
-			)
+			setPropertyFromGroup('playerStrums', i, 'x', -5000)
 		end
 	else
 		for i = 0, getProperty('opponentStrums.length') - 1 do
-			setPropertyFromGroup(
-				'opponentStrums',
-				i,
-				'x',
-				5000
-			)
+			setPropertyFromGroup('opponentStrums', i, 'x', 5000)
 		end
 	end
 end
@@ -107,7 +77,7 @@ function setupPastaPlayer()
 
 	removeLuaScript('scripts/camFollow')
 
-	if pastaPlayer ~= 2 then
+	if pastaPlayer ~= 2 and getModSetting('mechanics') ~= 'Pussy' then
 		addLuaScript('pendulum')
 	end
 
@@ -226,10 +196,7 @@ function setupPastaPlayer()
 	end
 end
 
---------------------------------------------------
 -- CHARACTER SELECTOR
---------------------------------------------------
-
 function onStartCountdown()
 	if Selectin then
 		startCharacterSelector()
@@ -262,15 +229,8 @@ function startCharacterSelector()
 	scaleObject('bg', 3, 3)
 	setProperty('bg.antialiasing', false)
 
-	setProperty(
-		'bg.x',
-		screenWidth / 2 - getProperty('bg.width') / 2
-	)
-
-	setProperty(
-		'bg.y',
-		screenHeight / 2 - getProperty('bg.height') / 2
-	)
+	setProperty('bg.x', screenWidth / 2 - getProperty('bg.width') / 2)
+	setProperty('bg.y', screenHeight / 2 - getProperty('bg.height') / 2)
 
 	setObjectCamera('bg', 'other')
 	addLuaSprite('bg', true)
@@ -481,38 +441,15 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	end
 end
 
---------------------------------------------------
 -- EVENTS
---------------------------------------------------
-
 function onEvent(name, value1, value2)
-	debugPrint(
-		'name: ' .. value1
-		.. ' value1: ' .. value1
-		.. ' value2: ' .. value2
-	)
-
 	if name == 'Pasta Camera' then
 		if value1 == '-1' then
-			triggerEvent(
-				'Camera Follow Pos',
-				'290',
-				'500'
-			)
-
+			triggerEvent('Camera Follow Pos', '290', '500')
 		elseif value1 == '' then
-			triggerEvent(
-				'Camera Follow Pos',
-				'600',
-				'500'
-			)
-
+			triggerEvent('Camera Follow Pos', '600', '500')
 		elseif value1 == '1' then
-			triggerEvent(
-				'Camera Follow Pos',
-				'850',
-				'500'
-			)
+			triggerEvent('Camera Follow Pos', '850', '500')
 		end
 	end
 end
