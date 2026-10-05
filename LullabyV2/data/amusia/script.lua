@@ -587,11 +587,11 @@ function onStepHit()
 		end
 
 		if curStep == 1312 then
-			doTweenAlpha('redOut', 'redStatic', 0.25, 0.667, 'cubeIn')
+			doTweenAlpha('redOut', 'redStatic', 0.35, 0.667, 'cubeIn')
 		end
 
 		if curStep == 2000 then
-			doTweenAlpha('redIn', 'redStatic', 0.75, 2, 'cubeIn')
+			doTweenAlpha('redIn', 'redStatic', 0.85, 2, 'cubeIn')
 			doTweenAlpha('staticIn', 'static', 0.25, 1, 'cubeIn')
 		end
 

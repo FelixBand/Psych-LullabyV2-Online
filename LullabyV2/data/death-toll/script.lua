@@ -1,10 +1,3 @@
---[[
-
-I'd prefer to keep this spaghetti in a seperate script LMAO
-This fucking sucks
-
-]]
-
 local opponentLaneMap = {0, 1, 3, 4}
 
 local centerShift = 80
