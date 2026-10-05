@@ -1,7 +1,20 @@
-local swingTime = 4 -- 4 = normal, 2 = hell mode, can be higher if you want, dont make lower than 2 or an odd number will prob fuck it up
+local swingTime = 4
 local hitWindow = 12
+local mechanics = 'Normal'
+
+local canHit = false
+local cutscened = false
 
 function onCreate()
+	mechanics = getModSetting('mechanics')
+
+	if mechanics == 'Pussy' then
+		close()
+		return
+	elseif mechanics == 'Hell' then
+		swingTime = 2
+	end
+
 	makeAnimatedLuaSprite('pendulumTrail', 'UI/base/hypno/Pendelum_Phase2', 0, 0)
 	addAnimationByPrefix('pendulumTrail', 'idle', 'pendulum Phase 2', 24, true)
 	updateHitbox('pendulumTrail')
@@ -22,11 +35,11 @@ function onCreate()
 	setProperty('pendulum.x', (screenWidth / 2) - (getProperty('pendulum.width') / 2))
 	setProperty('pendulum.y', 0)
 	addLuaSprite('pendulum', true)
-	
+
 	makeLuaSprite('daFlash', '', 0, 0)
-    makeGraphic('daFlash', screenWidth, screenHeight, 'FFAFC1')
-    setObjectCamera('daFlash', 'other')
-    addLuaSprite('daFlash')
+	makeGraphic('daFlash', screenWidth, screenHeight, 'FFAFC1')
+	setObjectCamera('daFlash', 'other')
+	addLuaSprite('daFlash')
 	setProperty('daFlash.alpha', 0)
 
 	makeAnimatedLuaSprite('trance', 'UI/base/hypno/StaticHypno', -5, 0)
@@ -41,7 +54,6 @@ function onCreate()
 	setProperty('psyshockParticle.alpha', 0.0001)
 	addLuaSprite('psyshockParticle')
 
-	-- tutorial & UI
 	makeAnimatedLuaSprite('tutorial', 'UI/base/hypno/Extras', 0, 0)
 	addAnimationByPrefix('tutorial', 'tap', 'Spacebar', 24, false)
 	setObjectCamera('tutorial', 'other')
@@ -61,72 +73,84 @@ function onCreate()
 end
 
 function reset()
-	if not cutscened then
-		cancelTween('pend0')
-		cancelTween('pend1')
-		cancelTween('pend2')
-		cancelTween('pend3')
-		setProperty('pendulum.angle', 0)
-		doTweenAngle('pend1', 'pendulum', getProperty('pendulum.angle') + 30, (stepCrochet / 1000) * swingTime, 'quadOut')
+	if cutscened then
+		return
 	end
+
+	cancelTween('pend0')
+	cancelTween('pend1')
+	cancelTween('pend2')
+	cancelTween('pend3')
+
+	setProperty('pendulum.angle', 0)
+	doTweenAngle('pend1', 'pendulum', 30, (stepCrochet / 1000) * swingTime, 'quadOut')
 end
 
 function onBeatHit()
-	if curBeat % swingTime == 0 then 
+	if curBeat % swingTime == 0 then
 		reset()
 	end
-	if curBeat % (swingTime / 2) == 0 then 
+
+	if curBeat % (swingTime / 2) == 0 then
 		playAnim('tutorial', 'tap', true)
 	end
 end
 
 function pendFeedback(feedback)
 	setProperty('pendFeedback.alpha', 1)
-	if feedback == 0 then -- good!
+
+	if feedback == 0 then
 		playAnim('pendFeedback', 'nice', true)
-	elseif feedback == 1 then -- bad! >:(
+	else
 		playAnim('pendFeedback', 'bad', true)
 	end
 end
 
 function onTweenCompleted(tag)
-	if tag == 'pend0' then 
+	if tag == 'pend0' then
 		doTweenAngle('pend1', 'pendulum', getProperty('pendulum.angle') + 30, (stepCrochet / 1000) * swingTime, 'quadOut')
-	elseif tag == 'pend1' then 
+	elseif tag == 'pend1' then
 		doTweenAngle('pend2', 'pendulum', getProperty('pendulum.angle') - 30, (stepCrochet / 1000) * swingTime, 'quadIn')
+
 		if canHit then
-			--when the player did not hit the pendulum
 			lose()
 			pendFeedback(1)
 		end
+
 		canHit = true
-	elseif tag == 'pend2' then 
+	elseif tag == 'pend2' then
 		doTweenAngle('pend3', 'pendulum', getProperty('pendulum.angle') - 30, (stepCrochet / 1000) * swingTime, 'quadOut')
-	elseif tag == 'pend3' then 
+	elseif tag == 'pend3' then
 		doTweenAngle('pend0', 'pendulum', getProperty('pendulum.angle') + 30, (stepCrochet / 1000) * swingTime, 'quadIn')
+
 		if canHit then
-			--when the player did not hit the pendulum
 			lose()
 			pendFeedback(1)
 		end
+
 		canHit = true
 	end
 end
 
 function lose()
-	if not cutscened then
-		--debugPrint('failed to hit, noob')
-		setProperty('trance.alpha', getProperty('trance.alpha') + 0.05)
-		if getProperty('trance.alpha') > 0.4 and getProperty('trance.alpha') < 0.8 then
-			triggerEvent('Alt Idle Animation', 'bf', '-alt')
-		elseif getProperty('trance.alpha') > 0.8 then
-			triggerEvent('Alt Idle Animation', 'bf', '-alt2')
-		end
-		if getProperty('trance.alpha') == 1 then
-			setProperty('health', 0)
-		end
-		tranceSound()
+	if cutscened then
+		return
 	end
+
+	local alpha = getProperty('trance.alpha') + 0.05
+	setProperty('trance.alpha', alpha)
+
+	if alpha > 0.8 then
+		triggerEvent('Alt Idle Animation', 'bf', '-alt2')
+	elseif alpha > 0.4 then
+		triggerEvent('Alt Idle Animation', 'bf', '-alt')
+	end
+
+	if alpha >= 1 then
+		setProperty('health', 0)
+	end
+
+	tranceSound()
 end
 
 function tranceSound()
@@ -137,59 +161,71 @@ end
 function onSongStart()
 	doTweenAlpha('tutorialIn', 'tutorial', 1, 0.5, 'linear')
 	runTimer('tutorialFadeOut', (stepCrochet * 64) / 1000)
-	doTweenAngle('pend1', 'pendulum', getProperty('pendulum.angle') + 30, (stepCrochet / 1000) * 4, 'quadOut')
+
+	doTweenAngle('pend1', 'pendulum', 30, (stepCrochet / 1000) * swingTime, 'quadOut')
+
 	runTimer('psyshock', getRandomInt(5, 15))
 	playSound('TranceStatic', 0, 'trance')
 end
 
-function onTimerCompleted(tag, loops, loopsLeft)
+function onTimerCompleted(tag)
 	if tag == 'psyshock' and not cutscened then
 		runTimer('psyshock', getRandomInt(5, 15))
 		playSound('Psyshock', 1)
+
 		setProperty('daFlash.alpha', 1)
 		doTweenAlpha('flashOut', 'daFlash', 0, 1, 'linear')
+
 		setProperty('psyshockParticle.alpha', 1)
 		playAnim('psyshockParticle', 'spark', true)
+
 		lose()
-	end
-	if tag == 'tutorialFadeOut' then
-		doTweenAlpha('tutorialOut', 'tutorial', 0, 0.5, 'linear')	
+	elseif tag == 'tutorialFadeOut' then
+		doTweenAlpha('tutorialOut', 'tutorial', 0, 0.5, 'linear')
 	end
 end
 
 function onUpdate(elapsed)
-	if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.SPACE') and curBeat > 0 then
-		if getProperty('pendulum.angle') > -hitWindow and getProperty('pendulum.angle') < hitWindow then
-			setProperty('pendulumTrail.angle', getProperty('pendulum.angle'))
-			setProperty('pendulumTrail.alpha', 1)
-			doTweenAlpha('trailFade', 'pendulumTrail', 0, 0.15, 'linear')
-			setProperty('trance.alpha', getProperty('trance.alpha') - 0.075)
-			if getProperty('trance.alpha') < 0.4 then
-				triggerEvent('Alt Idle Animation', 'bf', '')
-			end
-			tranceSound()
-			canHit = false
+	if not getPropertyFromClass('flixel.FlxG', 'keys.justPressed.SPACE') or curBeat <= 0 then
+		return
+	end
 
-			pendFeedback(0)
-		else
-			lose()
-			pendFeedback(1)
-			--debugPrint('bad timing, scrub')
+	local angle = getProperty('pendulum.angle')
+
+	if angle > -hitWindow and angle < hitWindow then
+		setProperty('pendulumTrail.angle', angle)
+		setProperty('pendulumTrail.alpha', 1)
+		doTweenAlpha('trailFade', 'pendulumTrail', 0, 0.15, 'linear')
+
+		local alpha = getProperty('trance.alpha') - 0.075
+		setProperty('trance.alpha', alpha)
+
+		if alpha < 0.4 then
+			triggerEvent('Alt Idle Animation', 'bf', '')
 		end
+
+		tranceSound()
+		canHit = false
+		pendFeedback(0)
+	else
+		lose()
+		pendFeedback(1)
 	end
 end
 
 function onGameOver()
 	stopSound('trance')
 end
+
 function onPause()
 	stopSound('trance')
 end
+
 function onResume()
 	tranceSound()
 end
 
-function onEndSong()
+function destroyPendulum()
 	removeLuaSprite('pendulum', true)
 	removeLuaSprite('pendulumTrail', true)
 	removeLuaSprite('daFlash', true)
@@ -197,5 +233,10 @@ function onEndSong()
 	removeLuaSprite('psyshockParticle', true)
 	removeLuaSprite('tutorial', true)
 	removeLuaSprite('pendFeedback', true)
+end
+
+function onEndSong()
+	destroyPendulum()
+
 	close()
 end
