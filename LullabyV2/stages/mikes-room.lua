@@ -182,7 +182,7 @@ end
 function onStepHit()
 	if strangling then
 		if getProperty('health') > 0.395 then
-			setProperty('health', getProperty('health') - 0.02)
+			setProperty('health', getProperty('health') - strangleHealthDrain)
 		end
 	end
 end
