@@ -119,14 +119,9 @@ function onEvent(name, value1, value2)
             playAnim('celebi', 'idle', true)
             runTimer('spawnCNotes', 0.5)
 
-            -- In this overengineered piece the right portion of the health bar (bf's bar) gets scaled down
-            -- and offset to the left to create a gap in the healthbar, representing the floor of the
-            -- minimum amount of health you may have.
             celebiHealthSubtract = tonumber(value1)
             scale = 1 - (value1 / 2)
-            setProperty('healthBar.rightBar.scale.x', scale)
-            -- Shift to the left by half of the scaled-down difference
-            setProperty('healthBar.rightBar.offset.x', (getProperty('healthBar.rightBar.width') * (1 - scale)) / 2)
+            scaleObject('healthBar.rightBar', scale, 1)
         end
     end
 end
