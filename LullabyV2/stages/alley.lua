@@ -11,7 +11,7 @@ function onCreate()
 	setLuaSpriteScrollFactor('fog', 0.8, 0.8)
 	scaleObject('fog', 0.7, 0.7)
 	
-	if string.lower(songName) == 'left-unchecked' then
+	if dadName == 'hypno-two' then
 		makeLuaSprite('midground', 'stages/alley/images/MIDGROUND BLOOD', 0, 0)
 	else
 		makeLuaSprite('midground', 'stages/alley/images/MIDGROUND', 0, 0)
