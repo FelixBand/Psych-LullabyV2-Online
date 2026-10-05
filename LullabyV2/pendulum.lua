@@ -304,9 +304,9 @@ function lose()
 
 	if boyfriendName == 'gf' then
 		if alpha > 0.8 then
-			triggerEvent('Alt Idle Animation', 'bf', '-alt2')
+			triggerEvent('Alt Idle Animation', 'bf', '-hypnotised2')
 		elseif alpha > 0.4 then
-			triggerEvent('Alt Idle Animation', 'bf', '-alt')
+			triggerEvent('Alt Idle Animation', 'bf', '-hypnotised1')
 		end
 	end
 
