@@ -67,7 +67,7 @@ function chooseDifficulty()
 		return 'Hell'
 	end
 
-	if dadName == 'Gold-Head' then
+	if dadName == 'gold-headless' then
 		return 'Hard'
 	end
 
