@@ -47,14 +47,11 @@ function onCreatePost()
 end
 
 function onEvent(name, value1, value2)
+    if name == 'Add Pendulum' then
+        addLuaScript('pendulum')
+    end
     if name == 'Change Character' and value1 == 'bf' then
         setProperty('bfded.alpha', 1)
-    end
-end
-
-function onBeatHit()
-    if curBeat == 79 then
-        addLuaScript('pendulum')
     end
 end
 

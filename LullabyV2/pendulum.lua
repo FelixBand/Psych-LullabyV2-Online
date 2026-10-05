@@ -7,6 +7,7 @@ local cutscened = false
 
 function onCreate()
 	mechanics = getModSetting('mechanics')
+	setVar('pausePendulum', false)
 
 	if mechanics == 'Pussy' then
 		close()
@@ -76,7 +77,7 @@ function onCreate()
 end
 
 function reset()
-	if cutscened then
+	if cutscened or getVar('pausePendulum') then
 		return
 	end
 
