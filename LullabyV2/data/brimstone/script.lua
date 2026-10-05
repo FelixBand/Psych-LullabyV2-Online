@@ -117,6 +117,8 @@ function onCreatePost()
 			setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true)
 		end
 	end
+
+	setVar('swingTime', 6)
 end
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)

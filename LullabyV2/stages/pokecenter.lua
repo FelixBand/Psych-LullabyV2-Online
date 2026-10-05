@@ -158,6 +158,13 @@ function onCreate()
 	scaleObject('darkoverlay', 0.7, 0.7)
 	addLuaSprite('darkoverlay')
 
+	if getModSetting('mechanics') == 'Hell' then
+		precacheImage('UI/base/hypno/Extras')
+		precacheImage('UI/base/hypno/StaticHypno')
+		precacheImage('UI/base/hypno/Pendelum_Phase2')
+		precacheImage('UI/base/hypno/Psyshock')
+	end
+
 	setProperty('skipCountdown', true)
 end
 
@@ -177,6 +184,17 @@ function onEvent(name, value1, value2)
 		setProperty('chanseyShadow.alpha', 1)
 		setProperty('charmanderShadow.alpha', 1)
 		setProperty('misdreavousShadow.alpha', 1)
+	end
+	if name == 'Add Pendulum' then
+		if getModSetting('mechanics') == 'Hell' then
+			addLuaScript('pendulum')
+			setProperty('pendulum.alpha', 0.0001)
+			setProperty('pendulum.y', -300)
+			setVar('pausePendulum', true)
+			setVar('swingTime', 3)
+			doTweenY('pendSlideIn', 'pendulum', 0, 2, 'circOut')
+			doTweenAlpha('pendFadeIn', 'pendulum', 1, 2, 'circOut')
+		end
 	end
 	if name == 'color tween in' then
 		doTweenColor('tween'..value1, value1, 0, 1, 'linear')
@@ -240,6 +258,12 @@ function onEvent(name, value1, value2)
 		setProperty('duskullShadow.color', 0xFFFF0000);
 		setProperty('chanseyShadow.color', 0xFFFF0000);
 		setProperty('charmanderShadow.color', 0xFFFF0000);
+	end
+end
+
+function onTweenCompleted(tag)
+	if tag == 'pendFadeIn' then
+		setVar('pausePendulum', false)
 	end
 end
 
