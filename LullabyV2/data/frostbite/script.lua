@@ -144,10 +144,6 @@ function onCreatePost()
                 new ShaderFilter(chromaticShader),
                 new ShaderFilter(snowfallShader)
             ]);
-            game.camHUD.setFilters([
-                new ShaderFilter(pincushionShader),
-                new ShaderFilter(chromaticShader)
-            ]);
             game.camOther.setFilters([
                 new ShaderFilter(pincushionShader),
                 new ShaderFilter(chromaticShader)
@@ -273,7 +269,7 @@ function onEvent(name, value1, value2)
         local target = tonumber(value1) or 0;
         local steps = tonumber(value2) or 0;
         doTweenX('chromaticRiser', 'chromaticController', target, (steps * stepCrochet) / 1000, 'cubeIn');
-    elseif name == 'SnowFall_amount' then
+    elseif name == 'Frostbite Change Snow Amount' then
         local target = tonumber(value1) or snowAmount;
         local steps = tonumber(value2) or 0;
         if value2 == '' then
@@ -281,7 +277,7 @@ function onEvent(name, value1, value2)
         else
             doTweenX('snowfallAmount', 'snowfallController', target, (steps * stepCrochet) / 1000, 'linear');
         end
-    elseif name == 'SnowFall_intensity' then
+    elseif name == 'Frostbite Change Snow Intensity' then
         local target = tonumber(value1) or snowIntensity;
         local steps = tonumber(value2) or 0;
         if value2 == '' then
