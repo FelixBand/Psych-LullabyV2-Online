@@ -256,7 +256,15 @@ function onUpdatePost()
 end
 
 function goodNoteHit()
-    for i = 0, getProperty('grpNoteSplashes.length')-1 do
+	fixSplashes()
+end
+
+function opponentNoteHit()
+	fixSplashes()
+end
+
+function fixSplashes()
+	for i = 0, getProperty('grpNoteSplashes.length')-1 do
        setPropertyFromGroup('grpNoteSplashes', i, 'scale.x', 0.75)
 	   setPropertyFromGroup('grpNoteSplashes', i, 'scale.y', 0.75)
 
