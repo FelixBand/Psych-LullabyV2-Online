@@ -1,11 +1,24 @@
-local playedNoise = false
 local celebiNoteCount = 3
+local cutsceneProgress = 0
 
 function onStartCountdown()
-    if not playedNoise then
+    if isStoryMode then
+        if cutsceneProgress == 0 then
+            startVideo('monochrome_cutscene')
+        end
+    else
+        cutsceneProgress = cutsceneProgress + 1
+    end
+
+    if cutsceneProgress == 1 then
         playSound('ImDead' .. getRandomInt(1,7), 1)
         runTimer('startsong', 3.5)
         playedNoise = true
+    end
+    
+    cutsceneProgress = cutsceneProgress + 1
+
+    if cutsceneProgress < 3 then
         return Function_Stop
     end
     return Function_Continue
@@ -14,8 +27,8 @@ end
 function onTimerCompleted(tag)
     if tag == 'startsong' then
         startCountdown()
-        setProperty('dadGroup.visible', true)
         playAnim('dad', 'fadeIn', true)
+        setProperty('dadGroup.visible', true)
         if playsAsBF() then
             for i = 0,getProperty('opponentStrums.length') - 1 do
                 setPropertyFromGroup('opponentStrums', i, 'x', -5000)
