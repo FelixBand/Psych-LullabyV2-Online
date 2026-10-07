@@ -1,3 +1,5 @@
+local isDead = false
+
 function onCreate()
 	makeLuaSprite('background', 'stages/alley/images/BACKGROUND', 0, 0)
 	setLuaSpriteScrollFactor('background', 0.6, 0.6)
@@ -31,6 +33,49 @@ function onCreate()
 	addLuaSprite('midground', false)
 	addLuaSprite('stageForeground', true)
 	addLuaSprite('brimstoneHand')
+
+
+	-- Game over screen
+	makeLuaSprite('deadSky', 'characters/death/gf/sky', 0, 0)
+	setObjectCamera('deadSky', 'other')
+	addLuaSprite('deadSky')
+
+	makeLuaSprite('deadTrees', 'characters/death/gf/trees', -350, 50)
+	setObjectCamera('deadTrees', 'other')
+	scaleObject('deadTrees', 1.4, 1.4)
+	addLuaSprite('deadTrees')
+
+	makeLuaSprite('deadTrunk', 'characters/death/gf/trunk', 610, 0)
+	setObjectCamera('deadTrunk', 'other')
+	scaleObject('deadTrunk', 1.2, 1.2)
+	addLuaSprite('deadTrunk')
+
+	makeAnimatedLuaSprite('deadGF', 'characters/death/gf/gf', 580, 80)
+	addAnimationByPrefix('deadGF', 'wake', 'GF_WAKEUP instance 1', 24, false)
+	addAnimationByPrefix('deadGF', 'die', 'GF_DIZZLE_OPENING instance 1', 24, false)
+	addAnimationByPrefix('deadGF', 'idle', 'GF_DIZZLE_LOOP instance 1', 24, true)
+	setObjectCamera('deadGF', 'other')
+	addLuaSprite('deadGF')
+
+	makeAnimatedLuaSprite('claw', 'characters/death/gf/claw', -170, 100)
+	addAnimationByPrefix('claw', 'idle', 'claw', 24, true)
+	setObjectCamera('claw', 'other')
+	scaleObject('claw', 0.8, 0.8)
+	addLuaSprite('claw')
+
+	makeAnimatedLuaSprite('retry', 'characters/death/gf/gf_gameover', 60, 330)
+	addAnimationByPrefix('retry', 'pressed', 'gameover_over instance 1', 24, false)
+	addAnimationByPrefix('retry', 'idle', 'gameover_concept instance 1', 24, true)
+	setObjectCamera('retry', 'other')
+	scaleObject('retry', 1, 1)
+	addLuaSprite('retry')
+
+	setProperty('deadSky.visible', false)
+	setProperty('deadTrees.visible', false)
+	setProperty('deadTrunk.visible', false)
+	setProperty('deadGF.visible', false)
+	setProperty('claw.visible', false)
+	setProperty('retry.visible', false)
 end
 
 local brimStoneHandOccured = false
@@ -60,3 +105,29 @@ function onMoveCamera(focus)
 		setProperty('defaultCamZoom', 0.65)
 	end
 end
+
+-- function onGameOver()
+-- 	isDead = true
+-- 	setProperty('paused', true)
+-- 	runHaxeCode([[
+-- 		FlxG.sound.music.volume = 0;
+-- 		vocals.volume = 0;
+-- 	]])
+
+-- 	cameraFlash('other', 'red', 1, true)
+
+-- 	setProperty('deadSky.visible', true)
+-- 	setProperty('deadTrees.visible', true)
+-- 	setProperty('deadTrunk.visible', true)
+-- 	setProperty('deadGF.visible', true)
+-- 	setProperty('claw.visible', true)
+-- 	setProperty('retry.visible', true)
+
+-- 	return Function_Stop
+-- end
+
+-- function onPause()
+--     if isDead then
+--         return Function_Stop
+--     end
+-- end
