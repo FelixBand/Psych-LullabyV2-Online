@@ -61,8 +61,8 @@ function onCreate()
 
     makeLuaSprite('freakachuJumpscare', 'jumpscares/Pikachu', 0, 0)
     setObjectCamera('freakachuJumpscare', 'other')
-    setProperty('freakachuJumpscare.scale.x', 0.425)
-    setProperty('freakachuJumpscare.scale.y', 0.425)
+    setProperty('freakachuJumpscare.scale.x', 0.5)
+    setProperty('freakachuJumpscare.scale.y', 0.5)
     screenCenter('freakachuJumpscare', 'xy')
 
     makeAnimatedLuaSprite('typhlosion', 'characters/gold/TYPHLOSION_MECHANIC', 150, 990)
@@ -335,10 +335,10 @@ function onTimerCompleted(tag, loops, loopsLeft)
         warmingCooldown = false
     end
     if tag == 'freak' then
-        doTweenZoom('camIn2', 'camGame', 1.9, 0.2, 'quadOut')
+        doTweenZoom('camIn2', 'camGame', 2.1, 0.2, 'quadOut')
         triggerEvent('Screen Shake', '0.8, 0.001', '')
         triggerEvent('Camera Follow Pos', '775', '870')
-        setProperty('defaultCamZoom', 1.9)
+        setProperty('defaultCamZoom', 2.1)
     end
     if tag == 'painsplit' then
         playSound('Frostbite_bite', 1)
@@ -352,6 +352,8 @@ function onTimerCompleted(tag, loops, loopsLeft)
             triggerEvent('Chromatic Riser', '0', tostring(400 / stepCrochet))
         end
         cameraShake('other', 0.008, 3.08)
+        doTweenX('shrinkFreakX', 'freakachuJumpscare.scale', 0.325, 0.5, 'cubeOut')
+        doTweenY('shrinkFreakY', 'freakachuJumpscare.scale', 0.325, 0.5, 'cubeOut')
     end
     if tag == 'jumpscareEnd' then
         removeLuaSprite('freakachuJumpscare', true)
