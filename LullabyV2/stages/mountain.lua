@@ -5,17 +5,17 @@ function onCreate()
 	setScrollFactor('background', 0.6, 0.6)
 	addLuaSprite('background')
 
-	makeLuaSprite('charizard', dir .. 'Charizard', 30, 100)
+	makeLuaSprite('charizard', dir .. 'Charizard', 107, 165)
 	setScrollFactor('charizard', 0.7, 0.7)
-	scaleObject('charizard', 0.6, 0.6)
+	scaleObject('charizard', 0.5, 0.5)
 	addLuaSprite('charizard')
 
-	makeLuaSprite('blastoise', dir .. 'Blastoise', -380, 280)
+	makeLuaSprite('blastoise', dir .. 'Blastoise', -235, 362)
 	setScrollFactor('blastoise', 0.8, 0.8)
-	scaleObject('blastoise', 0.5, 0.5)
+	scaleObject('blastoise', 0.4, 0.4)
 	addLuaSprite('blastoise')
 
-	makeLuaSprite('pokemons', dir .. 'Pokemons', 540, 490)
+	makeLuaSprite('pokemons', dir .. 'Pokemons', 495, 475)
 	setScrollFactor('pokemons', 0.9, 0.9)
 	scaleObject('pokemons', 0.25, 0.25)
 	addLuaSprite('pokemons')
@@ -33,8 +33,6 @@ function onCreate()
 end
 
 function onCreatePost()
-	setProperty('camHUD.alpha', 0)
-
 	-- swap strum positions
 	if not middlescroll then
 		for i = 0,getProperty('opponentStrums.length') - 1 do

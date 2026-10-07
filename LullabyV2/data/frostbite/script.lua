@@ -70,19 +70,20 @@ function onCreate()
     addAnimationByPrefix('typhlosion', 'fire', 'TYPHLOSION ROAR', 24, false)
     addLuaSprite('typhlosion', true)
 
-    makeAnimatedLuaSprite('freakachu', 'characters/red/Freakachu', 698, 818)
-    scaleObject('freakachu', 1.3, 1.3)
+    makeAnimatedLuaSprite('freakachu', 'characters/red/Freakachu', 760, 823)
+    scaleObject('freakachu', 1.2, 1.2)
     addAnimationByPrefix('freakachu', 'idle', 'Freakachu IDLE', 24, false)
     addAnimationByPrefix('freakachu', 'painsplit', 'Freakachu PAIN SPLIT', 24, false)
     playAnim('freakachu', 'idle', true)
     setProperty('freakachu.alpha', 0.0001)
     addLuaSprite('freakachu')
 
-    makeAnimatedLuaSprite('summonFreak', 'characters/red/freakachu_entrance', getProperty('dad.x') - 275, getProperty('dad.y') + 105)
+    makeAnimatedLuaSprite('summonFreak', 'characters/red/freakachu_entrance', getProperty('dad.x') - 197, getProperty('dad.y') + 138)
     addAnimationByPrefix('summonFreak', 'summon', 'Freakachu entrance instance 1', 24, false)
-    scaleObject('summonFreak', 0.89, 0.89)
+    scaleObject('summonFreak', 0.76, 0.76)
     setProperty('summonFreak.alpha', 0.0001)
-    addLuaSprite('summonFreak', true)
+    setObjectOrder('summonFreak', getObjectOrder('dadGroup') + 1)
+    addLuaSprite('summonFreak')
 
     setPropertyFromClass('GameOverSubstate', 'characterName', 'retry')
     setPropertyFromClass('GameOverSubstate', 'deathSoundName', 'fnf_loss_sfx')
@@ -152,6 +153,8 @@ function onCreatePost()
             ]);
         ]])
     end
+
+    setProperty('camHUD.alpha', 0)
 end
 
 local xx2 = 700 -- defaults for defaultCamZoom = 0.8
@@ -300,9 +303,9 @@ function onEvent(name, value1, value2)
         setProperty('dad.visible', false)
         followchars = false
         setProperty('camZooming', false)
-        doTweenZoom('camIn', 'camGame', 1.6, 0.6, 'quadOut')
-        setProperty('defaultCamZoom', 1.6)
-        triggerEvent('Camera Follow Pos', '750', '850')
+        doTweenZoom('camIn', 'camGame', 1.7, 0.6, 'quadOut')
+        setProperty('defaultCamZoom', 1.7)
+        triggerEvent('Camera Follow Pos', '850', '880')
         runTimer('freak', 0.86)
     end
     if name == 'Change Character' then
@@ -335,10 +338,10 @@ function onTimerCompleted(tag, loops, loopsLeft)
         warmingCooldown = false
     end
     if tag == 'freak' then
-        doTweenZoom('camIn2', 'camGame', 2.1, 0.2, 'quadOut')
+        doTweenZoom('camIn2', 'camGame', 2.6, 1, 'expoOut')
         triggerEvent('Screen Shake', '0.8, 0.001', '')
-        triggerEvent('Camera Follow Pos', '775', '870')
-        setProperty('defaultCamZoom', 2.1)
+        triggerEvent('Camera Follow Pos', '850', '890')
+        setProperty('defaultCamZoom', 2.6)
     end
     if tag == 'painsplit' then
         playSound('Frostbite_bite', 1)

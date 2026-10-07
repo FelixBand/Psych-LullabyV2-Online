@@ -1,67 +1,70 @@
 {
 	"animations": [
 		{
-			"loop": true,
 			"offsets": [
 				0,
 				0
 			],
+			"loop": true,
+			"fps": 24,
 			"anim": "idle",
-			"fps": 24,
-			"name": "DEAD RED IDLE",
-			"indices": []
+			"indices": [],
+			"name": "DEAD RED IDLE"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				14,
-				-5
+				11,
+				-4
 			],
-			"anim": "singDOWN",
+			"loop": false,
 			"fps": 24,
-			"name": "DEAD RED down",
-			"indices": []
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "DEAD RED down"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				125,
+				104,
 				2
 			],
-			"anim": "singLEFT",
+			"loop": false,
 			"fps": 24,
-			"name": "DEAD RED left",
-			"indices": []
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "DEAD RED left"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				-59,
+				-50,
 				-1
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 24,
-			"name": "DEAD RED right",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "DEAD RED right"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				0,
-				40
+				34
 			],
-			"anim": "singUP",
+			"loop": false,
 			"fps": 24,
-			"name": "DEAD RED up",
-			"indices": []
+			"anim": "singUP",
+			"indices": [],
+			"name": "DEAD RED up"
 		}
 	],
+	"vocals_file": null,
+	"results_character": null,
 	"no_antialiasing": false,
 	"image": "characters/red/mt_silver_red_dead",
 	"position": [
-		-100,
-		80
+		-70,
+		90
 	],
+	"speaker": null,
 	"healthicon": "red-dead",
 	"flip_x": false,
 	"healthbar_colors": [
@@ -74,5 +77,6 @@
 		0
 	],
 	"sing_duration": 4,
-	"scale": 0.7
+	"dead_character": null,
+	"scale": 0.6
 }
