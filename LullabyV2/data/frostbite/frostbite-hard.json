@@ -6095,22 +6095,7 @@
 			{
 				"lengthInSteps": 16,
 				"typeOfSection": 0,
-				"sectionNotes": [
-					[
-						179086.956521739,
-						-1,
-						"Frostbite Change Snow Amount",
-						"0",
-						"1"
-					],
-					[
-						179217.391304348,
-						-1,
-						"Frostbite Change Snow Intensity",
-						"0",
-						"1"
-					]
-				],
+				"sectionNotes": [],
 				"altAnim": false,
 				"bpm": 115,
 				"changeBPM": false,
