@@ -86,8 +86,8 @@ end
 function onSongStart()
 	setProperty('camZooming', true)
 	triggerEvent('Camera Follow Pos', 1150, 1100)
-	setProperty('boyfriendGroup.color', 0xFFFF0000)
-	setProperty('dadGroup.color', 0xFFFF0000)
+	setProperty('boyfriendGroup.color', getColorFromHex('000000'))
+	setProperty('dadGroup.color', getColorFromHex('000000'))
 end
 
 function onUpdate(elapsed)
@@ -195,8 +195,8 @@ function onEvent(name, value1, value2)
 		setProperty('cameraSpeed', 1)
 		triggerEvent('Camera Follow Pos', '', '')
 
-		setProperty('boyfriendGroup.color', 0xFFFFFFF)
-		setProperty('dadGroup.color', 0xFFFFFFF)
+		setProperty('boyfriendGroup.color', getColorFromHex('FFFFFF'))
+		setProperty('dadGroup.color', getColorFromHex('FFFFFF'))
 	end
 
 	if name == 'Progress Dialouge' and not endingStarted then
@@ -338,11 +338,10 @@ function advanceAmusiaDialogue()
 			'You\'re lying.',
 			'You... can sing.',
 			'Give me your sing.',
-			'Give me your sing.',
-			'Give me your sing.',
+			'Give me your sing. ', -- a space as a hack fix to fool an if statement
+			'Give me your sing. ',
 			'Sing.',
-			'Sing.',
-			string.rep('S', 64)
+			'Sing.'
 		}
 
 		responseIndex = 1
