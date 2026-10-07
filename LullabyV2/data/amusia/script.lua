@@ -624,32 +624,18 @@ end
 function waveStrumsY(group, defaultPrefix)
 	for i = 0, getProperty(group .. '.length') - 1 do
 		local wave = math.sin(
-			(getSongPosition() / (stepCrochet * 8)) * math.pi
-				+ (i * 75)
-		) * 30
+			(getSongPosition() / (stepCrochet * 8)) * math.pi + (i * 125)) * 30
 
-		setPropertyFromGroup(
-			group,
-			i,
-			'y',
-			_G[defaultPrefix .. i] + wave
-		)
+		setPropertyFromGroup(group, i, 'y', _G[defaultPrefix .. i] + wave)
 	end
 end
 
 function waveStrumsX(group, defaultPrefix)
 	local wave = math.sin(
-		(getSongPosition() / (stepCrochet * 16)) * math.pi
-	) * 75
+		(getSongPosition() / (stepCrochet * 16)) * math.pi) * 75
 
 	for i = 0, getProperty(group .. '.length') - 1 do
-		setPropertyFromGroup(
-			group,
-			i,
-			'x',
-			_G[defaultPrefix .. i]
-				+ wave
-		)
+		setPropertyFromGroup(group, i, 'x', _G[defaultPrefix .. i] + wave)
 	end
 end
 
