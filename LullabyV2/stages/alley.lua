@@ -1,4 +1,5 @@
 local isDead = false
+local pressedRetry = false
 
 function onCreate()
 	makeLuaSprite('background', 'stages/alley/images/BACKGROUND', 0, 0)
@@ -130,13 +131,38 @@ function onCustomSubstateCreate(name)
 		playAnim('deadGF', 'die', true)
 		playAnim('claw', 'idle', true)
 		playAnim('retry', 'idle', true)
+
+		cameraFlash('other', 'red', 0.5, true)
+		setProperty('camGame.visible', false)
+		setProperty('camHUD.visible', false)
+
+		callOnLuas('destroyPendulum')
 	end
 end
 
 function onCustomSubstateUpdate(name, elapsed)
 	if name == 'gfFuckingDies' then
-		if keyboardJustPressed('ENTER') or keyboardJustPressed('SPACE') then
-			restartSong()
+		if not pressedRetry and keyboardJustPressed('ENTER') or keyboardJustPressed('SPACE') then
+			pressedRetry = true
+			playMusic('gameOverEnd', 1)
+			playAnim('deadGF', 'wake', true)
+			setProperty('deadGF.offset.x', 50)
+
+			playAnim('retry', 'pressed', true)
+			setProperty('retry.offset.x', 140)
+			setProperty('retry.offset.y', 62)
+
+			doTweenAlpha('camOtherOut', 'camOther', 0, 3, 'cubeIn')
+			--restartSong()
 		end
+		if getProperty('deadGF.animation.curAnim.name') == 'die' and getProperty('deadGF.animation.curAnim.finished') then
+			playAnim('deadGF', 'idle')
+		end
+	end
+end
+
+function onTweenCompleted(tag)
+	if tag == 'camOtherOut' then
+		restartSong()
 	end
 end

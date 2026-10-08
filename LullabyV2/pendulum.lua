@@ -81,7 +81,7 @@ local offsets = {
 	}
 }
 
-local function cleanup()
+function destroyPendulum()
 	stopSound('trance')
 
 	removeLuaSprite('pendulum', true)
@@ -304,9 +304,9 @@ function lose()
 
 	if boyfriendName == 'gf' then
 		if alpha > 0.8 then
-			triggerEvent('Alt Idle Animation', 'bf', '-hypnotised1')
-		elseif alpha > 0.4 then
 			triggerEvent('Alt Idle Animation', 'bf', '-hypnotised2')
+		elseif alpha > 0.4 then
+			triggerEvent('Alt Idle Animation', 'bf', '-hypnotised1')
 		end
 	end
 
@@ -417,7 +417,7 @@ function onResume()
 end
 
 function onEndSong()
-	cleanup()
+	destroyPendulum()
 	close()
 	return Function_Continue
 end
