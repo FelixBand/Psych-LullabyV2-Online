@@ -191,7 +191,7 @@ function onEvent(name, value1, value2)
 			setProperty('pendulum.alpha', 0.0001)
 			setProperty('pendulum.y', -300)
 			setVar('pausePendulum', true)
-			setVar('swingTime', 3)
+			setVar('swingTime', 2)
 			doTweenY('pendSlideIn', 'pendulum', 0, 2, 'circOut')
 			doTweenAlpha('pendFadeIn', 'pendulum', 1, 2, 'circOut')
 		end
