@@ -142,7 +142,7 @@ end
 
 function onCustomSubstateUpdate(name, elapsed)
 	if name == 'gfFuckingDies' then
-		if not pressedRetry and keyboardJustPressed('ENTER') or keyboardJustPressed('SPACE') then
+		if not pressedRetry and keyJustPressed('accept') then
 			pressedRetry = true
 			playMusic('gameOverEnd', 1)
 			playAnim('deadGF', 'wake', true)
