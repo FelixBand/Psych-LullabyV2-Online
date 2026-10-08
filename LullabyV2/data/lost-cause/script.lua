@@ -153,7 +153,7 @@ function onCustomSubstateUpdate(name, elapsed)
             setProperty('gfDeath.offset.x', 97)
             setProperty('gfDeath.offset.y', 408)
 
-            doTweenZoom('camZoom', 'camGame', 0.4, 5, 'cubeIn')
+            doTweenZoom('camZoom', 'camGame', 0.4, 3, 'cubeIn')
 
             runTimer('restart', 5.5)
 			doTweenAlpha('gfOut', 'gfDeath', 0, 2, 'cubeIn')
