@@ -182,8 +182,8 @@ function onCreatePost()
     setProperty('camHUD.alpha', 0.0001)
 
     triggerEvent('Camera Follow Pos', '300', '370')
-    setProperty('camFollowPos.x', 300)
-	setProperty('camFollowPos.y', 370)
+    setProperty('camFollowPos.x', -340)
+	setProperty('camFollowPos.y', 10)
     removeLuaScript('scripts/camFollow')
 end
 
