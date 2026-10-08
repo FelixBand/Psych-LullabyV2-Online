@@ -355,8 +355,8 @@ function onTimerCompleted(tag, loops, loopsLeft)
             triggerEvent('Chromatic Riser', '0', tostring(400 / stepCrochet))
         end
         cameraShake('other', 0.008, 3.08)
-        doTweenX('shrinkFreakX', 'freakachuJumpscare.scale', 0.325, 0.5, 'cubeOut')
-        doTweenY('shrinkFreakY', 'freakachuJumpscare.scale', 0.325, 0.5, 'cubeOut')
+        doTweenX('shrinkFreakX', 'freakachuJumpscare.scale', 0.325, 1, 'expoOut')
+        doTweenY('shrinkFreakY', 'freakachuJumpscare.scale', 0.325, 1, 'expoOut')
     end
     if tag == 'jumpscareEnd' then
         removeLuaSprite('freakachuJumpscare', true)
