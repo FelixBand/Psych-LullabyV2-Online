@@ -13,17 +13,6 @@
 		},
 		{
 			"offsets": [
-				0,
-				0
-			],
-			"loop": true,
-			"fps": 24,
-			"anim": "idle-alt",
-			"indices": [],
-			"name": "altidle"
-		},
-		{
-			"offsets": [
 				11,
 				-348
 			],
@@ -76,11 +65,6 @@
 			"fps": 24,
 			"name": "Silver Spawn Full",
 			"indices": [
-				0,
-				1,
-				2,
-				3,
-				4,
 				5,
 				6,
 				7,
@@ -90,8 +74,7 @@
 				11,
 				12,
 				13,
-				14,
-				15
+				14
 			]
 		},
 		{
