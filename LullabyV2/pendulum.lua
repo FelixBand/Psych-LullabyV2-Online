@@ -146,7 +146,6 @@ function onCreate()
 
 	makeAnimatedLuaSprite('pendulumTrail', pendulumImage, 0, 0)
 	addAnimationByPrefix('pendulumTrail', 'idle', pendulumAnim, 24, true)
-	objectPlayAnimation('pendulumTrail', 'idle')
 
 	if hypnoPendulum then
 		scaleObject('pendulumTrail', 1.2, 1.2)
@@ -172,7 +171,6 @@ function onCreate()
 
 	makeAnimatedLuaSprite('pendulum', pendulumImage, 0, 0)
 	addAnimationByPrefix('pendulum', 'idle', pendulumAnim, 24, true)
-	objectPlayAnimation('pendulum', 'idle')
 
 	if hypnoPendulum then
 		scaleObject('pendulum', 1.2, 1.2)
@@ -301,8 +299,8 @@ function lose()
 
 	local alpha = getProperty('trance.alpha') + 0.05
 	setProperty('trance.alpha', alpha)
-
-	if boyfriendName == 'gf' then
+	
+	if getProperty('boyfriend.animOffsets.idle-hypnotised1', true) ~= null then -- if your character has at least an idle-hypnotised1 anim, you can use it!
 		if alpha > 0.8 then
 			triggerEvent('Alt Idle Animation', 'bf', '-hypnotised2')
 		elseif alpha > 0.4 then
