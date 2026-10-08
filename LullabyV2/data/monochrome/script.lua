@@ -239,8 +239,8 @@ function onCustomSubstateCreate(name)
         setProperty('camHUD.visible', false)
 
         runHaxeCode([[
-            game.dadGroup.cameras = [game.camGame];
             game.variables.set('dad', game.dadGroup);
+            game.dadGroup.cameras = [game.camGame];
             game.dad.specialAnim = true;
             game.dad.playAnim('fadeOut', true);
         ]]) -- hack to insert dad into the substate
