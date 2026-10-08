@@ -44,11 +44,7 @@ function onTimerCompleted(tag)
         end
 	end
     if tag == 'gameoverRestart' then
-        runHaxeCode([[
-            game.subState.remove(game.dadGroup); // detach dad so the substate doesn't destroy him
-        ]])
-        closeCustomSubstate()
-        restartSong(true)
+        restartSong()
     end
 end
 
