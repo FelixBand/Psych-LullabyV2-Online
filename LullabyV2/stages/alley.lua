@@ -154,7 +154,7 @@ function onCustomSubstateUpdate(name, elapsed)
 
 			doTweenAlpha('camOtherOut', 'camOther', 0, 3, 'cubeIn')
 		end
-		if not pressedRetry and keyJustPressed('back') then
+		if keyJustPressed('back') then
 			exitSong()
 		end
 		if getProperty('deadGF.animation.curAnim.name') == 'die' and getProperty('deadGF.animation.curAnim.finished') then
