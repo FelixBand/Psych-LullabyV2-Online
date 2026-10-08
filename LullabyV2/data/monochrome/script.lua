@@ -27,7 +27,7 @@ end
 function onTimerCompleted(tag)
     if tag == 'startsong' then
         startCountdown()
-        playAnim('dad', 'fadeIn', true)
+        triggerEvent('Play Animation', 'fadeIn', 'dad')
         setProperty('dadGroup.visible', true)
         if playsAsBF() then
             for i = 0,getProperty('opponentStrums.length') - 1 do
