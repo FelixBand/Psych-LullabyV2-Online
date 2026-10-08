@@ -20,9 +20,10 @@ function onCreate()
     setProperty('ending.alpha', 0.0001)
     addLuaSprite('ending')
 
+    makeLuaSprite('realCamFollow', '', 0, 0)
     
-    makeLuaSprite('blackBG', '', 0, 0)
-    makeGraphic('blackBG', 2000, 2000, '000000')
+    makeLuaSprite('blackBG', '', -400, 0)
+    makeGraphic('blackBG', 3000, 2000, '000000')
     setObjectOrder('blackBG', getObjectOrder('boyfriendGroup'))
     setProperty('blackBG.alpha', 0)
     addLuaSprite('blackBG')
@@ -39,6 +40,8 @@ function onCreate()
     precacheImage('UI/base/hypno/StaticHypno')
     precacheImage('UI/base/hypno/Pendelum_Phase2')
     precacheImage('UI/base/hypno/Psyshock')
+
+    precacheMusic('LostCauseLoop')
 
     setProperty('skipCountdown', true)
 end
@@ -116,6 +119,7 @@ function onCustomSubstateCreate(name)
         callOnLuas('destroyPendulum')
 
         insertToCustomSubstate('gfDeath')
+        insertToCustomSubstate('camFollowPos')
         setObjectCamera('gfDeath', 'game')
         setProperty('gfDeath.alpha', 1)
         setProperty('boyfriendGroup.visible', false)
@@ -124,19 +128,35 @@ function onCustomSubstateCreate(name)
 
         doTweenAlpha('hudOut', 'camHUD', 0, 0.5, 'linear')
         doTweenAlpha('blackIn', 'blackBG', 1, 1, 'linear')
+
+        setProperty('realCamFollow.x', getProperty('camFollowPos.x'))
+        setProperty('realCamFollow.y', getProperty('camFollowPos.y'))
         
-        startTween('camPosTween', 'camFollowPos', {x = 1000, y = 1000}, 1, {ease = 'cubeOut'})
+        doTweenX('camX', 'realCamFollow', 190, 2, 'cubeOut') 
+        doTweenY('camY', 'realCamFollow', 700, 2, 'cubeOut') 
+        doTweenZoom('camZoom', 'camGame', 0.65, 2, 'cubeOut')
     end
 end
 
 function onCustomSubstateUpdate(name, elapsed)
 	if name == 'gameover' then
+        setProperty('camFollowPos.x', getProperty('realCamFollow.x'))
+        setProperty('camFollowPos.y', getProperty('realCamFollow.y'))
 		if not pressedRetry and keyJustPressed('accept') then
 			pressedRetry = true
 			playMusic('LostCauseEnd', 1)
 
-            runTimer('restart', 4)
-			doTweenAlpha('gfOut', 'gfDeath', 0, 3, 'cubeIn')
+            cancelTween('blackIn')
+            setProperty('blackBG.alpha', 1)
+
+            playAnim('gfDeath', 'deathConfirm', true)
+            setProperty('gfDeath.offset.x', 97)
+            setProperty('gfDeath.offset.y', 408)
+
+            doTweenZoom('camZoom', 'camGame', 0.4, 5, 'cubeIn')
+
+            runTimer('restart', 5.5)
+			doTweenAlpha('gfOut', 'gfDeath', 0, 2, 'cubeIn')
 		end
 		if keyJustPressed('back') then
 			exitSong()
@@ -145,7 +165,10 @@ function onCustomSubstateUpdate(name, elapsed)
 			playAnim('gfDeath', 'deathLoop')
             setProperty('gfDeath.offset.x', -52)
             setProperty('gfDeath.offset.y', 90)
-            playMusic('LostCauseLoop', 1, true)
+            if not pressedRetry then
+                playMusic('LostCauseLoop', 1, true)
+            end
+            doTweenZoom('camZoom', 'camGame', 0.7, 3, 'smoothStepInOut')
 		end
 	end
 end
