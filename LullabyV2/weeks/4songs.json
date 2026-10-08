@@ -10,15 +10,15 @@
 		""
 	],
 	"songs": [
-		["Amusia", "ponyta", [3, 252, 240]],
-		["Dissension", "steven", [40, 40, 40]],
-		["Purin", "jigglypuff", [15, 15, 15]],
-		["Death Toll", "beelze", [212, 136, 55]],
-		["Isotope", "glitchy-red", [194, 54, 54]],
-		["Bygone Purpose", "smallhypno-animated", [40, 40, 40]],
-		["Pasta Night", "lord-x", [89, 46, 25]],
-		["Shinto", "shinto", [163, 103, 73]],
-		["Shitno", "shitno", [0, 0, 0]]
+		["amusia", "ponyta", [3, 252, 240]],
+		["dissension", "steven", [40, 40, 40]],
+		["purin", "jigglypuff", [15, 15, 15]],
+		["death toll", "beelze", [212, 136, 55]],
+		["isotope", "glitchy-red", [194, 54, 54]],
+		["bygone purpose", "smallhypno-animated", [40, 40, 40]],
+		["pasta night", "lord-x", [89, 46, 25]],
+		["shinto", "shinto", [163, 103, 73]],
+		["shitno", "shitno", [0, 0, 0]]
 	],
 	"hideStoryMode": true,
 	"weekName": "Hypno's Lullaby",

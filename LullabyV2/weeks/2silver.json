@@ -11,7 +11,7 @@
 	],
 	"songs": [
 		[
-			"Frostbite",
+			"frostbite",
 			"red",
 			[
 				255,
@@ -20,7 +20,7 @@
 			]
 		],
 		[
-			"Insomnia",
+			"insomnia",
 			"silver",
 			[
 				40,
@@ -29,7 +29,7 @@
 			]
 		],
 		[
-			"Monochrome",
+			"monochrome",
 			"gold",
 			[
 				0,
