@@ -43,6 +43,13 @@ function onTimerCompleted(tag)
             doTweenAlpha('CnoteOut' .. i, 'celebiNote'..i, 0, 1, 'linear')
         end
 	end
+    if tag == 'gameoverRestart' then
+        runHaxeCode([[
+            game.subState.remove(game.dadGroup); // detach dad so the substate doesn't destroy him
+        ]])
+        closeCustomSubstate()
+        restartSong(true)
+    end
 end
 
 function onCreate()
@@ -219,4 +226,26 @@ function resetCam(d)
     runHaxeCode('game.moveCameraSection()')
     setProperty('camFollow.x', 300 + xy[d+1][1])
     setProperty('camFollow.y', 370 + xy[d+1][2])
+end
+
+function onGameOver()
+    openCustomSubstate('gameover', true)
+    return Function_Stop
+end
+
+function onCustomSubstateCreate(name)
+    if name == 'gameover' then
+        callOnLuas('destroyPendulum')
+        setProperty('camHUD.visible', false)
+
+        runHaxeCode([[
+            game.dadGroup.cameras = [game.camGame];
+            game.variables.set('dad', game.dadGroup);
+            game.dad.specialAnim = true;
+            game.dad.playAnim('fadeOut', true);
+        ]]) -- hack to insert dad into the substate
+
+        insertToCustomSubstate('dad')
+        runTimer('gameoverRestart', 2)
+    end
 end
