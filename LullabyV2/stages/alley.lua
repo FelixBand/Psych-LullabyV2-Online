@@ -21,6 +21,10 @@ function onCreate()
 	setLuaSpriteScrollFactor('midground', 1, 1)
 	scaleObject('midground', 0.7, 0.7)
 
+	makeLuaSprite('stageForeground', 'stages/alley/images/FOREGROUND TREE', -50, 0)
+	setLuaSpriteScrollFactor('stageForeground', 1.2, 1.2)
+	scaleObject('stageForeground', 0.7, 0.7)
+
 	makeAnimatedLuaSprite('brimstoneHand', 'stages/alley/images/White_Hand', 1740, 550)
 	addAnimationByPrefix('brimstoneHand', 'idle', 'White Hand FInished', 24, false)
 	scaleObject('brimstoneHand', 0.65, 0.65)
@@ -38,44 +42,45 @@ function onCreate()
 	-- Game over screen
 	makeLuaSprite('deadSky', 'characters/death/gf/sky', 0, 0)
 	setObjectCamera('deadSky', 'other')
-	addLuaSprite('deadSky')
-
+	
 	makeLuaSprite('deadTrees', 'characters/death/gf/trees', -350, 50)
 	setObjectCamera('deadTrees', 'other')
 	scaleObject('deadTrees', 1.4, 1.4)
-	addLuaSprite('deadTrees')
-
+	
 	makeLuaSprite('deadTrunk', 'characters/death/gf/trunk', 610, 0)
 	setObjectCamera('deadTrunk', 'other')
 	scaleObject('deadTrunk', 1.2, 1.2)
-	addLuaSprite('deadTrunk')
-
+	
 	makeAnimatedLuaSprite('deadGF', 'characters/death/gf/gf', 580, 80)
 	addAnimationByPrefix('deadGF', 'wake', 'GF_WAKEUP instance 1', 24, false)
 	addAnimationByPrefix('deadGF', 'die', 'GF_DIZZLE_OPENING instance 1', 24, false)
 	addAnimationByPrefix('deadGF', 'idle', 'GF_DIZZLE_LOOP instance 1', 24, true)
 	setObjectCamera('deadGF', 'other')
-	addLuaSprite('deadGF')
-
+	
 	makeAnimatedLuaSprite('claw', 'characters/death/gf/claw', -170, 100)
 	addAnimationByPrefix('claw', 'idle', 'claw', 24, true)
 	setObjectCamera('claw', 'other')
 	scaleObject('claw', 0.8, 0.8)
-	addLuaSprite('claw')
-
+	
 	makeAnimatedLuaSprite('retry', 'characters/death/gf/gf_gameover', 60, 330)
 	addAnimationByPrefix('retry', 'pressed', 'gameover_over instance 1', 24, false)
 	addAnimationByPrefix('retry', 'idle', 'gameover_concept instance 1', 24, true)
 	setObjectCamera('retry', 'other')
 	scaleObject('retry', 1, 1)
-	addLuaSprite('retry')
+	
+	-- addLuaSprite('deadSky')
+	-- addLuaSprite('deadTrees')
+	-- addLuaSprite('deadTrunk')
+	-- addLuaSprite('deadGF')
+	-- addLuaSprite('claw')
+	-- addLuaSprite('retry')
 
-	setProperty('deadSky.visible', false)
-	setProperty('deadTrees.visible', false)
-	setProperty('deadTrunk.visible', false)
-	setProperty('deadGF.visible', false)
-	setProperty('claw.visible', false)
-	setProperty('retry.visible', false)
+	-- setProperty('deadSky.visible', false)
+	-- setProperty('deadTrees.visible', false)
+	-- setProperty('deadTrunk.visible', false)
+	-- setProperty('deadGF.visible', false)
+	-- setProperty('claw.visible', false)
+	-- setProperty('retry.visible', false)
 end
 
 local brimStoneHandOccured = false
@@ -106,28 +111,32 @@ function onMoveCamera(focus)
 	end
 end
 
--- function onGameOver()
--- 	isDead = true
--- 	setProperty('paused', true)
--- 	runHaxeCode([[
--- 		FlxG.sound.music.volume = 0;
--- 		vocals.volume = 0;
--- 	]])
+function onGameOver()
+	isDead = true
+	openCustomSubstate('gfFuckingDies', true)
 
--- 	cameraFlash('other', 'red', 1, true)
+	return Function_Stop
+end
 
--- 	setProperty('deadSky.visible', true)
--- 	setProperty('deadTrees.visible', true)
--- 	setProperty('deadTrunk.visible', true)
--- 	setProperty('deadGF.visible', true)
--- 	setProperty('claw.visible', true)
--- 	setProperty('retry.visible', true)
+function onCustomSubstateCreate(name)
+	if name == 'gfFuckingDies' then
+		insertToCustomSubstate('deadSky')
+		insertToCustomSubstate('deadTrees')
+		insertToCustomSubstate('deadTrunk')
+		insertToCustomSubstate('deadGF')
+		insertToCustomSubstate('claw')
+		insertToCustomSubstate('retry')
 
--- 	return Function_Stop
--- end
+		playAnim('deadGF', 'die', true)
+		playAnim('claw', 'idle', true)
+		playAnim('retry', 'idle', true)
+	end
+end
 
--- function onPause()
---     if isDead then
---         return Function_Stop
---     end
--- end
+function onCustomSubstateUpdate(name, elapsed)
+	if name == 'gfFuckingDies' then
+		if keyboardJustPressed('ENTER') or keyboardJustPressed('SPACE') then
+			restartSong()
+		end
+	end
+end
