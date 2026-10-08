@@ -153,7 +153,9 @@ function onCustomSubstateUpdate(name, elapsed)
 			setProperty('retry.offset.y', 62)
 
 			doTweenAlpha('camOtherOut', 'camOther', 0, 3, 'cubeIn')
-			--restartSong()
+		end
+		if not pressedRetry and keyJustPressed('back') then
+			exitSong()
 		end
 		if getProperty('deadGF.animation.curAnim.name') == 'die' and getProperty('deadGF.animation.curAnim.finished') then
 			playAnim('deadGF', 'idle')
