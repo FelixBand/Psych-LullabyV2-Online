@@ -33,10 +33,7 @@ local function normalizeStrums(group, keyCount, middleLane)
 	setPropertyFromGroup(group, middleLane, 'alpha', 0)
 end
 
-local function applyBellNote(group, note, useOddTexture)
-	if useOddTexture then
-		setPropertyFromGroup(group, note, 'texture', oddNoteTexture)
-	end
+local function applyBellNote(group, note)
 	setPropertyFromGroup(group, note, 'noteType', 'Bell')
 	setPropertyFromGroup(group, note, 'noAnimation', true)
 	setPropertyFromGroup(group, note, 'missHealth', 0.25)
@@ -246,6 +243,27 @@ function onCreatePost()
 	setProperty('camFollowPos.y', 500)
 end
 
+local debugLeft = 6
+
+local function applyOddTexture(index, isSustain)
+	local prev = getPropertyFromGroup('notes', index, 'animation.curAnim.name')
+	if debugLeft > 0 and isSustain then
+		debugLeft = debugLeft - 1
+		debugPrint('before swap: ' .. tostring(prev))
+	end
+
+	setPropertyFromGroup('notes', index, 'texture', oddNoteTexture)
+
+	local anim = 'oddScroll'
+	if isSustain then
+		if prev and stringEndsWith(prev, 'holdend') then
+			anim = 'oddholdend'
+		else
+			anim = 'oddhold'
+		end
+	end
+	callMethod('notes.members[' .. index .. '].animation.play', {anim, true})
+end
 
 function onSpawnNote(index, noteData, noteType, isSustain)
 	local keyCount = getProperty('playerStrums.length')
@@ -264,10 +282,13 @@ function onSpawnNote(index, noteData, noteType, isSustain)
 		if pussyMode then
 			ignoreBellLaneNote('notes', index)
 		else
-			applyBellNote('notes', index, true)
+			applyBellNote('notes', index)
+			applyOddTexture(index, isSustain)
 			if isSustain then
-				local current = getPropertyFromGroup('notes', index, 'offsetX')
-				setPropertyFromGroup('notes', index, 'offsetX', current - 26)
+				local currentX = getPropertyFromGroup('notes', index, 'offsetX')
+				setPropertyFromGroup('notes', index, 'offsetX', currentX - 26)
+				local currentY = getPropertyFromGroup('notes', index, 'offsetY')
+				setPropertyFromGroup('notes', index, 'offsetY', currentY + 10)
 			end
 		end
 	end
