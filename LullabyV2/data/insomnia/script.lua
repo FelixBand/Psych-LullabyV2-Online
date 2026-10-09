@@ -1,4 +1,5 @@
-local minAccuracy = 0.9 
+local cutscened = false
+local minAccuracy = 0.9
 
 function onCreate()
     setProperty('camHUD.alpha', 0.0001)
@@ -9,6 +10,16 @@ function onCreate()
     setObjectCamera('feraligatr_death', 'other')
     setProperty('feraligatr_death.alpha', 0.0001)
     addLuaSprite('feraligatr_death')
+
+    makeAnimatedLuaSprite('silverEnding', 'characters/silver/silverEnding', getProperty('dad.x') - 96, getProperty('dad.y') - 17)
+    addAnimationByPrefix('silverEnding', 'end', 'Silver instance 1', 24, false)
+    setProperty('silverEnding.alpha', 0.0001)
+    addLuaSprite('silverEnding', true)
+
+    makeAnimatedLuaSprite('feraligatrEnding', 'characters/silver/feraligatrEnding', -320, -250)
+    addAnimationByPrefix('feraligatrEnding', 'end', 'Feraligatr instance 1', 24, false)
+    setProperty('feraligatrEnding.alpha', 0.0001)
+    addLuaSprite('feraligatrEnding', true)
 
     if getModSetting('mechanics') == 'Hell' then
         minAccuracy = 0.98
@@ -26,7 +37,7 @@ local followchars = true
 local zoomin = false
 
 function onUpdate()
-    if rating < minAccuracy and totalPlayed > 0 then
+    if rating < minAccuracy and totalPlayed > 0 and not cutscened then
         followchars = false
         triggerEvent('Camera Follow Pos', '800', '400')
         if getProperty('vocals.volume', 1) then
@@ -41,8 +52,11 @@ function onUpdate()
     else
         cancelTween('feraligatr')
         zoomin = false
-        followchars = true
+        if not cutscened then
+            followchars = true
+        end
         runHaxeCode([[FlxG.sound.music.volume = 1;]])
+        stopSound('feraligatrWakes')
     end
 
 
@@ -78,6 +92,7 @@ function onCustomSubstateCreate(name)
         setProperty('feraligatr_death.alpha', 1)
         playAnim('feraligatr_death', 'chomp', true)
         playSound('feraligatr')
+        stopSound('feraligatrWakes')
 	end
 end
 
@@ -103,13 +118,33 @@ function onTweenCompleted(tag)
 	end
 end
 
--- local cutscened = false
--- function onEndSong()
---     if not cutscened and isStoryMode then
--- 		doTweenAlpha('hudout', 'camHUD', 0, 1, 'linear')
---         playSound('death', 1)
---         cutscened = true
---         return Function_Stop
---     end
--- return Function_Continue
--- end
+function onEndSong()
+    if not cutscened then
+        followchars = false
+        triggerEvent('Camera Follow Pos', xx2, yy2)
+        doTweenZoom('defaultZoom', 'camGame', getProperty('defaultCamZoom'), 1, 'smoothStepInOut')
+
+		doTweenAlpha('hudout', 'camHUD', 0, 1, 'linear')
+        playSound('death', 1)
+        playAnim('silverEnding', 'end', true)
+        setProperty('silverEnding.alpha', 1)
+        setProperty('dad.visible', false)
+        runTimer('endsong', 11)
+        runTimer('feraligatr attack', 6)
+        cutscened = true
+        return Function_Stop
+    end
+return Function_Continue
+end
+
+function onTimerCompleted(tag, loops, loopsLeft)
+    if tag == 'endsong' then
+        endSong()
+    end
+    if tag == 'feraligatr attack' then
+        triggerEvent('Camera Follow Pos', '800', '450')
+        playAnim('feraligatrEnding', 'end', true)
+        setProperty('feraligatrEnding.alpha', 1)
+        setProperty('feraligatr.visible', false)
+    end
+end
