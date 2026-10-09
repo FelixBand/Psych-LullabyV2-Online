@@ -5,6 +5,8 @@ local rightShift = 50
 local centerDown = 20
 local pussyMode = false
 
+local oddNoteTexture = 'hellbell/Bronzong_Gong_mechanic'
+
 local function normalizeStrums(group, keyCount, middleLane)
 	local leftX = getPropertyFromGroup(group, 0, 'x')
 	local rightX = getPropertyFromGroup(group, keyCount - 1, 'x')
@@ -31,7 +33,10 @@ local function normalizeStrums(group, keyCount, middleLane)
 	setPropertyFromGroup(group, middleLane, 'alpha', 0)
 end
 
-local function applyBellNote(group, note)
+local function applyBellNote(group, note, useOddTexture)
+	if useOddTexture then
+		setPropertyFromGroup(group, note, 'texture', oddNoteTexture)
+	end
 	setPropertyFromGroup(group, note, 'noteType', 'Bell')
 	setPropertyFromGroup(group, note, 'noAnimation', true)
 	setPropertyFromGroup(group, note, 'missHealth', 0.25)
@@ -155,6 +160,9 @@ function setupStrums()
 	end
 
 	setPropertyFromGroup('playerStrums', middleLane, 'useRGBShader', false)
+	if not pussyMode then
+		setPropertyFromGroup('playerStrums', middleLane, 'texture', oddNoteTexture)
+	end
 
 	for i = 0, getProperty('unspawnNotes.length') - 1 do
 		if getPropertyFromGroup('unspawnNotes', i, 'mustPress')
@@ -162,7 +170,7 @@ function setupStrums()
 			if pussyMode then
 				ignoreBellLaneNote('unspawnNotes', i)
 			else
-				applyBellNote('unspawnNotes', i)
+				applyBellNote('unspawnNotes', i, true)
 			end
 		end
 
@@ -239,11 +247,11 @@ function onCreatePost()
 end
 
 
-function onSpawnNote(id)
+function onSpawnNote(index, noteData, noteType, isSustain)
 	local keyCount = getProperty('playerStrums.length')
 	if keyCount % 2 == 0 then
-		if getPropertyFromGroup('notes', id, 'noteType') == 'Bell' then
-			applyBellNote('notes', id)
+		if noteType == 'Bell' then
+			applyBellNote('notes', index)
 		end
 		return
 	end
@@ -252,12 +260,15 @@ function onSpawnNote(id)
 	end
 
 	local middleLane = math.floor(keyCount / 2)
-	if getPropertyFromGroup('notes', id, 'mustPress')
-		and getPropertyFromGroup('notes', id, 'noteData') == middleLane then
+	if getPropertyFromGroup('notes', index, 'mustPress') and noteData == middleLane then
 		if pussyMode then
-			ignoreBellLaneNote('notes', id)
+			ignoreBellLaneNote('notes', index)
 		else
-			applyBellNote('notes', id)
+			applyBellNote('notes', index, true)
+			if isSustain then
+				local current = getPropertyFromGroup('notes', index, 'offsetX')
+				setPropertyFromGroup('notes', index, 'offsetX', current - 26)
+			end
 		end
 	end
 end
