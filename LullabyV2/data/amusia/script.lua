@@ -160,6 +160,11 @@ function onUpdate(elapsed)
 	end
 
 	updateAmusiaDialogue(elapsed)
+
+	if jumpscareShown then
+		setProperty('chromaticController.x', 10 + (math.sin(os.clock() * 5) + 1) / 2 * 40)
+		setProperty('pincushionController.x', 0.5 + (math.sin(os.clock() * 5) + 1) / 2 * 2)
+	end
 end
 
 function singDirection(noteData)
@@ -295,6 +300,9 @@ function showAmusiaJumpscare()
 	cancelTimer('amusiaForcedJumpscare')
 
 	hideAmusiaDialogue()
+
+	setSpriteShader('amusiaJumpscare', 'pincushion')
+	setSpriteShader('amusiaJumpscare', 'custom/chromaticAberration')
 
 	setProperty('amusiaJumpscare.visible', true)
 

@@ -65,6 +65,7 @@ function onCreate()
 
         initLuaShader('vignetteGlitch')
         initLuaShader('pincushion')
+        initLuaShader('custom/chromaticAberration')
 
         setSpriteShader('background', 'vignetteGlitch')
         setSpriteShader('background', 'pincushion')
@@ -74,9 +75,6 @@ function onCreate()
         setShaderFloat('background', 'vignetteIntensity', 0.01)
 
         runHaxeCode([[
-            game.initLuaShader('custom/pincushion');
-            game.initLuaShader('custom/chromaticAberration');
-
             var pincushionShader = game.createRuntimeShader('pincushion');
             var chromaticShader = game.createRuntimeShader('custom/chromaticAberration');
 
