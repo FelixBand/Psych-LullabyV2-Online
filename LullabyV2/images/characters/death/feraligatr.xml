@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:b4700d030d68c9fdecb84fc95ae719b7:438119d745cc1022b01e72d42063ad86:0d665836b6cc2d81f980ea09dea84e9b$ -->
+<TextureAtlas imagePath="feraligatr.png" width="15162" height="3846">
+    <SubTexture name="feraligatr0000001" x="1" y="1" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000002" x="1" y="1283" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000003" x="1" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000004" x="1" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000005" x="723" y="1" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000006" x="723" y="1283" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000007" x="723" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000008" x="1445" y="1" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000009" x="1445" y="1283" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000010" x="1445" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000011" x="2167" y="1" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000012" x="2167" y="1283" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000013" x="2167" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000014" x="2889" y="1" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000015" x="2889" y="1283" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000016" x="2889" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000017" x="3611" y="1" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000018" x="3611" y="1283" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000019" x="3611" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000020" x="4333" y="1" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000021" x="4333" y="1283" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000022" x="4333" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000023" x="5055" y="1" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000024" x="5055" y="1283" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000025" x="5055" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000026" x="5777" y="1" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000027" x="5777" y="1283" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000028" x="5777" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000029" x="6499" y="1" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000030" x="6499" y="1283" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000031" x="6499" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000032" x="7221" y="1" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000033" x="7221" y="1283" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000034" x="7221" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000035" x="7943" y="1" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000036" x="7943" y="1283" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000037" x="7943" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000038" x="8665" y="1" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000039" x="8665" y="1283" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000040" x="8665" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000041" x="9387" y="1" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000042" x="9387" y="1283" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000043" x="9387" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000044" x="10109" y="1" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000045" x="10109" y="1283" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000046" x="10109" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000047" x="10831" y="1" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000048" x="10831" y="1283" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000049" x="10831" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000050" x="11553" y="1" width="1280" height="720"/>
+    <SubTexture name="feraligatr0000051" x="12835" y="1" width="1280" height="720"/>
+    <SubTexture name="feraligatr0000052" x="14117" y="1" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000053" x="11553" y="723" width="1280" height="720"/>
+    <SubTexture name="feraligatr0000054" x="12835" y="723" width="1280" height="720"/>
+    <SubTexture name="feraligatr0000055" x="14117" y="1283" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000056" x="11553" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000057" x="12275" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000058" x="12997" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000059" x="13719" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000060" x="14441" y="2565" rotated="true" width="720" height="1280"/>
+    <SubTexture name="feraligatr0000061" x="11553" y="1445" width="1280" height="720"/>
+    <SubTexture name="feraligatr0000062" x="12835" y="1445" width="1280" height="720"/>
+</TextureAtlas>
