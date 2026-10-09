@@ -8,6 +8,8 @@ local hypnoPendulum = false
 local pendOffX = 0
 local pendOffY = 0
 
+local psyshockCooldown = 80
+
 local offsets = {
 	idle = {
 		[0] = {814, 264},
@@ -223,8 +225,6 @@ function onCreate()
 	setProperty('pendFeedback.y', getProperty('pendFeedback.y') + 60)
 	setProperty('pendFeedback.alpha', 0.0001)
 	addLuaSprite('pendFeedback')
-
-	runTimer('psyshock', getRandomInt(5, 15))
 end
 
 function reset()
@@ -332,11 +332,16 @@ function onSongStart()
 	playSound('TranceStatic', 0, 'trance')
 end
 
-function onTimerCompleted(tag)
-	if tag == 'psyshock' and not cutscened then
-		runTimer('psyshock', getRandomInt(5, 15))
-
+function onStepHit()
+	if psyshockCooldown <= 0 then
 		if not getVar('pausePendulum') then
+			if isHypno then
+				psyshockCooldown = psyshockCalculate(110, 65)
+			else
+				psyshockCooldown = psyshockCalculate(75, 40)
+			end
+			debugPrint(psyshockCooldown)
+
 			playSound('Psyshock', 1)
 
 			setProperty('daFlash.alpha', 1)
@@ -353,7 +358,17 @@ function onTimerCompleted(tag)
 
 			lose()
 		end
-	elseif tag == 'tutorialFadeOut' then
+	else
+		psyshockCooldown = psyshockCooldown - 1
+	end
+end
+
+function psyshockCalculate(startingValue, endingValue)
+	return math.floor(startingValue + (endingValue - startingValue) * (getSongPosition() / songLength))
+end
+
+function onTimerCompleted(tag)
+	if tag == 'tutorialFadeOut' then
 		doTweenAlpha('tutorialOut', 'tutorial', 0, 0.5, 'linear')
 	end
 end
