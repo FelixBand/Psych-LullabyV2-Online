@@ -64,6 +64,8 @@ function onCreate()
     setProperty('freakachuJumpscare.scale.x', 0.5)
     setProperty('freakachuJumpscare.scale.y', 0.5)
     screenCenter('freakachuJumpscare', 'xy')
+    setProperty('freakachuJumpscare.alpha', 0.0001)
+    addLuaSprite('freakachuJumpscare')
 
     makeAnimatedLuaSprite('typhlosion', 'characters/gold/TYPHLOSION_MECHANIC', 150, 990)
     addAnimationByPrefix('typhlosion', 'idle', 'TYPHLOSION MECHANIC', 24, false)
@@ -351,14 +353,14 @@ function onTimerCompleted(tag, loops, loopsLeft)
         setProperty('health', getProperty('health') - (0.2 + (getProperty('health') / 2.856)))
     end
     if tag == 'jumpscare' then
-        addLuaSprite('freakachuJumpscare')
+        setProperty('freakachuJumpscare.alpha', 1)
         if shadersEnabled then
             triggerEvent('Chromatic Riser', '1', '0')
-            triggerEvent('Chromatic Riser', '0', tostring(400 / stepCrochet))
+            triggerEvent('Chromatic Riser', '0.5', tostring(400 / stepCrochet))
         end
         cameraShake('other', 0.008, 3.08)
-        doTweenX('shrinkFreakX', 'freakachuJumpscare.scale', 0.325, 1, 'expoOut')
-        doTweenY('shrinkFreakY', 'freakachuJumpscare.scale', 0.325, 1, 'expoOut')
+        doTweenX('shrinkFreakX', 'freakachuJumpscare.scale', 0.325, 0.5, 'expoOut')
+        doTweenY('shrinkFreakY', 'freakachuJumpscare.scale', 0.325, 0.5, 'expoOut')
     end
     if tag == 'jumpscareEnd' then
         removeLuaSprite('freakachuJumpscare', true)
