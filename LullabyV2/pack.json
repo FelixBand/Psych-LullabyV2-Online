@@ -1,6 +1,6 @@
 {
 	"name": "Hypno's Lullaby V2",
-	"description": "A Psych Online compatible port of Hypno's Lullaby V2 by FelixBand",
+	"description": "A Psych Online compatible port by FelixBand.\nThis mod is best experienced with shaders and modcharts enabled.",
 	"restart":false,
 	"color": [170, 0, 255]
 }
