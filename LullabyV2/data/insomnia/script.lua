@@ -1,5 +1,6 @@
 local cutscened = false
 local minAccuracy = 0.9
+local enableMechanic = true
 
 function onCreate()
     setProperty('camHUD.alpha', 0.0001)
@@ -24,6 +25,9 @@ function onCreate()
     if getModSetting('mechanics') == 'Hell' then
         minAccuracy = 0.98
     end
+    if getModSetting('mechanics') == 'Pussy' or not playsAsBF() then
+        enableMechanic = false
+    end
 end
 
 function onCreatePost()
@@ -37,28 +41,29 @@ local followchars = true
 local zoomin = false
 
 function onUpdate()
-    if rating < minAccuracy and totalPlayed > 0 and not cutscened then
-        followchars = false
-        triggerEvent('Camera Follow Pos', '800', '400')
-        if getProperty('vocals.volume', 1) then
-            setProperty('vocals.volume', 0.5)
+    if enableMechanic then
+        if rating < minAccuracy and totalPlayed > 0 and not cutscened then
+            followchars = false
+            triggerEvent('Camera Follow Pos', '800', '400')
+            if getProperty('vocals.volume', 1) then
+                setProperty('vocals.volume', 0.5)
+            end
+            runHaxeCode([[FlxG.sound.music.volume = 0.5;]])
+            if not zoomin then
+                doTweenZoom('feraligatr', 'camGame', 1.4, 10, 'smoothStepIn')
+                playSound('feraligatrWakes')
+                zoomin = true
+            end
+        else
+            cancelTween('feraligatr')
+            zoomin = false
+            if not cutscened then
+                followchars = true
+            end
+            runHaxeCode([[FlxG.sound.music.volume = 1;]])
+            stopSound('feraligatrWakes')
         end
-        runHaxeCode([[FlxG.sound.music.volume = 0.5;]])
-        if not zoomin then
-            doTweenZoom('feraligatr', 'camGame', 1.4, 10, 'smoothStepIn')
-            playSound('feraligatrWakes')
-            zoomin = true
-        end
-    else
-        cancelTween('feraligatr')
-        zoomin = false
-        if not cutscened then
-            followchars = true
-        end
-        runHaxeCode([[FlxG.sound.music.volume = 1;]])
-        stopSound('feraligatrWakes')
     end
-
 
     if followchars then -- camfollow script
         if getProperty('boyfriend.animation.curAnim.name') == 'singLEFT' then
