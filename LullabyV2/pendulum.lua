@@ -4,6 +4,9 @@ local mechanics = 'Normal'
 local canHit = false
 local cutscened = false
 local hypnoPendulum = false
+local isHypno = false
+local pendulumMechanicDisabled = false
+local tranceDisabled = false
 
 local pendOffX = 0
 local pendOffY = 0
@@ -142,6 +145,10 @@ function onCreate()
 	end
 
 	hypnoPendulum = dadName == 'hypno'
+	isHypno = not playsAsBF() and hypnoPendulum
+	pendulumMechanicDisabled = not playsAsBF()
+		and (dadName == 'hypno' or dadName == 'hypno-two' or dadName == 'abomination-hypno')
+	tranceDisabled = pendulumMechanicDisabled
 
 	local pendulumImage = hypnoPendulum and 'UI/base/hypno/Pendelum' or 'UI/base/hypno/Pendelum_Phase2'
 	local pendulumAnim = hypnoPendulum and 'Pendelum instance 1' or 'pendulum Phase 2'
@@ -214,7 +221,7 @@ function onCreate()
 	setObjectCamera('tutorial', 'other')
 	screenCenter('tutorial', 'xy')
 	setProperty('tutorial.y', getProperty('tutorial.y') + 60)
-	setProperty('tutorial.alpha', 0.0001)
+	setProperty('tutorial.alpha', pendulumMechanicDisabled and 0 or 0.0001)
 	addLuaSprite('tutorial')
 
 	makeAnimatedLuaSprite('pendFeedback', 'UI/base/hypno/Extras', 0, 0)
@@ -223,12 +230,21 @@ function onCreate()
 	setObjectCamera('pendFeedback', 'other')
 	screenCenter('pendFeedback', 'xy')
 	setProperty('pendFeedback.y', getProperty('pendFeedback.y') + 60)
-	setProperty('pendFeedback.alpha', 0.0001)
+	setProperty('pendFeedback.alpha', pendulumMechanicDisabled and 0 or 0.0001)
 	addLuaSprite('pendFeedback')
+
+	if pendulumMechanicDisabled and not hypnoPendulum then
+		setProperty('pendulum.alpha', 0)
+		setProperty('pendulumTrail.alpha', 0)
+	end
+
+	if tranceDisabled then
+		setProperty('trance.alpha', 0)
+	end
 end
 
 function reset()
-	if cutscened or getVar('pausePendulum') then
+	if cutscened or getVar('pausePendulum') or (pendulumMechanicDisabled and not hypnoPendulum) then
 		return
 	end
 
@@ -249,7 +265,7 @@ function onBeatHit()
 		reset()
 	end
 
-	if curBeat % (getVar('swingTime') / 2) == 0 then
+	if not pendulumMechanicDisabled and curBeat % (getVar('swingTime') / 2) == 0 then
 		playAnim('tutorial', 'tap', true)
 	end
 end
@@ -272,28 +288,28 @@ function onTweenCompleted(tag)
 	elseif tag == 'pend1' then
 		doTweenAngle('pend2', 'pendulum', getProperty('pendulum.angle') - swingAngle, swingDuration(), 'quadIn')
 
-		if canHit then
+		if canHit and not pendulumMechanicDisabled then
 			lose()
 			pendFeedback(1)
 		end
 
-		canHit = true
+		canHit = not pendulumMechanicDisabled
 	elseif tag == 'pend2' then
 		doTweenAngle('pend3', 'pendulum', getProperty('pendulum.angle') - swingAngle, swingDuration(), 'quadOut')
 	elseif tag == 'pend3' then
 		doTweenAngle('pend0', 'pendulum', getProperty('pendulum.angle') + swingAngle, swingDuration(), 'quadIn')
 
-		if canHit then
+		if canHit and not pendulumMechanicDisabled then
 			lose()
 			pendFeedback(1)
 		end
 
-		canHit = true
+		canHit = not pendulumMechanicDisabled
 	end
 end
 
 function lose()
-	if cutscened then
+	if cutscened or tranceDisabled then
 		return
 	end
 
@@ -316,20 +332,31 @@ function lose()
 end
 
 function tranceSound()
+	if tranceDisabled then
+		stopSound('trance')
+		return
+	end
+
 	stopSound('trance')
 	playSound('TranceStatic', (getProperty('trance.alpha') * 1.1) - 0.35, 'trance')
 end
 
 function onSongStart()
-	doTweenAlpha('tutorialIn', 'tutorial', 1, 0.5, 'linear')
-	runTimer('tutorialFadeOut', (stepCrochet * 64) / 1000)
+	if not pendulumMechanicDisabled then
+		doTweenAlpha('tutorialIn', 'tutorial', 1, 0.5, 'linear')
+		runTimer('tutorialFadeOut', (stepCrochet * 64) / 1000)
+	end
 
 	local startAngle = hypnoPendulum and -9 or 0
 	local swingAngle = hypnoPendulum and 40 + -9 or 30
 
-	doTweenAngle('pend1', 'pendulum', startAngle + swingAngle, swingDuration(), 'quadOut')
+	if not pendulumMechanicDisabled or hypnoPendulum then
+		doTweenAngle('pend1', 'pendulum', startAngle + swingAngle, swingDuration(), 'quadOut')
+	end
 
-	playSound('TranceStatic', 0, 'trance')
+	if not tranceDisabled then
+		playSound('TranceStatic', 0, 'trance')
+	end
 end
 
 function onStepHit()
@@ -381,7 +408,7 @@ function onUpdate(elapsed)
 		setProperty('pendulum.y', getProperty('dad.y') + 10 + pendOffY)
 	end
 
-	if not getPropertyFromClass('flixel.FlxG', 'keys.justPressed.SPACE') or curBeat <= 0 or getVar('pausePendulum') then
+	if pendulumMechanicDisabled or not getPropertyFromClass('flixel.FlxG', 'keys.justPressed.SPACE') or curBeat <= 0 or getVar('pausePendulum') then
 		return
 	end
 

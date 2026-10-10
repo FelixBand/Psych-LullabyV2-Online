@@ -447,3 +447,4 @@ function onUpdate(elapsed)
 		setProperty('camZooming', false)
 	end
 end
+
