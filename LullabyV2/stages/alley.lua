@@ -3,15 +3,15 @@ local pressedRetry = false
 
 function onCreate()
 	makeLuaSprite('background', 'stages/alley/images/BACKGROUND', 0, 0)
-	setLuaSpriteScrollFactor('background', 0.6, 0.6)
+	setScrollFactor('background', 0.6, 0.6)
 	scaleObject('background', 0.7, 0.7)
 
 	makeLuaSprite('grass', 'stages/alley/images/Behind the clouds and fence', 0, 0)
-	setLuaSpriteScrollFactor('grass', 0.7, 0.7)
+	setScrollFactor('grass', 0.7, 0.7)
 	scaleObject('grass', 0.7, 0.7)
 
 	makeLuaSprite('fog', 'stages/alley/images/Behind the Fence', 0, 0)
-	setLuaSpriteScrollFactor('fog', 0.8, 0.8)
+	setScrollFactor('fog', 0.8, 0.8)
 	scaleObject('fog', 0.7, 0.7)
 	
 	if dadName == 'hypno-two' then
@@ -19,11 +19,11 @@ function onCreate()
 	else
 		makeLuaSprite('midground', 'stages/alley/images/MIDGROUND', 0, 0)
 	end
-	setLuaSpriteScrollFactor('midground', 1, 1)
+	setScrollFactor('midground', 1, 1)
 	scaleObject('midground', 0.7, 0.7)
 
 	makeLuaSprite('stageForeground', 'stages/alley/images/FOREGROUND TREE', -50, 0)
-	setLuaSpriteScrollFactor('stageForeground', 1.2, 1.2)
+	setScrollFactor('stageForeground', 1.2, 1.2)
 	scaleObject('stageForeground', 0.7, 0.7)
 
 	makeAnimatedLuaSprite('brimstoneHand', 'stages/alley/images/White_Hand', 1740, 550)
