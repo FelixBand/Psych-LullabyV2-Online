@@ -325,7 +325,11 @@ function lose()
 	end
 
 	if alpha >= 1 then
-		setProperty('health', 0)
+		if playsAsBF() then
+			setProperty('health', -1)
+		else
+			setProperty('health', 3)
+		end
 	end
 
 	tranceSound()

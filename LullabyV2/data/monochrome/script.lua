@@ -135,7 +135,9 @@ function onEvent(name, value1, value2)
             playAnim('celebi', 'idle', true)
             runTimer('spawnCNotes', 0.5)
 
-            celebiHealthSubtract = tonumber(value1)
+            if playsAsBF() then
+                celebiHealthSubtract = tonumber(value1)
+            end
             scale = 1 - (value1 / 2)
             scaleObject('healthBar.rightBar', scale, 1)
         end
