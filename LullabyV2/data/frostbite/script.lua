@@ -45,7 +45,7 @@ function onCreate()
     addLuaSprite('typhlosionThermometer')
     setObjectOrder('typhlosionThermometer', getObjectOrder('thermometer') - 1)
     playAnim('typhlosionThermometer', '-10', true)
-    if pussyMode then
+    if pussyMode or not playsAsBF() then
         setProperty('thermometerBarBG.visible', false)
         setProperty('thermometerBar.visible', false)
         setProperty('thermometer.visible', false)
@@ -120,8 +120,10 @@ function onBeatHit()
         painSplitChance = 0.5
         painSplitCooldown = 30
 
-        playAnim('freakachu', 'painsplit', true)
-        runTimer('painsplit', 0.46)
+        if not pussyMode then
+            playAnim('freakachu', 'painsplit', true)
+            runTimer('painsplit', 0.46)
+        end
     end
 end
 
