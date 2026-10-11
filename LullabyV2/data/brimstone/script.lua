@@ -1,4 +1,6 @@
 local BarsStart={}
+local pressedRetry = false
+local canRetry = false
 
 function onCreate()
 	for i=0 ,18 do
@@ -87,6 +89,28 @@ function onCreate()
 	if getModSetting('mechanics') == 'Hell' then
         addLuaScript('pendulum')
     end
+
+	-- Game over
+	makeAnimatedLuaSprite('deadBF', 'characters/death/BA_DeathRetry', 0, 350)
+	addAnimationByPrefix('deadBF', 'idle', 'buried_death', 24, false)
+	setObjectCamera('deadBF', 'other')
+	setProperty('deadBF.scale.x', 3.5)
+	setProperty('deadBF.scale.y', 3.5)
+	screenCenter('deadBF', 'x')
+	setProperty('deadBF.antialiasing', false)
+	setProperty('deadBF.alpha', 0.0001)
+	addLuaSprite('deadBF')
+
+	makeAnimatedLuaSprite('retry', 'characters/death/BA_DeathRetry', 0, 150)
+	addAnimationByPrefix('retry', 'confirm', 'BA_retry_confirm', 24, false)
+	addAnimationByPrefix('retry', 'idle', 'BA_retry0', 24, true)
+	setObjectCamera('retry', 'other')
+	setProperty('retry.scale.x', 3.5)
+	setProperty('retry.scale.y', 3.5)
+	screenCenter('retry', 'x')
+	setProperty('retry.antialiasing', false)
+	setProperty('retry.alpha', 0.0001)
+	addLuaSprite('retry')
 end
 
 local bfStartPosition=0
@@ -190,6 +214,30 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		mukSplatFadeStarted = false
 		playAnim('muksludge', tostring(math.random(0, 2)), true)
 	end
+	if tag == 'dead' then
+		setProperty('camHUD.visible', false)
+		setProperty('camGame.visible', false)
+		playSound('buryman-death/buriedThud')
+		runTimer('burymanVoiceline', 0.5)
+	end
+	if tag == 'burymanVoiceline' then
+		playSound('buryman-death/BA0')
+		runTimer('gameOverScreen', 3)
+	end
+	if tag == 'gameOverScreen' then
+		doTweenAlpha('retryIn', 'retry', 1, 1, 'linear')
+		doTweenAlpha('deadBFIn', 'deadBF', 1, 1, 'linear')
+		playAnim('deadBF', 'idle', true)
+		playMusic('BurymanDeath', 1, true)
+		runTimer('chomp', 3.65, 0)
+		canRetry = true
+	end
+	if tag == 'chomp' then
+		playAnim('deadBF', 'idle', true)
+	end
+	if tag == 'restart' then
+		restartSong()
+	end
 end
 
 local curFrame=0
@@ -267,7 +315,7 @@ function onUpdate(elapsed)
 				end
 			end
 		end
-		brimstoneShakes()
+		brimstoneShakes(curFrame)
 		curFrame=curFrame+1
 	end
 end
@@ -283,8 +331,8 @@ end
 local shakeProgression=0
 local cameraXPlacement=0
 local totalShakes=0
-function brimstoneShakes()
-	if curFrame % math.floor(12 * (getPropertyFromClass('flixel.FlxG','drawFramerate') / 120)) == 0 and brimstoneShaking then
+function brimstoneShakes(frame)
+	if frame % math.floor(12 * (getPropertyFromClass('flixel.FlxG','drawFramerate') / 120)) == 0 and brimstoneShaking then
 		if shakeProgression==0 then
 			cameraXPlacement=getProperty('camGame.scroll.x')
 			runHaxeCode([[
@@ -390,8 +438,72 @@ function onEvent(name, value1, value2)
 	end
 end
 
---function onSoundFinished(tag)
-    --if tag == 'vine boom' then
-		--debugPrint('boom')
-	--end
---end
+function onGameOver()
+	openCustomSubstate('gameover', true)
+
+	return Function_Stop
+end
+
+local substateFrame = 0
+
+function onCustomSubstateCreate(name)
+	if name == 'gameover' then
+		-- if a shake was mid-way when you died, put the camera back first
+		if shakeProgression > 0 then
+			setProperty('camGame.scroll.x', cameraXPlacement)
+		end
+		shakeProgression = 0
+		myShake = shakeProgress
+		substateFrame = 0
+		brimstoneShaking = true
+
+		callOnLuas('destroyPendulum')
+
+        runHaxeCode([[
+            game.variables.set('dad', game.dadGroup);
+            game.dadGroup.cameras = [game.camGame];
+            game.dad.specialAnim = true;
+            game.dad.playAnim('idle', true);
+
+			game.variables.set('boyfriend', game.boyfriendGroup);
+            game.boyfriendGroup.cameras = [game.camGame];
+            game.boyfriend.specialAnim = true;
+            game.boyfriend.playAnim('Aurgh', true);
+        ]])
+
+        insertToCustomSubstate('dad')
+		insertToCustomSubstate('boyfriend')
+		insertToCustomSubstate('deadBF')
+		insertToCustomSubstate('retry')
+		playSound('buryman-death/buriedDeath')
+        runTimer('dead', 2)
+
+		doTweenY('bfDown', 'boyfriend', getProperty('boyfriend.y') + 450, 2, 'linear')
+    end
+end
+
+function onCustomSubstateUpdate(name, elapsed)
+	if name == 'gameover' then
+		brimstoneShakes(substateFrame)
+		substateFrame = substateFrame + 1
+		if not pressedRetry and keyJustPressed('accept') and canRetry then
+			pressedRetry = true
+			playMusic('gameOverEnd', 1)
+            playAnim('retry', 'confirm', true)
+			setProperty('retry.offset.x', 20)
+			setProperty('retry.offset.y', 55)
+
+			doTweenAlpha('deadBFOut', 'deadBF', 0, 1, 'expoIn')
+			doTweenAlpha('retryOut', 'retry', 0, 1, 'expoIn')
+			runTimer('restart', 5)
+		end
+		if keyJustPressed('back') then
+			exitSong()
+		end
+	end
+end
+
+function betterBrimstoneShakes()
+	setProperty('camFollowPos.x', 340)
+	runTimer('brimstoneShake', 0.3, 7)
+end
