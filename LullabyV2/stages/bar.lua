@@ -182,10 +182,10 @@ end
 function onUpdate(elapsed)
 	if shadersEnabled then setShaderFloat('ShaderObj','iTime',getSongPosition() / 1000) end
 
-	if luaSpriteExists('Gold') and SongStarter then
+	if luaSpriteExists('Gold') then
 		setProperty('Gold.x',getProperty('Gold.x')-elapsed / (0.25 / 60))
 	end
-	if luaSpriteExists('Gb') and SongStarter then
+	if luaSpriteExists('Gb') then
 		setProperty('Gb.x',getProperty('Gb.x')-elapsed / (0.25 / 60))
 	end
 end
