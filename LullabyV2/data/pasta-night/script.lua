@@ -11,6 +11,7 @@ local SelecterCharacters = {'MX', 'LordX', 'Hypno'}
 local curSelect = pastaPlayer + 1
 local totalElapsed = 0
 local canSelecter = true
+local pressedRetry = false
 
 function onCreate()
 	setVar('pastaPlayer', pastaPlayer)
@@ -34,6 +35,28 @@ function onCreate()
     precacheImage('UI/base/hypno/StaticHypno')
     precacheImage('UI/base/hypno/Pendelum_Phase2')
     precacheImage('UI/base/hypno/Psyshock')
+
+	-- Game over
+	makeAnimatedLuaSprite('charGameOver', 'UI/base/pasta/PN_LoseSprites', 0, 0)
+	addAnimationByPrefix('charGameOver', 'player0', 'pastanight_LoseMX', 24)
+	addAnimationByPrefix('charGameOver', 'player1', 'pastanight_LoseLordX', 24)
+	addAnimationByPrefix('charGameOver', 'player2', 'pastanight_LoseHypno', 24)
+	setObjectCamera('charGameOver', 'other')
+	scaleObject('charGameOver', 4, 4)
+	screenCenter('charGameOver', 'xy')
+	setProperty('charGameOver.offset.x', -110)
+	setProperty('charGameOver.antialiasing', false)
+	setProperty('charGameOver.alpha', 0.0001)
+	addLuaSprite('charGameOver')
+
+	makeAnimatedLuaSprite('bgGameOver', 'UI/base/pasta/PN_GameOver', 0, 0)
+	addAnimationByPrefix('bgGameOver', 'idle', 'pastanight_curtains', 24, false)
+	setObjectCamera('bgGameOver', 'other')
+	scaleObject('bgGameOver', 3, 3)
+	screenCenter('bgGameOver', 'xy')
+	setProperty('bgGameOver.antialiasing', false)
+	setProperty('bgGameOver.alpha', 0.0001)
+	addLuaSprite('bgGameOver')
 end
 
 function setupStrums()
@@ -180,18 +203,9 @@ function setupPastaPlayer()
 
 		-- Multiplayer / opponent-player mode.
 		if not playsAsBF() and (isMX or isLordX or isHypno) then
-			local mustPress = getPropertyFromGroup(
-				'unspawnNotes',
-				i,
-				'mustPress'
-			)
+			local mustPress = getPropertyFromGroup('unspawnNotes', i, 'mustPress')
 
-			setPropertyFromGroup(
-				'unspawnNotes',
-				i,
-				'mustPress',
-				not mustPress
-			)
+			setPropertyFromGroup('unspawnNotes', i, 'mustPress', not mustPress)
 		end
 	end
 end
@@ -380,6 +394,9 @@ function updateSelection(pos)
 end
 
 function onTimerCompleted(tag, loops, loopsLeft)
+	if tag == 'restart' then
+		restartSong()
+	end
 	if tag == 'ApplyPastaStrums' then
 		setupStrums()
 		setupPastaPlayer()
@@ -418,7 +435,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		runTimer('ApplyPastaStrums', 1)
 
 		-- Remove selector objects.
-		removeLuaSprite('bg', true)
+		setProperty('bg.visible', false)
 		removeLuaSprite('Arrow', true)
 
 		for i = 1, #SelecterCharacters do
@@ -451,5 +468,53 @@ function onEvent(name, value1, value2)
 		elseif value1 == '1' then
 			triggerEvent('Camera Follow Pos', '850', '500')
 		end
+	end
+end
+
+function onGameOver()
+	openCustomSubstate('gameover', true)
+
+	return Function_Stop
+end
+
+function onCustomSubstateCreate(name)
+	if name == 'gameover' then
+		callOnLuas('destroyPendulum')
+		insertToCustomSubstate('bgGameOver')
+		insertToCustomSubstate('charGameOver')
+		
+		playAnim('bgGameOver', 'idle', true)
+		setProperty('bgGameOver.alpha', 1)
+		playAnim('charGameOver', 'player' .. pastaPlayer, true)
+		setProperty('charGameOver.alpha', 1)
+
+		setProperty('camGame.visible', false)
+		setProperty('camHUD.visible', false)
+		playSound('PS_Death')
+
+		doTweenY('charUp', 'charGameOver', getProperty('charGameOver.y') - 140, 0.5, 'quadOut')
+	end
+end
+
+function onCustomSubstateUpdate(name, elapsed)
+	if name == 'gameover' then
+		if not pressedRetry and keyJustPressed('accept') then
+			pressedRetry = true
+			playMusic('gameOverEnd', 1)
+
+			doTweenAlpha('camOtherOut', 'camOther', 0, 1.5, 'expoIn')
+		end
+		if keyJustPressed('back') then
+			exitSong()
+		end
+	end
+end
+
+function onTweenCompleted(tag)
+	if tag == 'charUp' then
+		doTweenY('charDown', 'charGameOver', getProperty('charGameOver.y') + 650, 0.8, 'quadIn')
+	end
+	if tag == 'camOtherOut' then
+		restartSong()
 	end
 end
