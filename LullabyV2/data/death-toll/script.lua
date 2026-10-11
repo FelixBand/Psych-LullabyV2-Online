@@ -385,11 +385,20 @@ end
 -- "boyfriend" is actually Dawn and "gf" is actually Boyfriend
 
 local contractProgress = 0
+local stepsToShake = 0
+
+function onStepHit()
+	if stepsToShake > 0 then
+		cameraShake('game', stepsToShake / 950, stepCrochet / 1000)
+		stepsToShake = stepsToShake - 1
+	end
+end
 
 function onEvent(name, value1, value2)
 	if name == 'Bong' then
 		playAnim('hellBell', 'bong', true)
-		cameraShake('game', 0.015, 0.35)
+		stepsToShake = 9
+		--cameraShake('game', 0.015, 0.35)
 		runTimer('hellBellIdle', 0.5)
 	end
 	if name == "Beelze Walk" then
