@@ -158,7 +158,6 @@ function opponentNoteHit(id, direction, noteType, isSustainNote) -- sync the two
 end
 
 function onGameOver()
-	isDead = true
 	openCustomSubstate('gameover', true)
 
 	return Function_Stop

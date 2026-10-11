@@ -482,7 +482,6 @@ function onUpdate(elapsed)
 end
 
 function onGameOver()
-	isDead = true
 	openCustomSubstate('gameover', true)
 
 	return Function_Stop

@@ -1,4 +1,3 @@
-local isDead = false
 local pressedRetry = false
 
 function onCreate()
@@ -113,7 +112,6 @@ function onMoveCamera(focus)
 end
 
 function onGameOver()
-	isDead = true
 	openCustomSubstate('gfFuckingDies', true)
 
 	return Function_Stop
