@@ -1,6 +1,7 @@
 local lowHealthFX = false
 local pussyMode = false
 local strangleHealthDrain = 0.02
+local pressedRetry = false
 
 function onCreate()
 	setProperty('skipCountdown',true)

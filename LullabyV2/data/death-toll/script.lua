@@ -4,6 +4,7 @@ local centerShift = 80
 local rightShift = 50
 local centerDown = 20
 local pussyMode = false
+local pressedRetry = false
 
 local oddNoteTexture = 'hellbell/Bronzong_Gong_mechanic'
 
@@ -229,6 +230,17 @@ function onCreate()
 	setProperty('bimbembo.alpha', 0.0001)
 	addLuaSprite('bimbembo')
 
+	-- game over assets
+	makeAnimatedLuaSprite('bfDies', 'characters/death/hellbell/hellbellDeath', -250, -270)
+	--addAnimationByPrefix('bfDies', 'firstDeath', 'deathLol', 24, false)
+	addAnimationByPrefix('bfDies', 'confirm', 'deathConfirm', 24, false)
+	addAnimationByPrefix('bfDies', 'deathLoop', 'deathIdle', 24, true)
+	setObjectCamera('bfDies', 'other')
+	setProperty('bfDies.scale.x', 1.5)
+	setProperty('bfDies.scale.y', 1.5)
+	setProperty('bfDies.alpha', 0.0001)
+	addLuaSprite('bfDies')
+
 	runTimer('dsIntro', 1)
 end
 
@@ -359,6 +371,15 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	if tag == 'hellBellIdle' then
 		playAnim('hellBell', 'idle', true)
 	end
+	if tag == 'gameoverzoomout' then
+		doTweenX('bfdiesx', 'bfDies.scale', 0.8, 2, 'cubeInOut')
+		doTweenY('bfdiesy', 'bfDies.scale', 0.8, 2, 'cubeInOut')
+		doTweenX('bfdiesslidex', 'bfDies', -50, 2, 'cubeInOut')
+		doTweenY('bfdiesslidey', 'bfDies', -75, 2, 'cubeInOut')
+		if not pressedRetry then
+			playMusic('DeathTollDeathAmbience', 1, true)
+		end
+	end
 end
 
 -- "boyfriend" is actually Dawn and "gf" is actually Boyfriend
@@ -415,6 +436,9 @@ function onTweenCompleted(tag)
     if tag == 'gameFadeOut' then
         doTweenAlpha('bfRefIn', 'bfReflection', 0.2, 2, 'linear')
     end
+	if tag == 'camOtherOut' then
+        restartSong()
+    end
 end
 
 function onBeatHit()
@@ -448,3 +472,44 @@ function onUpdate(elapsed)
 	end
 end
 
+function onGameOver()
+	isDead = true
+	openCustomSubstate('gameover', true)
+
+	return Function_Stop
+end
+
+function onCustomSubstateCreate(name)
+	if name == 'gameover' then
+		insertToCustomSubstate('bfDies')
+
+		--playAnim('bfDies', 'firstDeath', true)
+        setProperty('bfDies.alpha', 1)
+
+		cameraFlash('other', 'red', 3, true)
+		setProperty('camGame.visible', false)
+		setProperty('camHUD.visible', false)
+		removeLuaSprite('ds')
+		removeLuaSprite('dsgradient')
+		removeLuaSprite('bfReflection')
+		removeLuaSprite('bimbembo')
+
+        playSound('DT_Loss_SFX')
+		runTimer('gameoverzoomout', 1.5)
+	end
+end
+
+function onCustomSubstateUpdate(name, elapsed)
+	if name == 'gameover' then
+		if not pressedRetry and keyJustPressed('accept') then
+			pressedRetry = true
+			playMusic('gameOverEnd', 1)
+            playAnim('bfDies', 'confirm', true)
+
+			doTweenAlpha('camOtherOut', 'camOther', 0, 3, 'expoIn')
+		end
+		if keyJustPressed('back') then
+			exitSong()
+		end
+	end
+end
