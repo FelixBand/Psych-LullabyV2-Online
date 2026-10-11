@@ -76,3 +76,9 @@ function onStepHit()
 		playAnim('alexisPass', 'pass', true);
 	end
 end
+
+function noteMiss(index, noteData, noteType, isSustain)
+	if boyfriendName == 'alexis' then
+		playSound('Electric_miss' .. getRandomInt(1,5))
+	end
+end
