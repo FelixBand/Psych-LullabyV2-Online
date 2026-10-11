@@ -207,7 +207,7 @@ function onUpdate(elapsed)
     end
 
     if not pussyMode and frostbiteActive and not frostbiteEnded then
-        if keyJustPressed('space') and warmingCharges > 0 and not warmingCooldown then
+        if keyJustPressed('space') and warmingCharges > 0 and not warmingCooldown and not botPlay then
             warmUp()
             doTweenAlpha('hideFrostbiteGuide', 'frostbiteGuide', 0.0001, 0.5, 'cubeInOut')
         end
@@ -228,7 +228,11 @@ function onUpdate(elapsed)
             playAnim('thermometer', 'stage3', true)
         end
         if coldness > 35 and getProperty('frostbiteGuide.alpha') <= 0.0001 then
-            doTweenAlpha('showFrostbiteGuide', 'frostbiteGuide', 1, 0.5, 'cubeInOut')
+            if botPlay then
+                warmUp()
+            else
+                doTweenAlpha('showFrostbiteGuide', 'frostbiteGuide', 1, 0.5, 'cubeInOut')
+            end
         end
         if coldness >= 100 then
             setHealth(-1)
