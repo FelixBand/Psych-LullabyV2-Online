@@ -1,4 +1,5 @@
 local doCharacterZoom = true
+local pressedRetry = false
 
 function onCreate()
     if getModSetting('mechanics') == 'Hell' then
@@ -7,6 +8,16 @@ function onCreate()
 		precacheImage('UI/base/hypno/Pendelum_Phase2')
 		precacheImage('UI/base/hypno/Psyshock')
 	end
+
+	-- Game over
+	makeAnimatedLuaSprite('retry', 'characters/death/bygone/Retry')
+	addAnimationByPrefix('retry', 'idle', 'Retry instance 1', 24, true)
+	setObjectCamera('retry', 'other')
+	setProperty('retry.scale.x', 0.7)
+	setProperty('retry.scale.y', 0.7)
+	screenCenter('retry', 'xy')
+	setProperty('retry.alpha', 0.0001)
+	addLuaSprite('retry', true)
 
 	setProperty('skipCountdown', true)
 end
@@ -136,4 +147,43 @@ function onMoveCamera(focus)
             setProperty('defaultCamZoom', 0.8)
         end
     end
+end
+
+function onGameOver()
+	openCustomSubstate('gameover', true)
+
+	return Function_Stop
+end
+
+function onCustomSubstateCreate(name)
+	if name == 'gameover' then
+		callOnLuas('destroyPendulum')
+		insertToCustomSubstate('retry')
+
+		setProperty('camGame.visible', false)
+		setProperty('camHUD.visible', false)
+		cameraFlash('other', 'red', 0.5, true)
+		doTweenAlpha('retryIn', 'retry', 1, 1, 'linear')
+		playMusic('gameOver', 1, true)
+	end
+end
+
+function onCustomSubstateUpdate(name, elapsed)
+	if name == 'gameover' then
+		if not pressedRetry and keyJustPressed('accept') then
+			pressedRetry = true
+			playMusic('gameOverEnd', 1)
+
+			doTweenAlpha('camOtherOut', 'camOther', 0, 3, 'expoIn')
+		end
+		if keyJustPressed('back') then
+			exitSong()
+		end
+	end
+end
+
+function onTweenCompleted(tag)
+	if tag == 'camOtherOut' then
+		restartSong()
+	end
 end

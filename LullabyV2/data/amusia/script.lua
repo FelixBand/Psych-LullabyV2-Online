@@ -17,6 +17,7 @@ local jumpscareShown = false
 local strumShakeTime = 0
 local strumShakeDuration = 0.1
 local strumShakeActive = false
+local pressedRetry = false
 
 function onCreate()
 	setProperty('skipCountdown', true)
@@ -71,6 +72,17 @@ function onCreate()
 	addLuaSprite('amusiaSelector', true)
 	addLuaText('amusiaDialogueText', true)
 
+	-- Game over
+	makeAnimatedLuaSprite('retry', 'characters/death/bygone/Retry')
+	addAnimationByPrefix('retry', 'idle', 'Retry instance 1', 24, true)
+	setObjectCamera('retry', 'other')
+	setProperty('retry.scale.x', 0.7)
+	setProperty('retry.scale.y', 0.7)
+	screenCenter('retry', 'xy')
+	setProperty('retry.alpha', 0.0001)
+	addLuaSprite('retry', true)
+
+	-- Wigglytuff "miss" logic. SHE CAN'T SING!!! :(((
 	for i = 0, getProperty('unspawnNotes.length') - 1 do
 		table.insert(strumTimes, getPropertyFromGroup('unspawnNotes', i, 'strumTime'))
 		table.insert(mustPresses, getPropertyFromGroup('unspawnNotes', i, 'mustPress'))
@@ -683,4 +695,45 @@ end
 function onUpdatePost()
 	updateStrumWaves()
 	updateHealthIcons()
+end
+
+function onGameOver()
+	openCustomSubstate('gameover', true)
+
+	return Function_Stop
+end
+
+function onCustomSubstateCreate(name)
+	if name == 'gameover' then
+		insertToCustomSubstate('retry')
+		removeLuaSprite('static')
+		removeLuaSprite('redStatic')
+		removeLuaSprite('black')
+
+		setProperty('camGame.visible', false)
+		setProperty('camHUD.visible', false)
+		cameraFlash('other', 'red', 0.5, true)
+		doTweenAlpha('retryIn', 'retry', 1, 1, 'linear')
+		playMusic('gameOver', 1, true)
+	end
+end
+
+function onCustomSubstateUpdate(name, elapsed)
+	if name == 'gameover' then
+		if not pressedRetry and keyJustPressed('accept') then
+			pressedRetry = true
+			playMusic('gameOverEnd', 1)
+
+			doTweenAlpha('camOtherOut', 'camOther', 0, 3, 'expoIn')
+		end
+		if keyJustPressed('back') then
+			exitSong()
+		end
+	end
+end
+
+function onTweenCompleted(tag)
+	if tag == 'camOtherOut' then
+		restartSong()
+	end
 end
