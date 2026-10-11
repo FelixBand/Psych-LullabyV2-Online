@@ -26,10 +26,10 @@ function onCreate()
 	screenCenter('fog')
 	addLuaSprite('fog', true)
 
-	makeLuaSprite('introFog', '', 0, 0)
-    makeGraphic('introFog', 1280, 720, 'FF0E9FB')
-    setObjectCamera('introFog', 'other')
-    addLuaSprite('introFog')
+	makeLuaSprite('introFog', '', -50, -50)
+    makeGraphic('introFog', screenWidth * 2, screenHeight * 2, 'FF0E9FB')
+	setScrollFactor('introFog', 0, 0)
+    addLuaSprite('introFog', true)
 end
 
 function onCreatePost()

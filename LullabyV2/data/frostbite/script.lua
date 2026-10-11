@@ -12,6 +12,7 @@ local frostbiteActive = false
 local frostbiteEnded = false
 local typhlosionDead = false
 local pussyMode = false
+local pressedRetry = false
 
 function onCreate()
     pussyMode = getModSetting('mechanics') == 'Pussy'
@@ -70,7 +71,8 @@ function onCreate()
     makeAnimatedLuaSprite('typhlosion', 'characters/gold/TYPHLOSION_MECHANIC', 150, 990)
     addAnimationByPrefix('typhlosion', 'idle', 'TYPHLOSION MECHANIC', 24, false)
     addAnimationByPrefix('typhlosion', 'fire', 'TYPHLOSION ROAR', 24, false)
-    addLuaSprite('typhlosion', true)
+    setObjectOrder('typhlosion', getObjectOrder('boyfriendGroup') + 1)
+    addLuaSprite('typhlosion')
 
     makeAnimatedLuaSprite('freakachu', 'characters/red/Freakachu', 760, 823)
     scaleObject('freakachu', 1.2, 1.2)
@@ -99,6 +101,13 @@ function onCreate()
 	setProperty('healthBar.flipX', true)
 
     --addLuaSprite('freakachuJumpscare')
+
+    makeAnimatedLuaSprite('goldDies', 'characters/death/frostbite', 0, 0)
+    addAnimationByPrefix('goldDies', 'idle', 'gold', 24, false)
+    setObjectCamera('goldDies', 'other')
+    scaleObject('goldDies', 0.9195, 0.9195)
+    setProperty('goldDies.alpha', 0.0001)
+    addLuaSprite('goldDies')
 end
 
 function onBeatHit()
@@ -369,6 +378,11 @@ function onTimerCompleted(tag, loops, loopsLeft)
         inCutscene = false
         endSong()
     end
+    if tag == 'startMusicLoop' then
+        if not pressedRetry then
+            playMusic('MtSilverLoop', 1, true)
+        end
+    end
 end
 
 function onStepHit()
@@ -418,4 +432,46 @@ function warmUp()
         doTweenY('typhlosionDeath', 'typhlosion', getProperty('typhlosion.y') + 500, 1.5, 'quadInOut')
     end
     runTimer('warmingCooldown', 1, 1)
+end
+
+function onGameOver()
+	openCustomSubstate('gameover', true)
+
+	return Function_Stop
+end
+
+function onCustomSubstateCreate(name)
+	if name == 'gameover' then
+		insertToCustomSubstate('goldDies')
+
+		setProperty('camGame.visible', false)
+		setProperty('camHUD.visible', false)
+
+        playSound('frostbitedeathNoise', 2)
+        playAnim('goldDies', 'idle', true)
+        setProperty('goldDies.alpha', 1)
+        runTimer('startMusicLoop', 10)
+	end
+end
+
+function onCustomSubstateUpdate(name, elapsed)
+	if name == 'gameover' then
+		if not pressedRetry and keyJustPressed('accept') then
+			pressedRetry = true
+			playMusic('MtSilverEnd', 1)
+
+			removeLuaSprite('retry')
+
+			doTweenAlpha('camOtherOut', 'camOther', 0, 3, 'expoIn')
+		end
+		if keyJustPressed('back') then
+			exitSong()
+		end
+	end
+end
+
+function onTweenCompleted(tag)
+    if tag == 'camOtherOut' then
+        restartSong()
+    end
 end
