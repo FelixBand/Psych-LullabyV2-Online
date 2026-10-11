@@ -87,10 +87,6 @@ function onCreate()
     setObjectOrder('summonFreak', getObjectOrder('dadGroup') + 1)
     addLuaSprite('summonFreak')
 
-    setPropertyFromClass('GameOverSubstate', 'characterName', 'retry')
-    setPropertyFromClass('GameOverSubstate', 'deathSoundName', 'fnf_loss_sfx')
-    setPropertyFromClass('GameOverSubstate', 'loopSoundName', 'MtSilverLoop')
-    setPropertyFromClass('GameOverSubstate', 'endSoundName', 'MtSilverEnd')
     setProperty('skipCountdown', true)
 
     if shadersEnabled then
