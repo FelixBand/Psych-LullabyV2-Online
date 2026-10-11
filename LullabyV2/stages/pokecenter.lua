@@ -119,10 +119,10 @@ function onCreate()
 
 	-- animated characters
 
-	makeAnimatedLuaSprite('staticbg', 'static-purin', 900, 665)
+	makeAnimatedLuaSprite('staticbg', 'static-purin', 900, 119)
 	addAnimationByPrefix('staticbg', 'idle', 'static', 24, true)
 	setProperty('staticbg.antialiasing', false)
-	scaleObject('staticbg', 2, 1.49)
+	scaleObject('staticbg', 3, 3)
 	setProperty('staticbg.alpha', 0.001)
 	addLuaSprite('staticbg')
 
@@ -167,7 +167,7 @@ function onUpdate(elapsed)
 
 	if curBeat >= 460 then
 		-- staticbg should pulse in and out between 0.25 and 0.6 using a sine wave based on the song position
-		setProperty('staticbg.alpha', 0.625 + math.sin((180 / math.pi) * ((getSongPosition() / 1000 ) / 36)) * 0.175)
+		setProperty('staticbg.alpha', 0.325 + math.sin((180 / math.pi) * ((getSongPosition() / 1000 ) / 36)) * 0.175)
 		triggerEvent('Camera Follow Pos', '1350', '1000')
 		setProperty('camZooming', false)
 	end
