@@ -1,6 +1,7 @@
 local cutscened = false
 local minAccuracy = 0.9
 local enableMechanic = true
+local pressedRetry = false
 
 function onCreate()
     setProperty('camHUD.alpha', 0.0001)
