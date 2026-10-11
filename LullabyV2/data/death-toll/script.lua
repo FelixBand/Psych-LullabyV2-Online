@@ -389,7 +389,7 @@ local stepsToShake = 0
 
 function onStepHit()
 	if stepsToShake > 0 then
-		cameraShake('game', stepsToShake / 950, stepCrochet / 1000)
+		cameraShake('game', stepsToShake / 875, stepCrochet / 1000)
 		stepsToShake = stepsToShake - 1
 	end
 end
@@ -397,7 +397,7 @@ end
 function onEvent(name, value1, value2)
 	if name == 'Bong' then
 		playAnim('hellBell', 'bong', true)
-		stepsToShake = 9
+		stepsToShake = 12
 		--cameraShake('game', 0.015, 0.35)
 		runTimer('hellBellIdle', 0.5)
 	end
