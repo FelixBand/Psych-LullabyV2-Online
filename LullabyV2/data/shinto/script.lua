@@ -32,7 +32,7 @@ function onCustomSubstateCreate(name)
             game.dadGroup.cameras = [game.camGame];
             game.dad.specialAnim = true;
             game.dad.playAnim('lose', true);
-        ]]) -- hack to insert dad into the substate
+        ]])
 
         insertToCustomSubstate('dad')
         playSound('ShintoRetry')
