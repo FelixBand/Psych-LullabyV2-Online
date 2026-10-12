@@ -34,9 +34,13 @@ function doTheShaders()
     ]])
 end
 
-function onUpdate(elapsed)
+local function updateShaders()
     setShaderFloat('chromaticController', 'amount', getProperty('chromaticController.x'))
     setShaderFloat('pincushionController', 'distort', getProperty('pincushionController.x'))
+end
+
+function onUpdate(elapsed)
+    updateShaders()
 end
 
 function onCreatePost()
@@ -104,6 +108,12 @@ function onCustomSubstateCreate(name)
         insertToCustomSubstate('pincushionController')
         insertToCustomSubstate('chromaticController')
         runTimer('jumpscare', 2)
+    end
+end
+
+function onCustomSubstateUpdate(name, elapsed)
+    if name == 'gameover' then
+        updateShaders()
     end
 end
 
