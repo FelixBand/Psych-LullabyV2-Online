@@ -164,6 +164,21 @@ function onCreatePost()
     end
 
     setProperty('camHUD.alpha', 0)
+
+    -- flip the scoreTxts? will it work?
+    runHaxeCode([[
+        for (t in game.scoreTxtOthers) {
+            if (t.offset.x < 0) {
+                // was the left text: move it to the right edge
+                t.alignment = 'right';
+                t.offset.x = 30;
+            } else {
+                // was the right text: move it to the left edge
+                t.alignment = 'left';
+                t.offset.x = -30;
+            }
+        }
+    ]])
 end
 
 local xx2 = 700 -- defaults for defaultCamZoom = 0.8
@@ -247,13 +262,30 @@ function onUpdate(elapsed)
     --setProperty('thermometerBar.scale.y', getSongPosition() / 20000)
 end
 
+local function flipSide(arrayName, isPlayer)
+    local count = getProperty(arrayName .. '.length')
+    for i = 0, count - 1 do
+        local icon = arrayName .. '[' .. i .. ']'
+        local scaleX = getProperty(icon .. '.scale.x')
+        local barX = getProperty('healthBar.x')
+            + getProperty('healthBar.width') * getProperty('healthBar.percent') * 0.01
+        -- small extra spread per icon so stacked ones don't sit on top of each other
+        local spread = i * 40
+
+        if isPlayer then
+            setProperty(icon .. '.x', barX + (150 * scaleX - 150) / 2 - 26 - 110 - spread)
+            setProperty(icon .. '.origin.x', 240)
+        else
+            setProperty(icon .. '.x', barX - (150 * scaleX) / 2 - 26 * 2 + 110 + spread)
+            setProperty(icon .. '.origin.x', -100)
+        end
+        setProperty(icon .. '.flipX', true)
+    end
+end
+
 function onUpdatePost()
-    setProperty('iconP1.x',getProperty('healthBar.x') + ((getProperty('healthBar.width') *        getProperty('healthBar.percent') * 0.01) + (150 * getProperty('iconP1.scale.x') - 150) / 2 - 26) - 110)
-    setProperty('iconP1.origin.x',240)
-    setProperty('iconP1.flipX',true)
-    setProperty('iconP2.x',getProperty('healthBar.x') + ((getProperty('healthBar.width') * getProperty('healthBar.percent') * 0.01) - (150 * getProperty('iconP2.scale.x')) / 2 - 26 * 2) + 110)
-    setProperty('iconP2.origin.x',-100)
-    setProperty('iconP2.flipX',true)
+    flipSide('iconP1s', true)
+    flipSide('iconP2s', false)
 end
 
 local time = 1.5
