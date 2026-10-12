@@ -28,18 +28,36 @@ function onCreate()
 	initLuaShader('redAberration')
 end
 
+
+local function flipSide(arrayName, isPlayer)
+    local count = getProperty(arrayName .. '.length')
+    for i = 0, count - 1 do
+        local icon = arrayName .. '[' .. i .. ']'
+        local scaleX = getProperty(icon .. '.scale.x')
+        local barX = getProperty('healthBar.x')
+            + getProperty('healthBar.width') * getProperty('healthBar.percent') * 0.01
+        -- small extra spread per icon so stacked ones don't sit on top of each other
+        local spread = i * 40
+
+        if isPlayer then
+            setProperty(icon .. '.x', barX + (150 * scaleX - 150) / 2 - 26 - 110 - spread)
+            setProperty(icon .. '.origin.x', 240)
+        else
+            setProperty(icon .. '.x', barX - (150 * scaleX) / 2 - 26 * 2 + 110 + spread)
+            setProperty(icon .. '.origin.x', -100)
+        end
+        setProperty(icon .. '.flipX', true)
+    end
+end
+
 function onUpdatePost()
 	setShaderFloat('vignetteGlitchController', 'time', os.clock())
 	if curSection >= 68 then
 		setShaderFloat('dad', 'amount', getProperty('chromaticController.x'))
 	end
 
-    setProperty('iconP1.x',getProperty('healthBar.x') + ((getProperty('healthBar.width') *        getProperty('healthBar.percent') * 0.01) + (150 * getProperty('iconP1.scale.x') - 150) / 2 - 26) - 110)
-    setProperty('iconP1.origin.x',240)
-    setProperty('iconP1.flipX',true)
-    setProperty('iconP2.x',getProperty('healthBar.x') + ((getProperty('healthBar.width') * getProperty('healthBar.percent') * 0.01) - (150 * getProperty('iconP2.scale.x')) / 2 - 26 * 2) + 110)
-    setProperty('iconP2.origin.x',-100)
-    setProperty('iconP2.flipX',true)
+    flipSide('iconP1s', true)
+    flipSide('iconP2s', false)
 end
 
 function onCreatePost()
