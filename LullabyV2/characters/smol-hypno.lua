@@ -1,7 +1,15 @@
 -- Animated winning/losing/neutral icons script by FelixBand
+-- Reworked: follows Change Character events, stays idle while its character
+-- isn't on screen, and handles the same character on both sides.
+--
+-- Save as characters/<character name>.lua (same name as the character json).
+
 --==================================================
 -- SETTINGS
 --==================================================
+
+-- Frame numbers are 0-based tiles of the icon image (0 = first tile).
+-- A frame number past the end of the icon is clamped to its last tile.
 
 -- Neutral animation
 local neutralFrames = {0}
@@ -15,13 +23,12 @@ local losingFPS = 12
 local winningFrames = {0}
 local winningFPS = 12
 
-
 -- Health thresholds
--- P1:
+-- P1 (boyfriend side):
 --   health < playerLosingHealth = losing
 --   health > playerWinningHealth = winning
 --
--- P2:
+-- P2 (dad side):
 --   health > opponentLosingHealth = losing
 --   health < opponentWinningHealth = winning
 
@@ -33,146 +40,94 @@ local opponentWinningHealth = 0.4
 
 
 --==================================================
--- INTERNAL VARIABLES
+-- INTERNAL
 --==================================================
 
-local iconFrame = 0
-local iconTimer = 0
-local animationIndex = 1
-local currentAnimation = nil
-local player = 0
+local animations = {
+    neutral = {frames = neutralFrames, fps = neutralFPS},
+    losing  = {frames = losingFrames,  fps = losingFPS},
+    winning = {frames = winningFrames, fps = winningFPS},
+}
 
--- Used only when both characters are the same
-local iconFrameP1 = 0
-local iconTimerP1 = 0
-local animationIndexP1 = 1
-local currentAnimationP1 = nil
+-- Side 1 = boyfriend / iconP1, side 2 = dad / iconP2.
+-- Each side keeps its own animation state, so one script instance can drive
+-- both icons (same character on both sides) or just one.
+local sides = {
+    {character = 'boyfriend', icon = 'iconP1'},
+    {character = 'dad',       icon = 'iconP2'},
+}
 
-local iconFrameP2 = 0
-local iconTimerP2 = 0
-local animationIndexP2 = 1
-local currentAnimationP2 = nil
+for _, s in ipairs(sides) do
+    s.frame = 0
+    s.timer = 0
+    s.index = 1
+    s.anim = nil
+    s.active = false
+end
 
--- thisCharacter should be scriptName, except the folder path to it cut off.
--- So mods/modname/characters/yourcharacter.lua would be just "yourcharacter".
-local thisCharacter = string.sub(scriptName, string.find(scriptName, "[^/\\]+$"))
-thisCharacter = string.gsub(thisCharacter, "%.lua$", "")
+-- thisCharacter is scriptName without the folder path and extension.
+-- mods/modname/characters/yourcharacter.lua -> "yourcharacter"
+local thisCharacter = scriptName:match("[^/\\]+$"):gsub("%.lua$", "")
 
-local initialized = false
 
--- DETECT WHICH CHARACTER WE ARE
-function onCreatePost()
-    if boyfriendName == dadName then
-        -- Same character on both sides
-        player = 3
-
-    elseif thisCharacter == boyfriendName then
-        -- This character is the player
-        player = 1
-
-    elseif thisCharacter == dadName then
-        -- This character is the opponent
-        player = 2
+local function pickAnimation(side, health)
+    if side == 1 then
+        -- Player side: less health = losing
+        if health < playerLosingHealth then
+            return animations.losing
+        elseif health > playerWinningHealth then
+            return animations.winning
+        end
+    else
+        -- Opponent side: more health = losing
+        if health > opponentLosingHealth then
+            return animations.losing
+        elseif health < opponentWinningHealth then
+            return animations.winning
+        end
     end
-
-    debugPrint("LOADED " .. thisCharacter)
-
-    initialized = true
+    return animations.neutral
 end
 
 
---==================================================
--- APPLY ANIMATION - NORMAL
---==================================================
-
-function setAnimation(frames, fps, elapsed)
-
-    if #frames == 0 then
+local function stepAnimation(s, anim, elapsed)
+    local frames = anim.frames
+    if #frames == 0 or anim.fps <= 0 then
         return
     end
 
-    if currentAnimation ~= frames then
-        currentAnimation = frames
-        animationIndex = 1
-        iconTimer = 0
-        iconFrame = frames[1]
+    -- Switched to a different animation (or just became active): restart it
+    if s.anim ~= frames then
+        s.anim = frames
+        s.index = 1
+        s.timer = 0
+        s.frame = frames[1]
     end
 
-    iconTimer = iconTimer + elapsed
+    s.timer = s.timer + elapsed
+    local step = 1 / anim.fps
 
-    if iconTimer >= 1 / fps then
-        iconTimer = iconTimer - 1 / fps
-
-        animationIndex = animationIndex + 1
-
-        if animationIndex > #frames then
-            animationIndex = 1
+    -- while, not if: a long frame shouldn't make the animation fall behind
+    while s.timer >= step do
+        s.timer = s.timer - step
+        s.index = s.index + 1
+        if s.index > #frames then
+            s.index = 1
         end
-
-        iconFrame = frames[animationIndex]
-    end
-end
-
-
---==================================================
--- APPLY ANIMATION - DUPLICATE CHARACTER
---==================================================
-
-function setAnimationP1(frames, fps, elapsed)
-
-    if #frames == 0 then
-        return
-    end
-
-    if currentAnimationP1 ~= frames then
-        currentAnimationP1 = frames
-        animationIndexP1 = 1
-        iconTimerP1 = 0
-        iconFrameP1 = frames[1]
-    end
-
-    iconTimerP1 = iconTimerP1 + elapsed
-
-    if iconTimerP1 >= 1 / fps then
-        iconTimerP1 = iconTimerP1 - 1 / fps
-
-        animationIndexP1 = animationIndexP1 + 1
-
-        if animationIndexP1 > #frames then
-            animationIndexP1 = 1
-        end
-
-        iconFrameP1 = frames[animationIndexP1]
+        s.frame = frames[s.index]
     end
 end
 
 
-function setAnimationP2(frames, fps, elapsed)
-
-    if #frames == 0 then
-        return
-    end
-
-    if currentAnimationP2 ~= frames then
-        currentAnimationP2 = frames
-        animationIndexP2 = 1
-        iconTimerP2 = 0
-        iconFrameP2 = frames[1]
-    end
-
-    iconTimerP2 = iconTimerP2 + elapsed
-
-    if iconTimerP2 >= 1 / fps then
-        iconTimerP2 = iconTimerP2 - 1 / fps
-
-        animationIndexP2 = animationIndexP2 + 1
-
-        if animationIndexP2 > #frames then
-            animationIndexP2 = 1
-        end
-
-        iconFrameP2 = frames[animationIndexP2]
-    end
+-- The game resets the icon's frame every update, so it has to be re-applied
+-- every frame, after the game's own update (onUpdatePost).
+local function frameCode(n, iconName, frame)
+    local i = tostring(n)
+    local f = tostring(math.floor(frame))
+    return 'var tiles' .. i .. ' = game.' .. iconName .. '.frames.frames;'
+        .. 'game.' .. iconName .. '.frame = tiles' .. i
+        .. '[' .. f .. ' < tiles' .. i .. '.length ? ' .. f
+        .. ' : tiles' .. i .. '.length - 1];'
 end
 
 
@@ -181,93 +136,31 @@ end
 --==================================================
 
 function onUpdatePost(elapsed)
-    if not initialized then
-        return
-    end
+    local health = getProperty('health')
+    local code = ''
 
+    for n, s in ipairs(sides) do
+        -- Ask the game who is on this side right now. This is what makes
+        -- Change Character work: the answer changes when the event fires.
+        local onThisSide = getProperty(s.character .. '.curCharacter') == thisCharacter
 
-    --==================================================
-    -- IF BOTH SIDES USE THE SAME CHARACTER
-    --==================================================
+        if onThisSide then
+            if not s.active then
+                -- Just arrived on this side (song start or Change Character)
+                s.active = true
+                s.anim = nil
+            end
 
-    if player == 3 then
-
-        -- P1: less health = losing
-        local p1Losing = getProperty('health') < playerLosingHealth
-        local p1Winning = getProperty('health') > playerWinningHealth
-
-        if p1Losing then
-            setAnimationP1(losingFrames, losingFPS, elapsed)
-
-        elseif p1Winning then
-            setAnimationP1(winningFrames, winningFPS, elapsed)
-
+            stepAnimation(s, pickAnimation(n, health), elapsed)
+            code = code .. frameCode(n, s.icon, s.frame)
         else
-            setAnimationP1(neutralFrames, neutralFPS, elapsed)
+            -- Not our character: leave the icon alone so the game (or another
+            -- character's script) controls it.
+            s.active = false
         end
-
-
-        -- P2: more health = losing
-        local p2Losing = getProperty('health') > opponentLosingHealth
-        local p2Winning = getProperty('health') < opponentWinningHealth
-
-        if p2Losing then
-            setAnimationP2(losingFrames, losingFPS, elapsed)
-
-        elseif p2Winning then
-            setAnimationP2(winningFrames, winningFPS, elapsed)
-
-        else
-            setAnimationP2(neutralFrames, neutralFPS, elapsed)
-        end
-
-
-        runHaxeCode([[
-            game.iconP1.frame = game.iconP1.frames.frames[]] .. iconFrameP1 .. [[];
-            game.iconP2.frame = game.iconP2.frames.frames[]] .. iconFrameP2 .. [[];
-        ]])
-
-        return
     end
 
-
-    --==================================================
-    -- NORMAL: CHARACTER IS ONLY ON ONE SIDE
-    --==================================================
-
-    local losing = false
-    local winning = false
-
-    if player == 1 then
-        -- Player:
-        -- less health = losing
-        -- more health = winning
-
-        losing = getProperty('health') < playerLosingHealth
-        winning = getProperty('health') > playerWinningHealth
-
-    elseif player == 2 then
-        -- Opponent:
-        -- more health = losing
-        -- less health = winning
-
-        losing = getProperty('health') > opponentLosingHealth
-        winning = getProperty('health') < opponentWinningHealth
+    if code ~= '' then
+        runHaxeCode(code)
     end
-
-
-    if losing then
-        setAnimation(losingFrames, losingFPS, elapsed)
-
-    elseif winning then
-        setAnimation(winningFrames, winningFPS, elapsed)
-
-    else
-        setAnimation(neutralFrames, neutralFPS, elapsed)
-    end
-
-
-    runHaxeCode([[
-        game.iconP]] .. player .. [[.frame = game.iconP]] .. player .. [[.frames.frames[]] .. iconFrame .. [[];
-    ]])
 end
