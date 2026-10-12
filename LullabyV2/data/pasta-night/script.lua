@@ -18,17 +18,8 @@ function onCreate()
 
 	if shadersEnabled then
 		makeLuaSprite('crtController', '', 0, 0)
-        runHaxeCode([[
-            game.initLuaShader('crt');
-
-            var crtShader = game.createRuntimeShader('crt');
-
-            game.getLuaObject('crtController').shader = crtShader;
-
-            game.camOther.setFilters([
-                new ShaderFilter(crtShader)
-            ]);
-        ]]);
+		setProperty('crtController.alpha', 0)
+        doTheShaders()
     end
 
 	precacheImage('UI/base/hypno/Extras')
@@ -57,6 +48,20 @@ function onCreate()
 	setProperty('bgGameOver.antialiasing', false)
 	setProperty('bgGameOver.alpha', 0.0001)
 	addLuaSprite('bgGameOver')
+end
+
+function doTheShaders()
+	runHaxeCode([[
+		game.initLuaShader('crt');
+
+		var crtShader = game.createRuntimeShader('crt');
+
+		game.getLuaObject('crtController').shader = crtShader;
+
+		game.camOther.setFilters([
+			new ShaderFilter(crtShader)
+		]);
+	]]);
 end
 
 function setupStrums()
@@ -316,10 +321,12 @@ function startCharacterSelector()
 	updateSelection(2)
 end
 
+function updateShaders()
+	setShaderFloat('crtController', 'time', os.clock())
+end
+
 function onUpdate(elapsed)
-	if luaSpriteExists('crtController') then
-		setShaderFloat('crtController', 'time', os.clock())
-	end
+	updateShaders()
 	if Selectin then
 		totalElapsed = totalElapsed + elapsed
 
@@ -428,7 +435,6 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		end
 
 		runHaxeCode([[ game.camOther.setFilters([]); ]])
-		removeLuaSprite('crtController')
 
 		Selectin = false
 
@@ -482,11 +488,14 @@ function onCustomSubstateCreate(name)
 		callOnLuas('destroyPendulum')
 		insertToCustomSubstate('bgGameOver')
 		insertToCustomSubstate('charGameOver')
+		insertToCustomSubstate('crtController')
 		
 		playAnim('bgGameOver', 'idle', true)
 		setProperty('bgGameOver.alpha', 1)
 		playAnim('charGameOver', 'player' .. pastaPlayer, true)
 		setProperty('charGameOver.alpha', 1)
+
+		doTheShaders()
 
 		setProperty('camGame.visible', false)
 		setProperty('camHUD.visible', false)
@@ -498,6 +507,7 @@ end
 
 function onCustomSubstateUpdate(name, elapsed)
 	if name == 'gameover' then
+		updateShaders()
 		if not pressedRetry and keyJustPressed('accept') then
 			pressedRetry = true
 			playMusic('gameOverEnd', 1)
