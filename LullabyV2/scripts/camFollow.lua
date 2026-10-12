@@ -29,7 +29,7 @@ end
 
 function setMid(ch)
     if ch == 'bf' then
-        c.bX = getMidpointX('boyfriend') - getProperty('boyfriendCameraOffset[0]') - getProperty('boyfriend.cameraPosition[0]')
+        c.bX = getMidpointX('boyfriend') + getProperty('boyfriendCameraOffset[0]') - getProperty('boyfriend.cameraPosition[0]')
         c.bY = getMidpointY('boyfriend') + getProperty('boyfriendCameraOffset[1]') + getProperty('boyfriend.cameraPosition[1]')
     elseif ch == 'dad' then
         c.dX = getMidpointX('dad') + getProperty('opponentCameraOffset[0]') + getProperty('dad.cameraPosition[0]')
@@ -158,6 +158,8 @@ function onEvent(n, v1, v2)
             c.tar = v2
 
             if v2 == 'gf' then
+                setMid('bf')
+                setMid('dad')
                 triggerEvent(
                     'Camera Follow Pos',
                     (c.bX < c.dX and c.bX or c.dX) + math.abs(c.bX - c.dX) / 2,

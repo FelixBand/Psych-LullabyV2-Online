@@ -14,4 +14,7 @@ end
 
 function onCreatePost()
 	setProperty('boyfriendGroup.visible', false)
+
+	setProperty('camFollowPos.x', -465)
+	setProperty('camFollowPos.y', 177)
 end

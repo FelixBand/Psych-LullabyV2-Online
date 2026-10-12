@@ -40,4 +40,7 @@ function onCreatePost()
 			setPropertyFromGroup('opponentStrums', i, 'x', _G['defaultPlayerStrumX'..i])
 		end
 	end
+
+	setProperty('camFollowPos.x', 60)
+	setProperty('camFollowPos.y', 460)
 end

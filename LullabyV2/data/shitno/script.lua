@@ -86,12 +86,6 @@ function onEvent(name, value1, value2)
     end
 end
 
-function onTimerCompleted(tag, loops, loopsLeft)
-    if tag == 'bfSlide' then
-        doTweenX('bfSlide', 'boyfriendGroup', getProperty('boyfriend.x') + 350, 1.2, 'quadInOut');
-    end
-end
-
 function onGameOver()
     openCustomSubstate('gameover', true)
     return Function_Stop
@@ -118,6 +112,9 @@ function onCustomSubstateUpdate(name, elapsed)
 end
 
 function onTimerCompleted(tag, loops, loopsLeft)
+    if tag == 'bfSlide' then
+        doTweenX('bfSlide', 'boyfriendGroup', getProperty('boyfriend.x') + 350, 1.2, 'quadInOut');
+    end
     if tag == 'jumpscare' then
         setProperty('shitnoJumpscare.alpha', 1)
         cameraShake('other', 0.015, 5)

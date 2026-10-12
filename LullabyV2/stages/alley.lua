@@ -101,6 +101,9 @@ function onCreatePost()
 	end
 
 	setProperty('camZooming', true)
+
+	setProperty('camFollowPos.x', 463)
+	setProperty('camFollowPos.y', 319)
 end
 
 function onMoveCamera(focus)

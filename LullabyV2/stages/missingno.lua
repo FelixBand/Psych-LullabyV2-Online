@@ -67,6 +67,9 @@ function onCreatePost()
 	for i = 0,getProperty('opponentStrums.length') - 1 do
         setPropertyFromGroup('strumLineNotes',i,'visible',false)
     end
+
+	setProperty('camFollowPos.x', -139)
+	setProperty('camFollowPos.y', 10)
 end
 
 function onUpdate(elapsed)
