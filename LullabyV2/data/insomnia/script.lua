@@ -26,7 +26,7 @@ function onCreate()
     if getModSetting('mechanics') == 'Hell' then
         minAccuracy = 0.98
     end
-    if getModSetting('mechanics') == 'Pussy' or not playsAsBF() then
+    if getModSetting('mechanics') == 'Pussy' or not playsAsBF() or isRoomConnected() then
         enableMechanic = false
     end
 end
