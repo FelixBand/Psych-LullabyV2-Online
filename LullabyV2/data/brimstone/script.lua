@@ -86,6 +86,12 @@ function onCreate()
 	setProperty('muk.visible', false)
 	addLuaSprite('muk')
 
+	makeLuaSprite('dropShadow', 'characters/buried/shadow', 0, 10)
+	scaleObject('dropShadow', 6, 6)
+	setProperty('dropShadow.antialiasing', false)
+	setProperty('dropShadow.alpha', 0.0001)
+	addLuaSprite('dropShadow')
+
 	if getModSetting('mechanics') == 'Hell' then
         addLuaScript('pendulum')
     end
@@ -142,19 +148,7 @@ function onCreatePost()
 		end
 	end
 
-	runHaxeCode([[
-        for (t in game.scoreTxtOthers) {
-            if (t.offset.x < 0) {
-                // was the left text: move it to the right edge
-                t.alignment = 'right';
-                t.offset.x = 30;
-            } else {
-                // was the right text: move it to the left edge
-                t.alignment = 'left';
-                t.offset.x = -30;
-            }
-        }
-    ]])
+	callOnLuas('doFlipStage', {false, true})
 
 	setVar('swingTime', 6)
 end
@@ -243,7 +237,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		doTweenAlpha('deadBFIn', 'deadBF', 1, 1, 'linear')
 		playAnim('deadBF', 'idle', true)
 		playMusic('BurymanDeath', 1, true)
-		runTimer('chomp', 3.65, 0)
+		runTimer('chomp', 3.67, 0)
 		canRetry = true
 	end
 	if tag == 'chomp' then
@@ -264,6 +258,8 @@ local apparitionVignetteStartTime = nil
 
 function onUpdate(elapsed)
 	setProperty('camZooming', false)
+
+	setProperty('dropShadow.x', getProperty('gf.x') - 400)
 	if curBeat >= 874 then
 		local angle = ((getSongPosition() - 266192) / 4000) * math.pi
 		setProperty('gfGroup.x', 205 + math.sin(angle) * 40)
@@ -411,9 +407,11 @@ function onEvent(name, value1, value2)
 				setProperty('gfGroup.x', 205)
 				setProperty('gfGroup.y', -40)
 				triggerEvent('Play Animation', 'intro', 'gf')
+				setProperty('dropShadow.alpha', 1)
 			elseif value2 == 'Apparition' then
 				triggerEvent('Alt Idle Animation', 'gf', '-alt')
 				triggerEvent('Play Animation', 'transform', 'gf')
+				doTweenY('shadowDown', 'dropShadow', getProperty('dropShadow.y') + 280, 2, 'linear')
 				apparitionVignetteStartTime = getSongPosition() + (stepCrochet * 32)
 				if shadersEnabled and not brimstoneWarpActive then
 					brimstoneWarpActive = true
