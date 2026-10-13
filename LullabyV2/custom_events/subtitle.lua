@@ -7,7 +7,7 @@ local Time=0
 local Active={}
 local cleared=true
 local clearAtStep = nil
-local subtitleHoldSteps = 16 -- 16 steps = 1 beat
+local subtitleHoldSteps = 4
 
 function onEvent(tag,v1,v2)
     if tag == 'subtitle' then
