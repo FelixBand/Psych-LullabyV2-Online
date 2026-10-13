@@ -97,12 +97,9 @@ function onCreate()
         makeLuaSprite('snowfallController', '', snowAmount, snowIntensity)
     end
 
-    -- healthbar flipping
-	setProperty('healthBar.flipX', true)
-
     --addLuaSprite('freakachuJumpscare')
 
-    makeAnimatedLuaSprite('goldDies', 'characters/death/frostbite', 0, 0)
+    makeAnimatedLuaSprite('goldDies', 'characters/death/frostbite', 0, 0) -- the wip game over animation. It's sick o.o
     addAnimationByPrefix('goldDies', 'idle', 'gold', 24, false)
     setObjectCamera('goldDies', 'other')
     scaleObject('goldDies', 0.9195, 0.9195)
@@ -165,20 +162,7 @@ function onCreatePost()
 
     setProperty('camHUD.alpha', 0)
 
-    -- flip the scoreTxts? will it work?
-    runHaxeCode([[
-        for (t in game.scoreTxtOthers) {
-            if (t.offset.x < 0) {
-                // was the left text: move it to the right edge
-                t.alignment = 'right';
-                t.offset.x = 30;
-            } else {
-                // was the right text: move it to the left edge
-                t.alignment = 'left';
-                t.offset.x = -30;
-            }
-        }
-    ]])
+    callOnLuas('doFlipStage')
 end
 
 local xx2 = 700 -- defaults for defaultCamZoom = 0.8
@@ -260,32 +244,6 @@ function onUpdate(elapsed)
     end
 
     --setProperty('thermometerBar.scale.y', getSongPosition() / 20000)
-end
-
-local function flipSide(arrayName, isPlayer)
-    local count = getProperty(arrayName .. '.length')
-    for i = 0, count - 1 do
-        local icon = arrayName .. '[' .. i .. ']'
-        local scaleX = getProperty(icon .. '.scale.x')
-        local barX = getProperty('healthBar.x')
-            + getProperty('healthBar.width') * getProperty('healthBar.percent') * 0.01
-        -- small extra spread per icon so stacked ones don't sit on top of each other
-        local spread = i * 40
-
-        if isPlayer then
-            setProperty(icon .. '.x', barX + (150 * scaleX - 150) / 2 - 26 - 110 - spread)
-            setProperty(icon .. '.origin.x', 240)
-        else
-            setProperty(icon .. '.x', barX - (150 * scaleX) / 2 - 26 * 2 + 110 + spread)
-            setProperty(icon .. '.origin.x', -100)
-        end
-        setProperty(icon .. '.flipX', true)
-    end
-end
-
-function onUpdatePost()
-    flipSide('iconP1s', true)
-    flipSide('iconP2s', false)
 end
 
 local time = 1.5

@@ -254,19 +254,7 @@ function onCreatePost()
 	setProperty('camFollowPos.x', 1000)
 	setProperty('camFollowPos.y', 500)
 
-	runHaxeCode([[
-        for (t in game.scoreTxtOthers) {
-            if (t.offset.x < 0) {
-                // was the left text: move it to the right edge
-                t.alignment = 'right';
-                t.offset.x = 30;
-            } else {
-                // was the right text: move it to the left edge
-                t.alignment = 'left';
-                t.offset.x = -30;
-            }
-        }
-    ]])
+	callOnLuas('doFlipStage')
 end
 
 local debugLeft = 6

@@ -63,59 +63,20 @@ function onCreatePost()
             setPropertyFromGroup('opponentStrums', i, 'x', -5000)
         end
     end
-
-    runHaxeCode([[
-        for (t in game.scoreTxtOthers) {
-            if (t.offset.x < 0) {
-                // was the left text: move it to the right edge
-                t.alignment = 'right';
-                t.offset.x = 30;
-            } else {
-                // was the right text: move it to the left edge
-                t.alignment = 'left';
-                t.offset.x = -30;
-            }
-        }
-    ]])
     
     setProperty('camZooming', true)
+
+    callOnLuas('doFlipStage', {false, true}) -- false = don't flip health bar, true = do flip score texts!
 end
 
 function onEvent(name, value1, value2)
     if name == 'Add Pendulum' then
         addLuaScript('pendulum')
+        callOnLuas('doFlipStage') -- no args = just flip everything
     end
     if name == 'Change Character' and value1 == 'bf' then
         setProperty('bfded.alpha', 1)
     end
-end
-
-local function flipSide(arrayName, isPlayer)
-    local count = getProperty(arrayName .. '.length')
-    for i = 0, count - 1 do
-        local icon = arrayName .. '[' .. i .. ']'
-        local scaleX = getProperty(icon .. '.scale.x')
-        local barX = getProperty('healthBar.x')
-            + getProperty('healthBar.width') * getProperty('healthBar.percent') * 0.01
-        -- small extra spread per icon so stacked ones don't sit on top of each other
-        local spread = i * 40
-
-        if isPlayer then
-            setProperty(icon .. '.x', barX + (150 * scaleX - 150) / 2 - 26 - 110 - spread)
-            setProperty(icon .. '.origin.x', 240)
-        else
-            setProperty(icon .. '.x', barX - (150 * scaleX) / 2 - 26 * 2 + 110 + spread)
-            setProperty(icon .. '.origin.x', -100)
-        end
-        setProperty(icon .. '.flipX', true)
-    end
-end
-
-function onUpdatePost()
-	if curBeat >= 80 then -- flip healthbar after beat 80
-		flipSide('iconP1s', true)
-        flipSide('iconP2s', false)
-	end
 end
 
 function onStepHit()
@@ -131,7 +92,6 @@ function onStepHit()
         triggerEvent('Change Character', 'dad', 'abomination-hypno')
         removeLuaSprite('hypnoEntrance', true)
         setProperty('dad.alpha', 1)
-        setProperty('healthBar.flipX', true)
         doTweenAlpha('hudIn', 'camHUD', 1, 0.25, 'linear')
     elseif curStep == 2128 then
         setProperty('ending.alpha', 1)

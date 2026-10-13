@@ -28,41 +28,15 @@ function onCreate()
 	initLuaShader('redAberration')
 end
 
-
-local function flipSide(arrayName, isPlayer)
-    local count = getProperty(arrayName .. '.length')
-    for i = 0, count - 1 do
-        local icon = arrayName .. '[' .. i .. ']'
-        local scaleX = getProperty(icon .. '.scale.x')
-        local barX = getProperty('healthBar.x')
-            + getProperty('healthBar.width') * getProperty('healthBar.percent') * 0.01
-        -- small extra spread per icon so stacked ones don't sit on top of each other
-        local spread = i * 40
-
-        if isPlayer then
-            setProperty(icon .. '.x', barX + (150 * scaleX - 150) / 2 - 26 - 110 - spread)
-            setProperty(icon .. '.origin.x', 240)
-        else
-            setProperty(icon .. '.x', barX - (150 * scaleX) / 2 - 26 * 2 + 110 + spread)
-            setProperty(icon .. '.origin.x', -100)
-        end
-        setProperty(icon .. '.flipX', true)
-    end
-end
-
 function onUpdatePost()
 	setShaderFloat('vignetteGlitchController', 'time', os.clock())
-	if curSection >= 68 then
+	if curSection >= 69 then
 		setShaderFloat('dad', 'amount', getProperty('chromaticController.x'))
 	end
-
-    flipSide('iconP1s', true)
-    flipSide('iconP2s', false)
 end
 
 function onCreatePost()
 	setProperty('camZoomingMult', 0);
-	setProperty('healthBar.flipX', true)
 
 	for i = 0, getProperty('unspawnNotes.length') - 1 do -- allow bf's throw animation to play uninterrupted
 		local strumTime = getPropertyFromGroup('unspawnNotes', i, 'strumTime')
@@ -73,19 +47,7 @@ function onCreatePost()
 		end
 	end
 
-	runHaxeCode([[
-        for (t in game.scoreTxtOthers) {
-            if (t.offset.x < 0) {
-                // was the left text: move it to the right edge
-                t.alignment = 'right';
-                t.offset.x = 30;
-            } else {
-                // was the right text: move it to the left edge
-                t.alignment = 'left';
-                t.offset.x = -30;
-            }
-        }
-    ]])
+	callOnLuas('doFlipStage')
 end
 
 function onEvent(name, value1, value2)
