@@ -26,7 +26,7 @@ function onCreate()
 	screenCenter('fog')
 	addLuaSprite('fog', true)
 
-	makeLuaSprite('introFog', '', -50, -50)
+	makeLuaSprite('introFog', '', -200, -50)
     makeGraphic('introFog', screenWidth * 2, screenHeight * 2, 'FF0E9FB')
 	setScrollFactor('introFog', 0, 0)
     addLuaSprite('introFog', true)
