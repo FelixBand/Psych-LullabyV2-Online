@@ -23,7 +23,7 @@ function onCreate()
 end
 
 function onCreatePost()
-    setProperty('boyfriend.visible',false)
+    setProperty('boyfriendGroup.visible',false)
 	setObjectOrder('boyfriendGroup',getObjectOrder('laalmuada')+1)
 	setProperty('cameraSpeed', 1000)
 	setProperty('camGame.alpha', 0.0001)
@@ -95,7 +95,7 @@ function onEvent(eventName, value1, value2)
             runTimer('Spawn',1)
 
 			setProperty('dad.alpha',0.45)
-			setProperty('boyfriend.alpha',0.45)
+			setProperty('boyfriendGroup.alpha',0.45)
 			setProperty('gf.alpha',1)
 		else
 			doTweenAlpha('redOverlay','redOverlay',0,1.5,'quadInOut')
@@ -105,12 +105,26 @@ function onEvent(eventName, value1, value2)
 		setProperty('camHUD.alpha', 1)
         setProperty('camGame.zoom',getProperty('camGame.zoom')+2.5)
 		setProperty('defaultCamZoom', 1.2)
-        setProperty('boyfriend.visible',true)
+        setProperty('boyfriendGroup.visible',true)
         setProperty('background.alpha', 1)
         setProperty('portrait.alpha', 1)
         setProperty('lacama.alpha', 1)
         setProperty('laalmuada.alpha', 1)
         setProperty('iconP1.visible', true)
+    end
+	if eventName=='Mike Strangled Death' then  
+        setProperty('redOverlay.alpha',1)
+        doTweenAlpha('redOverlay','redOverlay',0.001,1.5,'quadInOut')
+        cameraShake('game',0.008, 0.04)
+        cameraShake('hud',0.008, 0.04)
+        playSound('DissensionDeath')
+
+        triggerEvent('Play Animation', 'singUP', 'bf')
+		triggerEvent('Alt Idle Animation', 'bf', '-disabled')
+        setHealth(0.01)
+        doTweenY('MikeDeath','boyfriend',getProperty('boyfriend.y')- 750,2.5,'quadInOut')
+        setProperty('camGame.zoom',getProperty('camGame.zoom')+ 0.2)
+        runTimer('Death',3.5)
     end
 end
 
@@ -126,6 +140,10 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	end
     if tag == 'restart' then
         restartSong()
+    end
+	if tag=='Death' then
+        setProperty('camGame.visible',false)
+        setProperty('camHUD.visible',false)
     end
 end
 
