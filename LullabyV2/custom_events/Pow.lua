@@ -27,10 +27,21 @@ function onEvent(eventName, value1, value2)
                 playSound('HandUp',1)
                 playAnim(mxChar,'Hit1',true)
                 setProperty(mxChar .. '.specialAnim',true)
+                runTimer('doDrop', 0.67)
             else
                 dropStart()
             end
         end
+    end
+end
+
+function onTimerCompleted(tag, loops, loopsLeft)
+    if tag == 'doDrop' then
+        playAnim(mxChar,'Hit2',true)
+        setProperty(mxChar .. '.specialAnim',true)
+        playAnim('MXArms','Hit2',true)
+        setProperty('POW.visible',false)
+        dropStart()
     end
 end
 
@@ -63,13 +74,6 @@ function onSongStart()
 end
 
 function onUpdate(elapsed)
-    if getProperty(mxChar .. '.animation.curAnim.finished') and getProperty(mxChar .. '.animation.curAnim.name')=='Hit1' then
-        playAnim(mxChar,'Hit2',true)
-        setProperty(mxChar .. '.specialAnim',true)
-        playAnim('MXArms','Hit2',true)
-        setProperty('POW.visible',false)
-        dropStart()
-    end
     if getProperty(mxChar .. '.animation.curAnim.name')~='Hit2' then
         setProperty('POW.visible',true)
     end   
