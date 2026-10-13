@@ -19,6 +19,12 @@ local strumShakeDuration = 0.1
 local strumShakeActive = false
 local pressedRetry = false
 
+-- botplayQuotes = {'i am unamused', 'do YOU even have a sing?'}
+
+-- function onCreatePost()
+-- 	callOnLuas('setBotplaySubtext', {botplayQuotes[getRandomInt(1, #botplayQuotes)]})
+-- end
+
 function onCreate()
 	setProperty('skipCountdown', true)
 	setProperty('cameraSpeed', 100)
