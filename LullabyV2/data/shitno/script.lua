@@ -63,7 +63,7 @@ function onEvent(name, value1, value2)
         ['Shitno Laugh'] = function()
             setProperty('dadGroup.alpha', getProperty('dadGroup.alpha') + 0.15)
             setProperty('ground.alpha', getProperty('ground.alpha') + 0.15)
-            setProperty('iconP2.alpha', 1)
+            setProperty('iconP2.alpha', getProperty('iconP1.alpha'))
         end,
         ['Fade In Intro'] = function()
             setProperty('cameraSpeed', 1)
