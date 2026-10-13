@@ -6,8 +6,12 @@ local Word={' '}
 local Time=0
 local Active={}
 local cleared=true
+local clearAtStep = nil
+local subtitleHoldSteps = 16 -- 16 steps = 1 beat
+
 function onEvent(tag,v1,v2)
     if tag == 'subtitle' then
+        clearAtStep = nil
         if Time~=0 and #Word>0 then
         clearOldText(Word)
         end
@@ -50,19 +54,28 @@ function UpdateSubtitle(Pos)
         setTextColor(MakeTag(Word[Pos]),'FF0000')  
     end
 end
+
 function onStepHit()
-    if Active[Time]~=nil and #Active~=0 then
-        if curStep>=GetStep(Active[Time]) then
+    if Active[Time] ~= nil and #Active ~= 0 then
+        if curStep >= GetStep(Active[Time]) then
             UpdateSubtitle(Time)
-            Time=Time+1
+            Time = Time + 1
+
+            if Time > #Active then
+                clearAtStep = curStep + subtitleHoldSteps
+            end
         end
-    elseif not cleared and #Active>0 and Time>#Active then
-        clearOldText(Word)
-        Word={}
-        Active={}
-        cleared=true
+    elseif not cleared and #Active > 0 and Time > #Active then
+        if clearAtStep ~= nil and curStep >= clearAtStep then
+            clearOldText(Word)
+            Word = {}
+            Active = {}
+            cleared = true
+            clearAtStep = nil
+        end
     end
 end
+
 function GetStep(Step)
     return tonumber(Step)
 end
