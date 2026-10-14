@@ -147,7 +147,7 @@ function onCreate()
 	hypnoPendulum = dadName == 'hypno'
 	isHypno = not playsAsBF() and hypnoPendulum
 	pendulumMechanicDisabled = not playsAsBF()
-		and (dadName == 'hypno' or dadName == 'hypno-two' or dadName == 'abomination-hypno')
+		and (dadName == 'hypno' or dadName == 'hypno-two' or dadName == 'abomination-hypno' or dadName == 'abomination-hypno-bf')
 	tranceDisabled = pendulumMechanicDisabled or botPlay
 
 	local pendulumImage = hypnoPendulum and 'UI/base/hypno/Pendelum' or 'UI/base/hypno/Pendelum_Phase2'
