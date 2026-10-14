@@ -3,7 +3,7 @@
 	"hideFreeplay": false,
 	"weekBackground": "black",
 	"weekBefore": "1hypno",
-	"startUnlocked": false,
+	"startUnlocked": true,
 	"weekCharacters": [
 		"lostsilverweek",
 		"campaignboy",

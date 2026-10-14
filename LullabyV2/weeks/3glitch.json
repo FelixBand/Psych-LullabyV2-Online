@@ -3,7 +3,7 @@
 	"hideFreeplay": false,
 	"weekBackground": "black",
 	"weekBefore": "2silver",
-	"startUnlocked": false,
+	"startUnlocked": true,
 	"weekCharacters": [
 		"glitchweek",
 		"campaignboy",
