@@ -31,7 +31,6 @@ end
 
 function onEvent(name, value1, value2)
 	if name == 'entrance' then
-		doTweenAlpha('bgStaticIn', 'staticbg', 1, 1, 'linear')
 		triggerEvent('Camera Follow Pos', '1350', '1100')
 		triggerEvent('Play Animation', 'turned', 'bf')
 		triggerEvent('Alt Idle Animation', 'bf', '-disabled')
