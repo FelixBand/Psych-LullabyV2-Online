@@ -160,7 +160,6 @@ end
 
 function onCreatePost()
     setProperty('boyfriendGroup.visible', false)
-    setProperty('gfGroup.visible', false)
     setProperty('camHUD.alpha', 0.0001)
 
     triggerEvent('Camera Follow Pos', '300', '370')
