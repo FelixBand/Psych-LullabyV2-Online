@@ -187,17 +187,11 @@ end
 
 function onStepHit()
     if curStep == 1605 then
-        setProperty('dadGroup.visible', false)
-        setProperty('no more.alpha', 1)
-        playAnim('no more', 'idle', true)
+        triggerEvent('Play Animation', 'no more', 'dad')
     elseif curStep == 1632 then
-        removeLuaSprite('no more', true)
-        setProperty('headrip.alpha', 1)
-        playAnim('headrip', 'idle', true)
+        triggerEvent('Play Animation', 'headrip', 'dad')
     elseif curStep == 1664 then
-        removeLuaSprite('headrip', true)
         triggerEvent('Change Character', 'dad', 'gold-headless')
-        setProperty('dadGroup.visible', true)
         setProperty('defaultCamZoom', 0.7)
     end
 end

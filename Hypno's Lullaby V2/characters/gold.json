@@ -2,6 +2,28 @@
 	"animations": [
 		{
 			"offsets": [
+				1,
+				-1
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "no more",
+			"indices": [],
+			"name": "No More instance 1"
+		},
+		{
+			"offsets": [
+				90,
+				141
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "headrip",
+			"indices": [],
+			"name": "Head rips_OneLayer instance 1"
+		},
+		{
+			"offsets": [
 				0,
 				0
 			],
