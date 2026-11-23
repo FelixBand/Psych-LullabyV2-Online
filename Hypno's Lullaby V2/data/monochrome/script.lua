@@ -59,22 +59,6 @@ function onCreate()
     setProperty('celebi.alpha', 0.0001)
     addLuaSprite('celebi')
 
-    makeAnimatedLuaSprite('celebiNoteExample', 'characters/gold/Note_asset', 600, 200)
-    addAnimationByIndices('celebiNoteExample', 'idle', 'Note Full', '18', 1)
-    --addLuaSprite('celebiNote', true)
-
-    makeAnimatedLuaSprite('no more', 'characters/gold/GOLD_NO_MORE', getProperty('dadGroup.x') - 73, getProperty('dadGroup.y') - 112)
-    addAnimationByPrefix('no more', 'idle', 'No More instance 1', 24, false)
-    setProperty('no more.alpha', 0)
-    scaleObject('no more', 1.3, 1.3)
-    addLuaSprite('no more')
-
-    makeAnimatedLuaSprite('headrip', 'characters/gold/GOLD_HEAD_RIPPING_OFF', getProperty('dadGroup.x') - 160, getProperty('dadGroup.y') - 252)
-    addAnimationByPrefix('headrip', 'idle', 'Head rips_OneLayer instance 1', 24, false)
-    setProperty('headrip.alpha', 0)
-    scaleObject('headrip', 1.3, 1.3)
-    addLuaSprite('headrip')
-
     -- UI
     makeLuaSprite('celebiHealth', '', getProperty('healthBar.x'), getProperty('healthBar.y'))
 
